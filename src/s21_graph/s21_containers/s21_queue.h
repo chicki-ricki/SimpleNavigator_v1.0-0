@@ -16,7 +16,7 @@ namespace s21
 		~Queue();
 		void	init();
 		void	push(T const &);
-		void	pop();
+		T		&pop();
 		T		&peek();
 	private:
 		T				*arr_;

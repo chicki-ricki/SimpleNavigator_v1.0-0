@@ -35,8 +35,8 @@ s21::Queue<T>::~Queue()
 template <typename T>
 void	s21::Queue<T>::init()
 {
-	arr_ = new T[++size_];
-	bzero(arr_, size_ - 1);
+	arr_ = new T[size_ + 1];
+	bzero(arr_, size_ + 1);
 }
 
 template <typename T>
@@ -45,32 +45,43 @@ void	s21::Queue<T>::push(T const &elem)
 	unsigned int	size_new = size_;
 	T				*arr_new;
 
-	size_new++;
-	arr_new = new T[size_new];
-	for (int i = 0; i < size_new; i++)
-		arr_new[i] = arr_[i];
-	arr_new[size_new - 1] = elem;
-	top_ = &arr_new[size_new - 1];
-	if (arr_)
-		delete [] arr_;
-	arr_ = arr_new;
-	size_ = size_new;
+	if (size_ == 0)
+	{
+		arr_[size_] = elem;
+		size_++;
+	}
+	else
+	{
+		size_new++;
+		arr_new = new T[size_new];
+		for (int i = 0; i < size_new; i++)
+			arr_new[i] = arr_[i];
+		arr_new[size_new - 1] = elem;
+		top_ = &arr_new[0];
+		if (arr_)
+			delete [] arr_;
+		arr_ = arr_new;
+		size_ = size_new;
+	}
 }
 
 template <typename T>
-void	s21::Queue<T>::pop()
+T	&s21::Queue<T>::pop()// gthtgbcfnm vfccbd
 {
 	if (size_ > 0)
 	{
-		top_--;
+		top_++;
 		size_--;
+		for (int i = 0; i < size_; i++)
+			arr_[i] = arr_[i + 1];
 	}
+	return (*top_);
 }
 
 template <typename T>
 T	&s21::Queue<T>::peek()
 {
-	return (arr_[size_ - 1]);
+	return (arr_[0]);
 }
 
 #endif
