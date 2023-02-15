@@ -1,6 +1,9 @@
 #ifndef S21_QUEUE_H
 # define S21_QUEUE_H
 
+# include <strings.h>
+# include <iostream>
+
 namespace s21
 {
 	template <class T>
@@ -8,15 +11,20 @@ namespace s21
 	{
 	public:
 		Queue();
+		Queue&	operator=(const Queue &);
+		Queue(const Queue &);
 		~Queue();
 		void	init();
-		void	push(Queue &);
+		void	push(T const &);
 		void	pop();
-		void	peek();
+		T		&peek();
 	private:
-		std::vector<T>	vec_;
+		T				*arr_;
+		T				*top_;
 		unsigned int	size_;
 	};
 }
+
+# include "s21_queue.tpp"
 
 #endif
