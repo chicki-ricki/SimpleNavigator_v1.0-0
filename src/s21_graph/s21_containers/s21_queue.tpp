@@ -41,21 +41,22 @@ s21::Queue<T>::Queue(const Queue &src): Queue()
 template <typename T>
 s21::Queue<T>&	s21::Queue<T>::operator=(Queue &&qq)
 {
-	if (this != &qq)
-	{
-		head_ = qq.head_;
-		tail_ = qq.tail_;
-		size_ = qq.size_;
-		qq.head_ = nullptr;
-		qq.tail_ = nullptr;
-		qq.size_ = 0;
-	}
+	if (this == &qq)
+		return (*this);
+std::cout << "hello from  operator=" << std::endl;
+	head_ = qq.head_;
+	tail_ = qq.tail_;
+	size_ = qq.size_;
+	qq.head_ = nullptr;
+	qq.tail_ = nullptr;
+	qq.size_ = 0;
 	return (*this);
 }
 
 template <typename T>
-s21::Queue<T>::Queue(Queue &&qq)
+s21::Queue<T>::Queue(Queue &&qq): Queue()
 {
+	std::cout << "hello from  &&qq" << std::endl;
 	*this = qq;
 }
 
