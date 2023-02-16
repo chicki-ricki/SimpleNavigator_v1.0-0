@@ -1,4 +1,4 @@
-#ifdef S21_STACK_H
+#ifdef S21_STACK_H_
 
 template <typename T>
 s21::Stack<T>::Stack(): arr_(0), top_(0), size_(0)
@@ -54,7 +54,7 @@ void	s21::Stack<T>::push(T const &elem)
 	{
 		size_new++;
 		arr_new = new T[size_new];
-		for (int i = 0; i < size_new; i++)
+		for (unsigned int i = 0; i < size_new; i++)
 			arr_new[i] = arr_[i];
 		arr_new[size_new - 1] = elem;
 		top_ = &arr_new[size_new - 1];

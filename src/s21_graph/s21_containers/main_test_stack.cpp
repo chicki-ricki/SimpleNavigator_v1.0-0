@@ -1,4 +1,4 @@
-#include "s21_stack.h"
+#include "s21_stack.h_"
 #include <iostream>
 
 // #include <stack>
@@ -33,4 +33,5 @@ int	main()
 	// std::cout << "st.top(): " << st.top() << std::endl;
 	// st.pop();
 	// std::cout << "st.top(): " << st.top() << std::endl;
+	while (1){};
 }

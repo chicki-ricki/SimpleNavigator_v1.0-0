@@ -1,7 +1,7 @@
-#include "s21_queue.h"
+#include "s21_queue.h_"
 #include <iostream>
 
- #include <queue>
+// #include <queue>
 
 int	main()
 {
@@ -21,11 +21,10 @@ int	main()
 	s.pop();
 	std::cout << "s.peek() after pop (12): " << s.peek() << std::endl;
 	
-	//sega:
+	
 	s.pop();
-	std::cout << "s.peek() after pop (0): " << s.peek() << std::endl;
-	s.pop();
-	std::cout << "s.peek() after pop (0): " << s.peek() << std::endl;
+	std::cout << "s.peek() after pop (sega): " << s.peek() << std::endl;
+	// while (1){};
 
 
 	// std::queue<int>	st;
