@@ -71,9 +71,10 @@ T	&s21::Queue<T>::pop()// gthtgbcfnm vfccbd
 	if (size_ > 0)
 	{
 		top_++;
-		size_--;
+		
 		for (int i = 0; i < size_; i++)
 			arr_[i] = arr_[i + 1];
+		size_--;
 	}
 	return (*top_);
 }
