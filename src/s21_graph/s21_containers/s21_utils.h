@@ -1,5 +1,5 @@
-#ifndef S21_UTILS_H_
-# define S21_UTILS_H_
+#ifndef S21_UTILS_H
+# define S21_UTILS_H
 
 # include <iostream>
 

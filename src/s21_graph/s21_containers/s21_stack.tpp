@@ -1,85 +1,131 @@
-#ifdef S21_STACK_H_
+#ifdef S21_STACK_H
 
 template <typename T>
-s21::Stack<T>::Stack(): arr_(0), top_(0), size_(0)
+s21::Stack<T>::Stack(): size_(0), head_(nullptr)
 {}
 
 template <typename T>
 s21::Stack<T>&	s21::Stack<T>::operator=(const Stack & rhs)
 {
-	size_ = rhs->size_;
-	arr_ = new T[size_];
-	for (int i = 0; i < size_; i++)
-		arr_[i] = rhs.arr_[i];
-	top_ = rhs->top_;
+	this->Clear();
+	s21::Stack<T>::Copy(rhs);
 	return (*this);
 }
 
 template <typename T>
-s21::Stack<T>::Stack(const Stack &src)
+s21::Stack<T>::Stack(const Stack &src): Stack()
 {
 	*this = src;
 }
 
 template <typename T>
-s21::Stack<T>::~Stack()
+s21::Stack<T>&	s21::Stack<T>::operator=(Stack &&ss)
 {
-	if (arr_)
-		delete [] arr_;
+	// if (this == &ss)
+	// 	return (*this);
+std::cout << "hello from  operator=" << std::endl;
+	this->Clear();
+	s21::Stack<T>::Copy(ss);
+	ss->Clear();
+	return (*this);
 }
 
-// template <typename T>
-// s21::Stack<T>::Stack(T elem): arr_(0), top_(0), size_(0)
-// {}
+template <typename T>
+s21::Stack<T>::Stack(Stack &&ss): Stack()
+{
+// std::cout << "hello from  &&ss" << std::endl;
+	*this = ss;
+}
+
+template <typename T>
+s21::Stack<T>::Stack(std::initializer_list<T> const& init) :Stack()
+{
+	for (auto it = init.begin(); it != init.end(); it++)
+		push(*it);
+}
+
+template <typename T>
+s21::Stack<T>::~Stack()
+{
+	this->Clear();
+}
 
 template <typename T>
 void	s21::Stack<T>::init()
 {
-	arr_ = new T[size_ + 1];
-	bzero(arr_, size_ + 1);
+	head_ = nullptr;
+	size_ = -1;
 }
 
 template <typename T>
 void	s21::Stack<T>::push(T const &elem)
 {
-	unsigned int	size_new = size_;
-	T				*arr_new;
+	StackItem	*s = new StackItem();
 
-	if (size_ == 0)
-	{
-		arr_[size_] = elem;
-		size_++;
-	}
-	else
-	{
-		size_new++;
-		arr_new = new T[size_new];
-		for (unsigned int i = 0; i < size_new; i++)
-			arr_new[i] = arr_[i];
-		arr_new[size_new - 1] = elem;
-		top_ = &arr_new[size_new - 1];
-		if (arr_)
-			delete [] arr_;
-		arr_ = arr_new;
-		size_ = size_new;
-	}
+	s->value = elem;
+	s->next = NULL;
+
+	s->next = head_;
+	head_ = s;
+
+	size_++;
 }
 
 template <typename T>
 T	&s21::Stack<T>::pop()
 {
-	if (size_ > 0)
-	{
-		top_--;
-		size_--;
-	}
-	return (*top_);
+	StackItem	*ret = head_;
+
+	if (head_ == nullptr)
+		s21::exitError("Error: stack is empty");
+	head_ = head_->next;
+	size_--;
+	return (ret->value);
 }
 
 template <typename T>
 T	&s21::Stack<T>::peek()
 {
-	return (arr_[size_ - 1]);
+	if (head_ == nullptr)
+		s21::exitError("Error: stack is empty");
+	return (head_->value);
+}
+
+template <typename T>
+unsigned int	s21::Stack<T>::getSize()
+{
+	return (size_);
+}
+
+template <typename T>
+void	s21::Stack<T>::Copy(Stack &rhs)
+{
+	StackItem	*begin = rhs.head_;
+	StackItem	*ptr;
+
+	size_ = rhs.size_;
+	while (begin != nullptr)
+	{
+		StackItem *tmp = new StackItem();
+		tmp->value = begin->value;
+		tmp->next = nullptr;
+		if (head_ == nullptr)
+			head_ = ptr = tmp;
+		else
+		{
+			ptr->next = tmp;
+			ptr = tmp;
+		}
+		begin = begin->next;
+	}
+}
+
+template <typename T>
+void	s21::Stack<T>::Clear()
+{
+	while (head_ != nullptr)
+		pop();
+	size_ = 0;
 }
 
 #endif

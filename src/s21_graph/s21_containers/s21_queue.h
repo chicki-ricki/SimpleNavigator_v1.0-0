@@ -20,11 +20,14 @@ namespace s21
 		Queue(Queue &&);							//конструктор перемещения
 		Queue(std::initializer_list<T> const& init);//конструктор со списком инициализации
 		~Queue();
-		void	init();
-		void	push(T const &);
-		T		&pop();
-		T		&peek();
+		void			init();
+		void			push(T const &);
+		T				&pop();
+		T				&peek();
+		unsigned int	getSize();
 	private:
+		void	Copy(const Queue &);
+		void	Clear();
 		struct QueueItem
 		{
 			T					value;
