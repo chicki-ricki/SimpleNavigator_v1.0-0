@@ -1,15 +1,20 @@
 #ifndef S21_GRAHP_H
-# define S21_GRAHP_H
-# include <iostream>
+#define S21_GRAHP_H
 
-# include "s21_stack.h"
-# include "s21_queue.h"
+#include <iostream>
+#include <vector>
+
+# include "s21_containers/s21_containers.h"
 
 class Graph
 {
+	std::vector< std::vector<int> > graph_;
 public:
-	void	loadGraphFromFile(std::string);// - загрузка графа из файла в формате матрицы смежности
-	void	exportGraphToDot(std::string);// - выгрузка графа в файл в формате dot
+	Graph();
+	//5 constructors + destuctor
+	int loadGraphFromFile(std::string);  // - загрузка графа из файла в формате матрицы смежности
+	int exportGraphToDot(std::string);  // - выгрузка графа в файл в формате dot
+	std::vector< std::vector<int> > &getGraph();
 };
 
 #endif
