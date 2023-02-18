@@ -47,7 +47,7 @@ s21::Stack<T>::~Stack() {
 template <typename T>
 void s21::Stack<T>::init() {
   head_ = nullptr;
-  size_ = -1;
+  size_ = 0;
 }
 
 template <typename T>

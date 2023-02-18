@@ -1,7 +1,7 @@
 #ifdef S21_QUEUE_H
 
 template <typename T>
-s21::Queue<T>::Queue() : size_(0), head_(nullptr), tail_(nullptr) {}
+s21::Queue<T>::Queue() : head_(nullptr), tail_(nullptr), size_(0) {}
 
 template <typename T>
 s21::Queue<T> &s21::Queue<T>::operator=(Queue const &rhs) {
