@@ -13,7 +13,7 @@ class Graph {
   Graph(const Graph &);
   Graph &operator=(Graph &&);
   Graph(Graph &&);
-  // Graph(std::initializer_list<T> &);
+  // Graph(std::initializer_list<std::vector<std::vector<int> > > &);
   ~Graph();
   // загрузка графа из файла в формате матрицы смежности:
   int loadGraphFromFile(std::string);
