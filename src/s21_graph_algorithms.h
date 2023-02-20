@@ -8,10 +8,17 @@ typedef struct TsmResult {
   double distance;// длина этого маршрута
 };
 
-class Greaph;
+class Graph;
 
 class GraphAlgorithms {
  public:
+  GraphAlgorithms();
+  GraphAlgorithms &operator=(const GraphAlgorithms &);
+  GraphAlgorithms(const GraphAlgorithms &);
+  GraphAlgorithms &operator=(GraphAlgorithms &&);
+  GraphAlgorithms(GraphAlgorithms &&);
+  // GraphAlgorithms(std::initializer_list<T> const &);
+  ~GraphAlgorithms();
   /* - нерекурентный поиск в глубину в графе от заданной вершины. Функция должна
   возвращать массив, содержащий в себе обойдённые вершины в порядке их обхода. 
   При реализации этой функции обязательно использовать самописную структуру 
