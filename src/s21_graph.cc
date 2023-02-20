@@ -48,6 +48,33 @@ Graph::~Graph() {
   }
 }
 
-int Graph::loadGraphFromFile(std::string filename) {}
+std::vector<int> makeVector(std::string const &str, char c) {
+  std::stringstream ss(str);
+  std::string s;
+  std::vector<int> rez;
+
+  while (getline(ss, s, c)) {
+    rez.push_back(std::stoi(s));
+  }
+  return (rez);
+}
+
+int Graph::loadGraphFromFile(std::string filename) {
+  std::ifstream inFile(filename);
+  std::string line;
+  int i = 0;
+
+  if (inFile.is_open() != true) {
+    s21::exitError("Error: file with graph is not open");
+  }
+  inFile >> size_;
+  getline(inFile, line);
+  while (i < size_) {
+    getline(inFile, line);
+    graph_.push_back(makeVector(line, ' '));
+    i++;
+  }
+  inFile.close();
+}
 
 int Graph::exportGraphToDot(std::string filename) {}

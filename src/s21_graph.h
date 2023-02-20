@@ -1,7 +1,9 @@
 #ifndef S21_GRAHP_H
 #define S21_GRAHP_H
 
+#include <fstream>
 #include <iostream>
+#include <sstream>
 #include <vector>
 
 #include "s21_containers/s21_containers.h"
