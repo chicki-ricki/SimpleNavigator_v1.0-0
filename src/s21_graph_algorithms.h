@@ -1,9 +1,10 @@
-#ifndef S21_GRAPH_ALGORITHMS_H
-#define S21_GRAPH_ALGORITHMS_H
+// #ifndef S21_GRAPH_ALGORITHMS_H
+// #define S21_GRAPH_ALGORITHMS_H
+#pragma once
 
 #include "s21_graph.h"
 
-typedef struct TsmResult {
+struct TsmResult {
   int *vertices;// массив с искомым маршрутом (с порядком обхода вершин). Вместо int* можно использовать std::vector<int>
   double distance;// длина этого маршрута
 };
@@ -25,38 +26,38 @@ class GraphAlgorithms {
   данных стек, которую предварительно стоит оформить в виде отдельной 
   статической библиотеки:
   */
-  int *depthFirstSearch(Graph &, int);
+  std::vector<int> depthFirstSearch(Graph &, int);
   /* - поиск в ширину в графе от заданной вершины. Функция должна возвращать 
   массив, содержащий в себе обойдённые вершины в порядке их обхода. При 
   реализации этой функции обязательно использовать самописную структуру данных 
   очередь, которую предварительно стоит оформить в виде отдельной статической 
   библиотеки:
   */
-  int *breadthFirstSearch(Graph &, int);
+  // int *breadthFirstSearch(Graph &, int);
   /* - поиск кратчайшего пути между двумя вершинами в графе с использованием 
   алгоритма Дейкстры. Функция принимает на вход номера двух вершин и возвращает 
   численный результат, равный наименьшему расстоянию между ними:
   */
-  int getShortestPathBetweenVertices(Graph &graph, int vertex1, int vertex2);
+  // int getShortestPathBetweenVertices(Graph &graph, int vertex1, int vertex2);
   /* - поиск кратчайших путей между всеми парами вершин в графе с 
   использованием алгоритма Флойда-Уоршелла. В качестве результата функция 
   возвращает матрицу кратчайших путей между всеми вершинами графа:
   */
-  int *getShortestPathsBetweenAllVertices(Graph &graph);
+  // int *getShortestPathsBetweenAllVertices(Graph &graph);
   /* - поиск наименьшего остовного дерева в графе с помощью алгоритма Прима. 
   В качестве результата функция должна возвращать матрицу смежности для 
   минимального остовного дерева:
   */
-  int *getLeastSpanningTree(Graph &graph);
+  // int *getLeastSpanningTree(Graph &graph);
   /* - решение задачи коммивояжера с помощью муравьиного алгоритма. Необходимо 
   найти самый выгодный (короткий) маршрут, проходящий через все вершины графа 
   хотя бы по одному разу с последующим возвратом в исходную вершину. В качестве
   результата функция должна возвращать структуру TsmResult:
   */
-  TsmResult solveTravelingSalesmanProblem(Graph &graph);
+  // TsmResult solveTravelingSalesmanProblem(Graph &graph);
   /* Необходимо выбрать дополнительные два алгоритма для решения задачи 
   коммивояжера и реализовать их в виде методов класса GraphAlgorithms
   */
 };
 
-#endif
+// #endif

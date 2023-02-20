@@ -1,5 +1,6 @@
-#ifndef S21_UTILS_H
-#define S21_UTILS_H
+// #ifndef S21_UTILS_H
+// #define S21_UTILS_H
+#pragma once
 
 #include <iostream>
 
@@ -10,4 +11,4 @@ void exitError(std::string str) {
 }
 }  // namespace s21
 
-#endif
+// #endif

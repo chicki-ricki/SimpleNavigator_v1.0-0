@@ -1,5 +1,6 @@
-#ifndef S21_GRAHP_H
-#define S21_GRAHP_H
+// #ifndef S21_GRAHP_H
+// #define S21_GRAHP_H
+#pragma once
 
 #include <fstream>
 #include <iostream>
@@ -20,13 +21,14 @@ class Graph {
   // загрузка графа из файла в формате матрицы смежности:
   int loadGraphFromFile(std::string);
   // выгрузка графа в файл в формате dot:
-  int exportGraphToDot(std::string);
+  // int exportGraphToDot(std::string);
   std::vector<std::vector<int> > &getGraph();
   unsigned int getSizeGraph();
 
  private:
   std::vector<std::vector<int> > graph_;
   unsigned int size_;
+  std::vector<int> makeVector(std::string const &, char);
 };
 
-#endif
+// #endif
