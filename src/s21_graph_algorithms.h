@@ -19,7 +19,7 @@ class GraphAlgorithms {
   GraphAlgorithms &operator=(GraphAlgorithms &&);
   GraphAlgorithms(GraphAlgorithms &&);
   // GraphAlgorithms(std::initializer_list<T> const &);
-  ~GraphAlgorithms();
+  // ~GraphAlgorithms();
   /* - нерекурентный поиск в глубину в графе от заданной вершины. Функция должна
   возвращать массив, содержащий в себе обойдённые вершины в порядке их обхода. 
   При реализации этой функции обязательно использовать самописную структуру 
@@ -58,6 +58,9 @@ class GraphAlgorithms {
   /* Необходимо выбрать дополнительные два алгоритма для решения задачи 
   коммивояжера и реализовать их в виде методов класса GraphAlgorithms
   */
+ private:
+  int fillStack(s21::Stack<int> &, std::vector<int>, std::vector<int>);
+  int checkElem(int, std::vector<int> &);
 };
 
 // #endif
