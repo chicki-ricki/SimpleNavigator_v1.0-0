@@ -5,10 +5,10 @@
 #include <iostream>
 
 namespace s21 {
-void exitError(std::string str) {
-  perror(str.c_str());
-  exit(1);
-}
+void exitError(std::string str);// {
+//   perror(str.c_str());
+//   exit(1);
+// }
 }  // namespace s21
 
 // #endif

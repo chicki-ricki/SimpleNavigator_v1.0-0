@@ -88,13 +88,15 @@ std::vector<int> Graph::makeVector(std::string const &str, char c) {
   std::vector<int> rez;
 
   while (getline(ss, s, c)) {
-    rez.push_back(std::stoi(s));
+    if (s != "") {
+      rez.push_back(std::stoi(s));
+    }
   }
 
-for (std::vector<int>::iterator it = rez.begin(); it != rez.end(); it++) {
-  std::cout << *it << " ";
-}
-std::cout << std::endl;
+// for (std::vector<int>::iterator it = rez.begin(); it != rez.end(); it++) {
+//   std::cout << *it << " ";
+// }
+// std::cout << std::endl;
 
   return (rez);
 }

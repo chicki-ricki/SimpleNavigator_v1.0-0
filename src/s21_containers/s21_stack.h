@@ -1,7 +1,7 @@
 #ifndef S21_STACK_H
 #define S21_STACK_H
 
-#include <strings.h>
+// #include <strings.h>
 
 #include "s21_utils.h"
 
