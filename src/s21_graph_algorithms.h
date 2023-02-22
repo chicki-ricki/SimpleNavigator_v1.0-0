@@ -2,6 +2,8 @@
 // #define S21_GRAPH_ALGORITHMS_H
 #pragma once
 
+#include <algorithm>
+
 #include "s21_graph.h"
 
 struct TsmResult {
@@ -38,7 +40,7 @@ class GraphAlgorithms {
   алгоритма Дейкстры. Функция принимает на вход номера двух вершин и возвращает 
   численный результат, равный наименьшему расстоянию между ними:
   */
-  // int getShortestPathBetweenVertices(Graph &graph, int vertex1, int vertex2);
+  int getShortestPathBetweenVertices(Graph &, int, int);
   /* - поиск кратчайших путей между всеми парами вершин в графе с 
   использованием алгоритма Флойда-Уоршелла. В качестве результата функция 
   возвращает матрицу кратчайших путей между всеми вершинами графа:
@@ -61,6 +63,7 @@ class GraphAlgorithms {
  private:
   int fillStack(s21::Stack<int> &, std::vector<int>, std::vector<int>);
   int checkElem(int, std::vector<int> &);
+  void handlerDayxtra(std::vector<int>, std::vector<int> &, std::vector<int> &, int);
 };
 
 // #endif

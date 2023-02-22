@@ -21,6 +21,9 @@ for (std::vector<int>::iterator it = graphDepth.begin(); it != graphDepth.end();
 }
   std::cout << std::endl;
 
+    int minDex = graphAlgDepth.getShortestPathBetweenVertices(graph, 1, 4);
+std::cout << "minDex in main: " << minDex << std::endl;
+
   //   std::string fileExport;
   //   if (graph.exportGraphToDot(fileExport) != 0)
   //     s21::exitError("Error: cannot write graph to *.dot file");
