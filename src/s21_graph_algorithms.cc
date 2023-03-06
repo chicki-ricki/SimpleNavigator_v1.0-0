@@ -123,13 +123,13 @@ int GraphAlgorithms::checkElem(int num, std::vector<int> &vizit) {
 }
 
 int GraphAlgorithms::fillStack(s21::Stack<int> &rez, std::vector<int> vec, std::vector<int> vizit) {
-  size_t i = 0;
+  size_t i = vec.size();
 
-  while (i < vec.size()) {
+  while (i > 0) {
     if (vec[i] != 0 && checkElem(i, vizit) == 0) {
       rez.push(i);
     }
-    i++;
+    i--;
   }
   return (0);
 }

@@ -69,10 +69,22 @@ int Graph::loadGraphFromFile(std::string filename) {
   return (0);
 }
 
-// int Graph::exportGraphToDot(std::string filename) {
-//   // (void) filename;
-//   // return (0);
-// }
+std::string convertGraphToDot() {
+
+}
+
+int Graph::exportGraphToDot(std::string filename) {
+  std::ofstream outFile;
+  
+  outFile.open(filename);
+
+  if (outFile.is_open() != true) {
+    return (1);
+  }
+  outFile << convertGraphToDot() << std::endl;
+  outFile.close();
+  return (0);
+}
 
 std::vector<std::vector<int> > &Graph::getGraph() {
   return (graph_);

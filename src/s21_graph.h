@@ -21,7 +21,7 @@ class Graph {
   // загрузка графа из файла в формате матрицы смежности:
   int loadGraphFromFile(std::string);
   // выгрузка графа в файл в формате dot:
-  // int exportGraphToDot(std::string);
+  int exportGraphToDot(std::string);
   std::vector<std::vector<int> > &getGraph();
   unsigned int getSizeGraph();
 
