@@ -69,8 +69,27 @@ int Graph::loadGraphFromFile(std::string filename) {
   return (0);
 }
 
-std::string convertGraphToDot() {
+std::string Graph::convertGraphToDot() {
+  std::string rez = "";
+  size_t i = 0;
+  size_t j;
 
+  while (i < size_) {
+    rez = rez + std::to_string(i + 1) + ";\n";
+    i++;
+  }
+  i = 0;
+  while (i < size_) {
+    j = i + 1;
+    while (j < size_) {
+      if (graph_[i][j] != 0) {
+        rez = rez + std::to_string(i + 1) + " -- " + std::to_string(j + 1) + ";\n";
+      }
+      j++;
+    }
+    i++;
+  }
+  return (rez);
 }
 
 int Graph::exportGraphToDot(std::string filename) {

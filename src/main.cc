@@ -11,10 +11,10 @@ int main(int ac, char **av) {
     if (graph.loadGraphFromFile(std::string(av[1])) != 0) {
       s21::exitError("Error: cannot read file with graph");
     }
-    // if (graph.exportGraphToDot("exportFile.dot") != 0) {
-    //   s21::exitError("Error: cannot write graph to file");
-    // }
-  //   // graphAlgorithms
+    if (graph.exportGraphToDot("exportFile.dot") != 0) {
+      s21::exitError("Error: cannot write graph to file");
+    }
+    // graphAlgorithms
     GraphAlgorithms graphAlgDepth;
     graphDepth = graphAlgDepth.depthFirstSearch(graph, 1);
 
