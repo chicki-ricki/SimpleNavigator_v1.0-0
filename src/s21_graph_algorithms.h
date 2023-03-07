@@ -45,7 +45,7 @@ class GraphAlgorithms {
   использованием алгоритма Флойда-Уоршелла. В качестве результата функция 
   возвращает матрицу кратчайших путей между всеми вершинами графа:
   */
-  // int *getShortestPathsBetweenAllVertices(Graph &graph);
+  int **getShortestPathsBetweenAllVertices(Graph &graph);
   /* - поиск наименьшего остовного дерева в графе с помощью алгоритма Прима. 
   В качестве результата функция должна возвращать матрицу смежности для 
   минимального остовного дерева:
@@ -63,7 +63,8 @@ class GraphAlgorithms {
  private:
   int fillStack(s21::Stack<int> &, std::vector<int>, std::vector<int>);
   int checkElem(int, std::vector<int> &);
-  void handlerDayxtra(std::vector<int>, std::vector<int> &, std::vector<int> &, int);
+  void firstFillArray(int **, Graph &);
+  int minElem(int, int);
 };
 
 // #endif
