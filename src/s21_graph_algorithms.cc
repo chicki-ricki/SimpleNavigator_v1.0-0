@@ -134,6 +134,17 @@ int GraphAlgorithms::fillStack(s21::Stack<int> &rez, std::vector<int> vec, std::
   return (0);
 }
 
+int GraphAlgorithms::fillQueue(s21::Queue<int> &rez, std::vector<int> vec, std::vector<int> vizit) {
+  size_t i = 0;
+  while (i < vec.size()) {
+    if (vec[i] != 0 && checkElem(i, vizit) == 0) {
+      rez.push(i);
+    }
+    i++;
+  }
+  return(0);
+}
+
 int GraphAlgorithms::checkElem(int num, std::vector<int> &vizit) {
   for (std::vector<int>::iterator it = vizit.begin(); it != vizit.end(); it++) {
     if (num == *it) {
@@ -145,7 +156,6 @@ int GraphAlgorithms::checkElem(int num, std::vector<int> &vizit) {
 
 void GraphAlgorithms::firstFillArray(int **arr, Graph &graph) {
   std::vector<std::vector<int> > matrixGraph = graph.getGraph();
-
 
   for (size_t i = 0; i < graph.getSizeGraph(); i++) {
     for (size_t j = 0; j < graph.getSizeGraph(); j++) {
@@ -168,17 +178,4 @@ int GraphAlgorithms::minElem(int elem1, int elem2) {
   } else {
     return (elem2);
   }
-}
-
-
-int GraphAlgorithms::fillQueue(s21::Queue<int> &rez, std::vector<int> vec, std::vector<int> vizit) {
-  size_t i = 0;
-  while (i < vec.size()) {
-		if (vec[i] != 0 && checkElem(i, vizit) == 0) {
-      rez.push(i);
-	  }
-    i++;
-  }
-  std::cout << std::endl;
-  return(0);
 }

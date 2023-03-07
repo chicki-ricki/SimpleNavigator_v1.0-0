@@ -31,13 +31,14 @@ int main(int ac, char **av) {
     GraphAlgorithms graphAlg;
     testGraph = graphAlg.depthFirstSearch(graph, 1);
 
-std::cout << "обход в глубину in main: " << std::endl;
-printResult(testGraph);
+    std::cout << "обход в глубину in main: " << std::endl;
+    printResult(testGraph);
+// while (1) {};
 
-	testGraph.clear();
-	testGraph = graphAlg.breadthFirstSearch(graph, 5);
-std::cout << "обход в ширину in main: " << std::endl;
-printResult(testGraph);
+    testGraph.clear();
+    testGraph = graphAlg.breadthFirstSearch(graph, 1);
+    std::cout << "обход в ширину in main: " << std::endl;
+    printResult(testGraph);
 
 
     // graphAlgDeyxtra;
@@ -55,10 +56,9 @@ printResult(testGraph);
       std::cout << std::endl;
     }
     freeArr(matrix, graph.getSizeGraph());
-while (1) {};
   } else {
     s21::exitError("Error: invalid count of arguments");
   }
- 
+while (1) {};
   return (0);
 }
