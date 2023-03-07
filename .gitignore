@@ -59,3 +59,4 @@ stack
 graph
 
 depthFirstSearch.cc
+*.dot
