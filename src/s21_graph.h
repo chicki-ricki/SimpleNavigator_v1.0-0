@@ -29,6 +29,7 @@ class Graph {
   std::vector<std::vector<int> > graph_;
   unsigned int size_;
   std::vector<int> makeVector(std::string const &, char);
+  std::string convertGraphToDot();
 };
 
 // #endif

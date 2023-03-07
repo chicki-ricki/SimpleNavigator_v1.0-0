@@ -21,7 +21,7 @@ class GraphAlgorithms {
   GraphAlgorithms &operator=(GraphAlgorithms &&);
   GraphAlgorithms(GraphAlgorithms &&);
   // GraphAlgorithms(std::initializer_list<T> const &);
-  // ~GraphAlgorithms();
+  ~GraphAlgorithms();
   /* - нерекурентный поиск в глубину в графе от заданной вершины. Функция должна
   возвращать массив, содержащий в себе обойдённые вершины в порядке их обхода. 
   При реализации этой функции обязательно использовать самописную структуру 
@@ -45,7 +45,7 @@ class GraphAlgorithms {
   использованием алгоритма Флойда-Уоршелла. В качестве результата функция 
   возвращает матрицу кратчайших путей между всеми вершинами графа:
   */
-  // int *getShortestPathsBetweenAllVertices(Graph &graph);
+  int **getShortestPathsBetweenAllVertices(Graph &graph);
   /* - поиск наименьшего остовного дерева в графе с помощью алгоритма Прима. 
   В качестве результата функция должна возвращать матрицу смежности для 
   минимального остовного дерева:
@@ -64,7 +64,8 @@ class GraphAlgorithms {
   int fillStack(s21::Stack<int> &, std::vector<int>, std::vector<int>);
   int fillQueue(s21::Queue<int> &, std::vector<int>, std::vector<int>);
   int checkElem(int, std::vector<int> &);
-  void handlerDayxtra(std::vector<int>, std::vector<int> &, std::vector<int> &, int);
+  void firstFillArray(int **, Graph &);
+  int minElem(int, int);
 };
 
 // #endif

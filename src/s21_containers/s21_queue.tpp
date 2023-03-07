@@ -64,6 +64,7 @@ void s21::Queue<T>::push(T const &elem) {
 template <typename T>
 T &s21::Queue<T>::pop() {
   QueueItem *ret = head_;
+  T *val = &(ret->value);
 
   if (head_ == nullptr) {
     s21::exitError("Error: queue is empty");
@@ -73,7 +74,8 @@ T &s21::Queue<T>::pop() {
     tail_ = nullptr;
   }
   size_--;
-  return (ret->value);
+  // return (ret->value);
+  return (*val);
 }
 
 template <typename T>

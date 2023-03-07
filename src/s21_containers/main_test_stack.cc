@@ -25,6 +25,9 @@ int main() {
 
   while (s.getSize() != 0) {
     std::cout << s.pop() << " ";
+    // std::cout << s.pop() << " ";
+    // std::cout << s.pop() << " ";
+
   }
   std::cout << std::endl;
 
@@ -46,5 +49,5 @@ int main() {
 
   // std::cout << "st.top(): " << st.top() << std::endl;
 
-  // while (1) {};
+  while (1) {};
 }

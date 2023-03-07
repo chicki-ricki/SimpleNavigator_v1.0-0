@@ -7,8 +7,7 @@ GraphAlgorithms &GraphAlgorithms::operator=(const GraphAlgorithms &rhs) {
   return (*this);
 }
 
-GraphAlgorithms::GraphAlgorithms(const GraphAlgorithms &src):
-    GraphAlgorithms() {
+GraphAlgorithms::GraphAlgorithms(const GraphAlgorithms &src) : GraphAlgorithms() {
   *this = src;
 }
 
@@ -20,6 +19,8 @@ GraphAlgorithms &GraphAlgorithms::operator=(GraphAlgorithms &&gg) {
 GraphAlgorithms::GraphAlgorithms(GraphAlgorithms &&gg) : GraphAlgorithms() {
   *this = gg;
 }
+
+GraphAlgorithms::~GraphAlgorithms() {}
 
 std::vector<int> GraphAlgorithms::depthFirstSearch(Graph &graph, int startVertex) {
   int index = startVertex - 1;
@@ -61,16 +62,6 @@ std::vector<int> GraphAlgorithms::breadthFirstSearch(Graph &graph, int startVert
   return (visited);
 }
 
-void GraphAlgorithms::handlerDayxtra(std::vector<int> vec, std::vector<int> &distance, std::vector<int> &vizit, int num) {
-  for (size_t i = 0; i < vec.size(); i++) {
-    if (checkElem(i, vizit) == 0) {
-      if ((distance[num] + vec[i]) < distance[i]) {
-        distance[i] = distance[num] + vec[i];
-      }
-    }
-  }
-}
-
 int GraphAlgorithms::getShortestPathBetweenVertices(Graph &graph, int vertex1, int vertex2) {
   std::vector<int> distance;
   std::vector<int> vizit;
@@ -80,8 +71,6 @@ int GraphAlgorithms::getShortestPathBetweenVertices(Graph &graph, int vertex1, i
   int ret = 1;
   std::vector<std::vector<int> > graphVector = graph.getGraph();
   int tmp;
-
-(void)vertex2;
 
   // init distance
   for (size_t i = 0; i < graphVector.size(); i++) {
@@ -111,29 +100,26 @@ int GraphAlgorithms::getShortestPathBetweenVertices(Graph &graph, int vertex1, i
     }
     ret = 0;
   }
-
-
-// for (std::vector<int>::iterator it = distance.begin(); it != distance.end(); it++) {
-//   std::cout << *it << " ";
-// }
-// std::cout << std::endl;
-
-
-  // vizit.push_back(index);
-  // while (vizit.size() < graph.getSizeGraph()) {
-  //   handlerDayxtra(graph.getGraph()[index], distance, vizit, index);
-
-  // }
   return (distance[vertex2 - 1]);
 }
 
-int GraphAlgorithms::checkElem(int num, std::vector<int> &vizit) {
-  for (std::vector<int>::iterator it = vizit.begin(); it != vizit.end(); it++) {
-    if (num == *it) {
-      return (1);
+int **GraphAlgorithms::getShortestPathsBetweenAllVertices(Graph &graph) {
+  int **rez = (int **)malloc(sizeof(int *) * graph.getSizeGraph());
+  size_t m = 0;
+
+  while (m < graph.getSizeGraph()) {
+    rez[m] = (int *)malloc(sizeof(int) * graph.getSizeGraph());
+    m++;
+  }
+  firstFillArray(rez, graph);
+  for (size_t k = 0; k < graph.getSizeGraph(); k++) {
+    for (size_t i = 0; i < graph.getSizeGraph(); i++) {
+      for (size_t j = 0; j < graph.getSizeGraph(); j++) {
+        rez[i][j] = minElem(rez[i][j], rez[i][k] + rez[k][j]);
+      }
     }
   }
-  return (0);
+  return (rez);
 }
 
 int GraphAlgorithms::fillStack(s21::Stack<int> &rez, std::vector<int> vec, std::vector<int> vizit) {
@@ -147,6 +133,43 @@ int GraphAlgorithms::fillStack(s21::Stack<int> &rez, std::vector<int> vec, std::
   }
   return (0);
 }
+
+int GraphAlgorithms::checkElem(int num, std::vector<int> &vizit) {
+  for (std::vector<int>::iterator it = vizit.begin(); it != vizit.end(); it++) {
+    if (num == *it) {
+      return (1);
+    }
+  }
+  return (0);
+}
+
+void GraphAlgorithms::firstFillArray(int **arr, Graph &graph) {
+  std::vector<std::vector<int> > matrixGraph = graph.getGraph();
+
+
+  for (size_t i = 0; i < graph.getSizeGraph(); i++) {
+    for (size_t j = 0; j < graph.getSizeGraph(); j++) {
+      if (i == j) {
+        arr[i][j] = 0;
+      } else {
+        if (matrixGraph[i][j] == 0) {
+          arr[i][j] = 10000;
+        } else {
+          arr[i][j] = matrixGraph[i][j];
+        }
+      }
+    }
+  }
+}
+
+int GraphAlgorithms::minElem(int elem1, int elem2) {
+  if (elem1 < elem2) {
+    return (elem1);
+  } else {
+    return (elem2);
+  }
+}
+
 
 int GraphAlgorithms::fillQueue(s21::Queue<int> &rez, std::vector<int> vec, std::vector<int> vizit) {
   size_t i = 0;
