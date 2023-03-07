@@ -7,8 +7,7 @@ GraphAlgorithms &GraphAlgorithms::operator=(const GraphAlgorithms &rhs) {
   return (*this);
 }
 
-GraphAlgorithms::GraphAlgorithms(const GraphAlgorithms &src):
-    GraphAlgorithms() {
+GraphAlgorithms::GraphAlgorithms(const GraphAlgorithms &src) : GraphAlgorithms() {
   *this = src;
 }
 
@@ -56,8 +55,6 @@ int GraphAlgorithms::getShortestPathBetweenVertices(Graph &graph, int vertex1, i
   int ret = 1;
   std::vector<std::vector<int> > graphVector = graph.getGraph();
   int tmp;
-
-// (void)vertex2;
 
   // init distance
   for (size_t i = 0; i < graphVector.size(); i++) {
@@ -131,7 +128,7 @@ int GraphAlgorithms::checkElem(int num, std::vector<int> &vizit) {
 }
 
 void GraphAlgorithms::firstFillArray(int **arr, Graph &graph) {
-  std::vector<std::vector<int> >  matrixGraph = graph.getGraph();
+  std::vector<std::vector<int> > matrixGraph = graph.getGraph();
 
   for (size_t i = 0; i < graph.getSizeGraph(); i++) {
     for (size_t j = 0; j < graph.getSizeGraph(); j++) {

@@ -1,5 +1,12 @@
 #include "s21_graph_algorithms.h"
 
+void freeArr(int **arr, size_t count) {
+  for (size_t i = 0; i < count; i++) {
+    free(arr[i]);
+  }
+  free(arr);
+}
+
 int main(int ac, char **av) {
   if (ac == 2) {
     Graph graph;
@@ -12,32 +19,33 @@ int main(int ac, char **av) {
       s21::exitError("Error: cannot write graph to *.dot file");
     }
     // graphAlgorithms
-    GraphAlgorithms graphAlgDepth;
-    graphDepth = graphAlgDepth.depthFirstSearch(graph, 1);
+    GraphAlgorithms graphAlg;
+    graphDepth = graphAlg.depthFirstSearch(graph, 1);
+    std::cout << "обход in main: " << std::endl;
+    for (std::vector<int>::iterator it = graphDepth.begin(); it != graphDepth.end(); it++) {
+      std::cout << *it + 1 << "->";
+    }
+    std::cout << std::endl;
 
-std::cout << "обход in main: " << std::endl;
-for (std::vector<int>::iterator it = graphDepth.begin(); it != graphDepth.end(); it++) {
-  std::cout << *it + 1 << "->";
-}
-std::cout << std::endl;
+    // graphAlgDeyxtra;
+    int minDex = graphAlg.getShortestPathBetweenVertices(graph, 1, 4);
+    std::cout << "minDeyxtra in main: " << minDex << std::endl;
 
-    GraphAlgorithms graphAlgDeyxtra;
-    int minDex = graphAlgDeyxtra.getShortestPathBetweenVertices(graph, 1, 4);
-std::cout << "minDex in main: " << minDex << std::endl;
-
-    GraphAlgorithms graphAlgFloyd;
-    int **matrix = graphAlgFloyd.getShortestPathsBetweenAllVertices(graph);
-std::cout << "Floyd-Worshel: " << std::endl;
-for (size_t i = 0; i < graph.getSizeGraph(); i++) {
-  for (size_t j = 0; j < graph.getSizeGraph(); j++) {
-    std::cout << matrix[i][j] << " |";
-  }
-  std::cout << std::endl;
-}
-    //free(matrix);
+    // graphAlgFloyd;
+    int **matrix = graphAlg.getShortestPathsBetweenAllVertices(graph);
+    
+    std::cout << "Floyd-Worshel: " << std::endl;
+    for (size_t i = 0; i < graph.getSizeGraph(); i++) {
+      for (size_t j = 0; j < graph.getSizeGraph(); j++) {
+        std::cout << matrix[i][j] << " |";
+      }
+      std::cout << std::endl;
+    }
+    freeArr(matrix, graph.getSizeGraph());
 
   } else {
     s21::exitError("Error: invalid count of arguments");
   }
+  // while (1) {};
   return (0);
 }
