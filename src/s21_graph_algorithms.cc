@@ -132,6 +132,41 @@ int **GraphAlgorithms::getShortestPathsBetweenAllVertices(Graph &graph) {
   return (rez);
 }
 
+int **GraphAlgorithms::getLeastSpanningTree(Graph &graph) {
+  size_t edgeNum;
+  int *vizit = new int[graph.getSizeGraph()];
+  int x;
+  int y;
+
+  memset(vizit, 0, sizeof(graph.getSizeGraph()));
+  edgeNum = 0;
+  vizit[0] = 1;
+  std::cout << "Edge" << " : " << "Weight" << std::endl;
+  while (edgeNum < graph.getSizeGraph() - 1) {
+    int min = 10000;
+    x = 0;
+    y = 0;
+    for (size_t i = 0; i < graph.getSizeGraph(); i++) {
+      if (vizit[i] == 1) {
+        for (size_t j = 0; j < graph.getSizeGraph(); j++) {
+          if (vizit[j] == 0 && graph.getGraph()[i][j]) {
+            if (min > graph.getGraph()[i][j]) {
+              min = graph.getGraph()[i][j];
+              x = i;
+              y = j;
+            }
+          }
+        }
+      }
+    }
+    std::cout << x <<  " - " << y << " :  " << graph.getGraph()[x][y];
+    std::cout << std::endl;
+    vizit[y] = true;
+    edgeNum++;
+  }
+  return (vizit);
+}
+
 int GraphAlgorithms::fillStack(s21::Stack<int> &rez, std::vector<int> vec, std::vector<int> vizit) {
   size_t i = vec.size() - 1;
 
