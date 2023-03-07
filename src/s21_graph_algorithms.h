@@ -28,14 +28,16 @@ class GraphAlgorithms {
   данных стек, которую предварительно стоит оформить в виде отдельной 
   статической библиотеки:
   */
-  std::vector<int> depthFirstSearch(Graph &, int);
+  // std::vector<int> depthFirstSearch(Graph &, int);
+  int *depthFirstSearch(Graph &, int);
   /* - поиск в ширину в графе от заданной вершины. Функция должна возвращать 
   массив, содержащий в себе обойдённые вершины в порядке их обхода. При 
   реализации этой функции обязательно использовать самописную структуру данных 
   очередь, которую предварительно стоит оформить в виде отдельной статической 
   библиотеки:
   */
-  std::vector<int> breadthFirstSearch(Graph &, int);
+  // std::vector<int> breadthFirstSearch(Graph &, int);
+  int *breadthFirstSearch(Graph &, int);
   /* - поиск кратчайшего пути между двумя вершинами в графе с использованием 
   алгоритма Дейкстры. Функция принимает на вход номера двух вершин и возвращает 
   численный результат, равный наименьшему расстоянию между ними:
@@ -66,6 +68,7 @@ class GraphAlgorithms {
   int checkElem(int, std::vector<int> &);
   void firstFillArray(int **, Graph &);
   int minElem(int, int);
+  void convertToArr(int *, std::vector<int> &);
 };
 
 // #endif

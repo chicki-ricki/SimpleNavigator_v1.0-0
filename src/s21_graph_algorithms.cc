@@ -22,11 +22,19 @@ GraphAlgorithms::GraphAlgorithms(GraphAlgorithms &&gg) : GraphAlgorithms() {
 
 GraphAlgorithms::~GraphAlgorithms() {}
 
-std::vector<int> GraphAlgorithms::depthFirstSearch(Graph &graph, int startVertex) {
+void GraphAlgorithms::convertToArr(int *rez, std::vector<int> &vec) {
+  for (size_t i = 0; i < vec.size(); i++) {
+    rez[i] = vec[i] + 1;
+  }
+}
+
+// std::vector<int> GraphAlgorithms::depthFirstSearch(Graph &graph, int startVertex) {
+int *GraphAlgorithms::depthFirstSearch(Graph &graph, int startVertex) {
   int index = startVertex - 1;
   s21::Stack<int> s;
   std::vector<int> vizit;
   std::vector<std::vector<int> > graphVector = graph.getGraph();
+  int *arr = (int *)malloc(sizeof(int) * graph.getSizeGraph());
 
   vizit.push_back(index);
   fillStack(s, graphVector[index], vizit);
@@ -39,17 +47,21 @@ std::vector<int> GraphAlgorithms::depthFirstSearch(Graph &graph, int startVertex
       s.pop();
     }
   }
-  return (vizit);
+  convertToArr(arr, vizit);
+  // return (vizit);
+  return (arr);
 }
 
-std::vector<int> GraphAlgorithms::breadthFirstSearch(Graph &graph, int startVertex) {
+// std::vector<int> GraphAlgorithms::breadthFirstSearch(Graph &graph, int startVertex) {
+int *GraphAlgorithms::breadthFirstSearch(Graph &graph, int startVertex) {
   s21::Queue<int> queue;
-	int index = startVertex - 1;
-	std::vector<int> visited;
-	std::vector<std::vector<int> > graphVector = graph.getGraph();
+  int index = startVertex - 1;
+  std::vector<int> visited;
+  std::vector<std::vector<int> > graphVector = graph.getGraph();
+  int *arr = (int *)malloc(sizeof(int) * graph.getSizeGraph());
 
-	visited.push_back(index);
-	fillQueue(queue, graphVector[index], visited);
+  visited.push_back(index);
+  fillQueue(queue, graphVector[index], visited);
   while (queue.getSize() > 0) {
     if (checkElem(queue.peek(), visited) == 0) {
       visited.push_back(queue.peek());
@@ -59,7 +71,9 @@ std::vector<int> GraphAlgorithms::breadthFirstSearch(Graph &graph, int startVert
       queue.pop();
     }
   }
-  return (visited);
+  convertToArr(arr, visited);
+  // return (visited);
+  return (arr);
 }
 
 int GraphAlgorithms::getShortestPathBetweenVertices(Graph &graph, int vertex1, int vertex2) {

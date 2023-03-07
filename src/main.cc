@@ -7,11 +7,15 @@ void freeArr(int **arr, size_t count) {
   free(arr);
 }
 
-void printResult(std::vector<int> testGraph)
+// void printResult(std::vector<int> testGraph)
+void printResult(int *testGraph, size_t count)
 {
-	for (std::vector<int>::iterator it = testGraph.begin(); it != testGraph.end(); it++) {
-		std::cout << *it + 1 << "->";
-	}
+	// for (std::vector<int>::iterator it = testGraph.begin(); it != testGraph.end(); it++) {
+	// 	std::cout << *it + 1 << "->";
+	// }
+  for (size_t i = 0; i < count; i++) {
+    std::cout << testGraph[i] << "->";
+  }
   std::cout << std::endl;
 }
 
@@ -19,7 +23,8 @@ void printResult(std::vector<int> testGraph)
 int main(int ac, char **av) {
   if (ac == 2) {
     Graph graph;
-    std::vector<int> testGraph;
+    // std::vector<int> testGraph;
+    int *testGraph;
 
     if (graph.loadGraphFromFile(std::string(av[1])) != 0) {
       s21::exitError("Error: cannot read file with graph");
@@ -32,13 +37,16 @@ int main(int ac, char **av) {
     testGraph = graphAlg.depthFirstSearch(graph, 1);
 
     std::cout << "обход в глубину in main: " << std::endl;
-    printResult(testGraph);
+    printResult(testGraph, graph.getSizeGraph());
+    free(testGraph);
 // while (1) {};
 
-    testGraph.clear();
+    // testGraph.clear();
+    bzero(testGraph, graph.getSizeGraph());
     testGraph = graphAlg.breadthFirstSearch(graph, 1);
     std::cout << "обход в ширину in main: " << std::endl;
-    printResult(testGraph);
+    printResult(testGraph, graph.getSizeGraph());
+    free(testGraph);
 
 
     // graphAlgDeyxtra;
