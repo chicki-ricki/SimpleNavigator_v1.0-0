@@ -28,13 +28,12 @@ void GraphAlgorithms::convertToArr(int *rez, std::vector<int> &vec) {
   }
 }
 
-// std::vector<int> GraphAlgorithms::depthFirstSearch(Graph &graph, int startVertex) {
 int *GraphAlgorithms::depthFirstSearch(Graph &graph, int startVertex) {
   int index = startVertex - 1;
   s21::Stack<int> s;
   std::vector<int> vizit;
   std::vector<std::vector<int> > graphVector = graph.getGraph();
-  int *arr = (int *)malloc(sizeof(int) * graph.getSizeGraph());
+  int *arr = new int[graph.getSizeGraph()];
 
   vizit.push_back(index);
   fillStack(s, graphVector[index], vizit);
@@ -48,17 +47,15 @@ int *GraphAlgorithms::depthFirstSearch(Graph &graph, int startVertex) {
     }
   }
   convertToArr(arr, vizit);
-  // return (vizit);
   return (arr);
 }
 
-// std::vector<int> GraphAlgorithms::breadthFirstSearch(Graph &graph, int startVertex) {
 int *GraphAlgorithms::breadthFirstSearch(Graph &graph, int startVertex) {
   s21::Queue<int> queue;
   int index = startVertex - 1;
   std::vector<int> visited;
   std::vector<std::vector<int> > graphVector = graph.getGraph();
-  int *arr = (int *)malloc(sizeof(int) * graph.getSizeGraph());
+  int *arr = new int[graph.getSizeGraph()];
 
   visited.push_back(index);
   fillQueue(queue, graphVector[index], visited);
@@ -72,7 +69,6 @@ int *GraphAlgorithms::breadthFirstSearch(Graph &graph, int startVertex) {
     }
   }
   convertToArr(arr, visited);
-  // return (visited);
   return (arr);
 }
 
@@ -118,11 +114,11 @@ int GraphAlgorithms::getShortestPathBetweenVertices(Graph &graph, int vertex1, i
 }
 
 int **GraphAlgorithms::getShortestPathsBetweenAllVertices(Graph &graph) {
-  int **rez = (int **)malloc(sizeof(int *) * graph.getSizeGraph());
+  int **rez = new int *[graph.getSizeGraph()];
   size_t m = 0;
 
   while (m < graph.getSizeGraph()) {
-    rez[m] = (int *)malloc(sizeof(int) * graph.getSizeGraph());
+    rez[m] = new int[graph.getSizeGraph()];
     m++;
   }
   firstFillArray(rez, graph);
