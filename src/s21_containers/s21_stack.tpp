@@ -42,6 +42,7 @@ s21::Stack<T>::Stack(std::initializer_list<T> const &init) : Stack() {
 template <typename T>
 s21::Stack<T>::~Stack() {
   this->Clear();
+
 }
 
 template <typename T>
@@ -66,13 +67,17 @@ void s21::Stack<T>::push(T const &elem) {
 template <typename T>
 T &s21::Stack<T>::pop() {
   StackItem *ret = head_;
+  // создание указателя на значение, без указателя - лики:
+  T *val = &(ret->value);
+  delete ret;
 
   if (head_ == nullptr) {
     s21::exitError("Error: stack is empty");
   }
   head_ = head_->next;
   size_--;
-  return (ret->value);
+  // return (ret->value);
+  return (*val);
 }
 
 template <typename T>
@@ -114,6 +119,8 @@ void s21::Stack<T>::Clear() {
     pop();
   }
   size_ = 0;
+  if (head_)
+    delete head_;
 }
 
 #endif

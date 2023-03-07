@@ -18,6 +18,7 @@ int main(int ac, char **av) {
     if (graph.exportGraphToDot("exportFile.dot") != 0) {
       s21::exitError("Error: cannot write graph to *.dot file");
     }
+
     // graphAlgorithms
     GraphAlgorithms graphAlg;
     graphDepth = graphAlg.depthFirstSearch(graph, 1);
@@ -46,6 +47,6 @@ int main(int ac, char **av) {
   } else {
     s21::exitError("Error: invalid count of arguments");
   }
-  // while (1) {};
+  while (1) {};
   return (0);
 }
