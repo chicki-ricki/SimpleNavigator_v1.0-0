@@ -20,6 +20,8 @@ GraphAlgorithms::GraphAlgorithms(GraphAlgorithms &&gg) : GraphAlgorithms() {
   *this = gg;
 }
 
+GraphAlgorithms::~GraphAlgorithms() {}
+
 std::vector<int> GraphAlgorithms::depthFirstSearch(Graph &graph, int startVertex) {
   int index = startVertex - 1;
   s21::Stack<int> s;

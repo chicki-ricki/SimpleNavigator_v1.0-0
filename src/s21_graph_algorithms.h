@@ -21,7 +21,7 @@ class GraphAlgorithms {
   GraphAlgorithms &operator=(GraphAlgorithms &&);
   GraphAlgorithms(GraphAlgorithms &&);
   // GraphAlgorithms(std::initializer_list<T> const &);
-  // ~GraphAlgorithms();
+  ~GraphAlgorithms();
   /* - нерекурентный поиск в глубину в графе от заданной вершины. Функция должна
   возвращать массив, содержащий в себе обойдённые вершины в порядке их обхода. 
   При реализации этой функции обязательно использовать самописную структуру 
