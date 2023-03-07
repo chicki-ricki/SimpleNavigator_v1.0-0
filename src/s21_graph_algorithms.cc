@@ -41,11 +41,25 @@ std::vector<int> GraphAlgorithms::depthFirstSearch(Graph &graph, int startVertex
   return (vizit);
 }
 
-// int	*GraphAlgorithms::breadthFirstSearch(Graph &graph, int startVertex) {
-//   (void) graph;
-//   (void) startVertex;
-//   return (0);
-// }
+std::vector<int> GraphAlgorithms::breadthFirstSearch(Graph &graph, int startVertex) {
+  s21::Queue<int> queue;
+	int index = startVertex - 1;
+	std::vector<int> visited;
+	std::vector<std::vector<int> > graphVector = graph.getGraph();
+
+	visited.push_back(index);
+	fillQueue(queue, graphVector[index], visited);
+  while (queue.getSize() > 0) {
+    if (checkElem(queue.peek(), visited) == 0) {
+      visited.push_back(queue.peek());
+      fillQueue(queue, graphVector[queue.peek()], visited);
+    }
+    else {
+      queue.pop();
+    }
+  }
+  return (visited);
+}
 
 void GraphAlgorithms::handlerDayxtra(std::vector<int> vec, std::vector<int> &distance, std::vector<int> &vizit, int num) {
   for (size_t i = 0; i < vec.size(); i++) {
@@ -123,7 +137,7 @@ int GraphAlgorithms::checkElem(int num, std::vector<int> &vizit) {
 }
 
 int GraphAlgorithms::fillStack(s21::Stack<int> &rez, std::vector<int> vec, std::vector<int> vizit) {
-  size_t i = vec.size();
+  size_t i = vec.size() - 1;
 
   while (i > 0) {
     if (vec[i] != 0 && checkElem(i, vizit) == 0) {
@@ -132,4 +146,16 @@ int GraphAlgorithms::fillStack(s21::Stack<int> &rez, std::vector<int> vec, std::
     i--;
   }
   return (0);
+}
+
+int GraphAlgorithms::fillQueue(s21::Queue<int> &rez, std::vector<int> vec, std::vector<int> vizit) {
+  size_t i = 0;
+  while (i < vec.size()) {
+		if (vec[i] != 0 && checkElem(i, vizit) == 0) {
+      rez.push(i);
+	  }
+    i++;
+  }
+  std::cout << std::endl;
+  return(0);
 }

@@ -3,10 +3,19 @@
 
 // extern void s21::exitError(std::string);
 
+void printResult(std::vector<int> testGraph)
+{
+	for (std::vector<int>::iterator it = testGraph.begin(); it != testGraph.end(); it++) {
+		std::cout << *it + 1 << "->";
+	}
+  std::cout << std::endl;
+}
+
+
 int main(int ac, char **av) {
   if (ac == 2) {
     Graph graph;
-    std::vector<int> graphDepth;
+    std::vector<int> testGraph;
 
     if (graph.loadGraphFromFile(std::string(av[1])) != 0) {
       s21::exitError("Error: cannot read file with graph");
@@ -16,13 +25,16 @@ int main(int ac, char **av) {
     // }
   //   // graphAlgorithms
     GraphAlgorithms graphAlgDepth;
-    graphDepth = graphAlgDepth.depthFirstSearch(graph, 1);
+//    testGraph = graphAlgDepth.depthFirstSearch(graph, 1);
 
-std::cout << "обход in main: " << std::endl;
-for (std::vector<int>::iterator it = graphDepth.begin(); it != graphDepth.end(); it++) {
-  std::cout << *it + 1 << "->";
-}
-  std::cout << std::endl;
+// std::cout << "обход в глубину in main: " << std::endl;
+// printResult(testGraph);
+
+	testGraph.clear();
+	testGraph = graphAlgDepth.breadthFirstSearch(graph, 5);
+std::cout << "обход в ширину in main: " << std::endl;
+printResult(testGraph);
+
 
     int minDex = graphAlgDepth.getShortestPathBetweenVertices(graph, 1, 4);
 std::cout << "minDex in main: " << minDex << std::endl;

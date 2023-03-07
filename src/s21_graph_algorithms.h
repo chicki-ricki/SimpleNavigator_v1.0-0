@@ -35,7 +35,7 @@ class GraphAlgorithms {
   очередь, которую предварительно стоит оформить в виде отдельной статической 
   библиотеки:
   */
-  // int *breadthFirstSearch(Graph &, int);
+  std::vector<int> breadthFirstSearch(Graph &, int);
   /* - поиск кратчайшего пути между двумя вершинами в графе с использованием 
   алгоритма Дейкстры. Функция принимает на вход номера двух вершин и возвращает 
   численный результат, равный наименьшему расстоянию между ними:
@@ -62,6 +62,7 @@ class GraphAlgorithms {
   */
  private:
   int fillStack(s21::Stack<int> &, std::vector<int>, std::vector<int>);
+  int fillQueue(s21::Queue<int> &, std::vector<int>, std::vector<int>);
   int checkElem(int, std::vector<int> &);
   void handlerDayxtra(std::vector<int>, std::vector<int> &, std::vector<int> &, int);
 };
