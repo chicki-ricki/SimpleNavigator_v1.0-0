@@ -25,7 +25,6 @@ s21::Queue<T> &s21::Queue<T>::operator=(Queue &&qq) {
 
 template <typename T>
 s21::Queue<T>::Queue(Queue &&qq) : Queue() {
-  std::cout << "hello from  &&qq" << std::endl;
   *this = qq;
 }
 
