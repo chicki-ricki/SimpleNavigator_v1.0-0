@@ -115,11 +115,8 @@ int GraphAlgorithms::getShortestPathBetweenVertices(Graph &graph, int vertex1, i
 
 int **GraphAlgorithms::getShortestPathsBetweenAllVertices(Graph &graph) {
   int **rez = new int *[graph.getSizeGraph()];
-  size_t m = 0;
-
-  while (m < graph.getSizeGraph()) {
+  for (size_t m = 0; m < graph.getSizeGraph(); m++) {
     rez[m] = new int[graph.getSizeGraph()];
-    m++;
   }
   firstFillArray(rez, graph);
   for (size_t k = 0; k < graph.getSizeGraph(); k++) {
@@ -133,30 +130,20 @@ int **GraphAlgorithms::getShortestPathsBetweenAllVertices(Graph &graph) {
 }
 
 int **GraphAlgorithms::getLeastSpanningTree(Graph &graph) {
-  size_t edgeNum;
+  int x;
+  int y;
+	size_t edgeNum;
 	std::vector<std::vector<int>> graph_arr = graph.getGraph();
   size_t graph_size = graph.getSizeGraph();
   int *vizit = new int[graph_size];
-  int **res = new int *[graph_size];
-	//res = nullptr;	
-  size_t m = 0;
-  while (m < graph_size) {
-    res[m] = new int[graph_size];
-    m++;
+	int **res = new int *[graph_size];
+  for (size_t i = 0; i < graph_size; i++) {
+    res[i] = new int[graph_size];
+		memset(res[i], 0, sizeof(int) * graph_size);
   }
-	for (size_t i = 0; i < graph_size; i++) {
-    for (size_t j = 0; j < graph_size; j++) {
-      res[i][j] = 0;
-    } 
-  }
-
-  int x;
-  int y;
-
-  memset(vizit, 0, sizeof(graph_size));
+  memset(vizit, 0, sizeof(int) * graph_size);
   edgeNum = 0;
   vizit[0] = 1;
-  //std::cout << "Edge" << " : " << "Weight" << std::endl;
   while (edgeNum < graph_size - 1) {
     int min = 10000;
     x = 0;
@@ -175,10 +162,7 @@ int **GraphAlgorithms::getLeastSpanningTree(Graph &graph) {
       }
     }
 		res[x][y] = res[y][x] = min;
-   //std::cout << x <<  " - " << y << " :  " << graph.getGraph()[x][y];
-
-   //std::cout << std::endl;
-    vizit[y] = true;
+    vizit[y] = 1;
     edgeNum++;
   }
   return (res);
