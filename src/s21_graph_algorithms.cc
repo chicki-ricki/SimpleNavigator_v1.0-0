@@ -134,24 +134,39 @@ int **GraphAlgorithms::getShortestPathsBetweenAllVertices(Graph &graph) {
 
 int **GraphAlgorithms::getLeastSpanningTree(Graph &graph) {
   size_t edgeNum;
-  int *vizit = new int[graph.getSizeGraph()];
+	std::vector<std::vector<int>> graph_arr = graph.getGraph();
+  size_t graph_size = graph.getSizeGraph();
+  int *vizit = new int[graph_size];
+  int **res = new int *[graph_size];
+	//res = nullptr;	
+  size_t m = 0;
+  while (m < graph_size) {
+    res[m] = new int[graph_size];
+    m++;
+  }
+	for (size_t i = 0; i < graph_size; i++) {
+    for (size_t j = 0; j < graph_size; j++) {
+      res[i][j] = 0;
+    } 
+  }
+
   int x;
   int y;
 
-  memset(vizit, 0, sizeof(graph.getSizeGraph()));
+  memset(vizit, 0, sizeof(graph_size));
   edgeNum = 0;
   vizit[0] = 1;
-  std::cout << "Edge" << " : " << "Weight" << std::endl;
-  while (edgeNum < graph.getSizeGraph() - 1) {
+  //std::cout << "Edge" << " : " << "Weight" << std::endl;
+  while (edgeNum < graph_size - 1) {
     int min = 10000;
     x = 0;
     y = 0;
-    for (size_t i = 0; i < graph.getSizeGraph(); i++) {
+    for (size_t i = 0; i < graph_size; i++) {
       if (vizit[i] == 1) {
-        for (size_t j = 0; j < graph.getSizeGraph(); j++) {
-          if (vizit[j] == 0 && graph.getGraph()[i][j]) {
-            if (min > graph.getGraph()[i][j]) {
-              min = graph.getGraph()[i][j];
+        for (size_t j = 0; j < graph_size; j++) {
+          if (vizit[j] == 0 && graph_arr[i][j]) {
+            if (min > graph_arr[i][j]) {
+              min = graph_arr[i][j];
               x = i;
               y = j;
             }
@@ -159,12 +174,14 @@ int **GraphAlgorithms::getLeastSpanningTree(Graph &graph) {
         }
       }
     }
-    std::cout << x <<  " - " << y << " :  " << graph.getGraph()[x][y];
-    std::cout << std::endl;
+		res[x][y] = res[y][x] = min;
+   //std::cout << x <<  " - " << y << " :  " << graph.getGraph()[x][y];
+
+   //std::cout << std::endl;
     vizit[y] = true;
     edgeNum++;
   }
-  return (vizit);
+  return (res);
 }
 
 int GraphAlgorithms::fillStack(s21::Stack<int> &rez, std::vector<int> vec, std::vector<int> vizit) {
