@@ -172,34 +172,108 @@ int **GraphAlgorithms::getLeastSpanningTree(Graph &graph) {
 #define BETA 3  // коэффициент эвристики
 #define T_MAX 10000  // количество итераций
 #define M 20  // количество муравьев в колонии
-#define Q 100  // количетсво ??
+#define Q 100  // некоторый регулируемый параметр
 #define RHO 0.5  // коэффициент испарения феромона
 
-TsmResult solveTravelingSalesmanProblem(Graph &graph){
+void GraphAlgorithms::fillNotVizit(std::vector<int> &vec, size_t vertex) {
+  for (size_t i = 1; i < vertex; i++) {
+    vec.push_back(i);
+  }
+  // vec.push_back(0);
+}
+
+double GraphAlgorithms::probability(size_t to, Ant &ant, double **distance, double **pheromone, size_t vertex) {
+  double sum = 0.0;
+  size_t from = ant.data.vertices[ant.data.vertices.size() - 1];
+
+  for (size_t j = 0; j < vertex; j++) {
+    sum += pow(pheromone[from][j], ALPHA) * pow(distance[from][j], BETA);
+  }
+  for (size_t j = 0; j < vertex; j++) {
+    if ((int)to == ant.notVizit[j]) {
+      return ((pow(pheromone[from][to], ALPHA) * pow(distance[from][to], BETA)) / sum);
+    }
+  }
+  return (((pow(pheromone[from][to], ALPHA) * pow(distance[from][to], BETA)) / sum) / 2);
+}
+
+TsmResult GraphAlgorithms::solveTravelingSalesmanProblem(Graph &graph) {
   TsmResult way;
   way.distance = -1;
   size_t graphSize = graph.getSizeGraph();
   double **distance = new double*[graphSize];
-  double **pheramone = new double*[graphSize];
+  double **pheromone = new double*[graphSize];
+  // std::vector<int> notVizit;
+
+  // инициализация данных о расстоянии и количестве феромона
   for (size_t i = 0; i < graphSize; i++) {
     distance[i] = new double [graphSize];
-    pheramone[i] = new double [graphSize];
+    pheromone[i] = new double [graphSize];
     for (size_t j = 0; j < graphSize; j++) {
-      pheramone[i][j] = 1.0 / graphSize;
-      if (i != j) {
+      pheromone[i][j] = 1.0 / graphSize;
+      if (graph.getGraph()[i][j] != 0) {
         distance[i][j] = 1.0 / graph.getGraph()[i][j];
       }
     }
   }
+
   // инициализация муравьев
-  TsmResult ants[M];
+  // TsmResult ants[M];
+  Ant ants[M];
   for (int i = 0; i < M; i++) {
-    ants[i].distance = 0.0;
-    ants[i].vertices.push_back(0);
+    ants[i].data.distance = 0.0;
+    ants[i].data.vertices.push_back(0);
+    fillNotVizit(ants[i].notVizit, graphSize);
   }
+  // основной цикл
   for (int i = 0; i < T_MAX; i++) {
+    // цикл по муравьям
     for (int k = 0; k < M; k++) {
-      while (ants[i].vertices.size() < graphSize) {
+      // поиск маршрута для текущего муравья
+      while (ants[k].notVizit.size() > 0) {
+        int jMax = -1;
+        double pMax = 0.0;
+        for (size_t j = 0; j < graphSize; j++) {
+          double p = probability(j, ants[k], distance, pheromone, graphSize);
+          if (p && p >= pMax) {
+            pMax = p;
+            jMax = j;
+          }
+        }
+
+        ants[k].data.distance += graph.getGraph()[ants[k].data.vertices.back()][jMax];
+        ants[k].data.vertices.push_back(jMax);
+        ants[k].notVizit.erase(ants[i].notVizit.begin());
+      }
+
+      // оставляем феромон на пути муравья
+      for (size_t m = 0; m < ants[k].data.vertices.size() - 1; m++) {
+        size_t from = ants[k].data.vertices[m % ants[k].data.vertices.size()];
+        size_t to = ants[k].data.vertices[(m + 1) % ants[k].data.vertices.size()];
+
+        pheromone[from][to] += Q / ants[k].data.distance;
+        pheromone[to][from] = pheromone[from][to];
+      }
+// std::cout << "GraphAlgorithms::solveTravelingSalesmanProblem| ending while" << std::endl;
+
+      // проверка на лучшее решение
+      if (ants[k].data.distance < way.distance || way.distance < 0) {
+        way.distance = ants[k].data.distance;
+        for (size_t x = 0; x < ants[k].data.vertices.size(); x++) {
+          way.vertices[x] = ants[i].data.vertices[x];
+        }
+      }
+      // обновление муравья
+      ants[k].data.distance = 0;
+      ants[k].data.vertices.push_back(0);
+      fillNotVizit(ants[k].notVizit, graphSize);
+    }
+    // цикл по ребрам
+    for (size_t i = 0; i < graphSize; i++) {
+      for (size_t j =0; j < graphSize; j++) {
+        if (i != j) {
+          pheromone[i][j] *= (1 - RHO);
+        }
       }
     }
   }

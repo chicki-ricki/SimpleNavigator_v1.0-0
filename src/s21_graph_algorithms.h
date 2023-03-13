@@ -3,6 +3,7 @@
 #pragma once
 
 #include <algorithm>
+#include <math.h>
 
 #include "s21_graph.h"
 
@@ -10,6 +11,11 @@ struct TsmResult {
   // int *vertices;// массив с искомым маршрутом (с порядком обхода вершин). Вместо int* можно использовать std::vector<int>
   std::vector<int> vertices;// массив с искомым маршрутом (с порядком обхода вершин). Вместо int* можно использовать std::vector<int>
   double distance;// длина этого маршрута
+};
+
+struct Ant {
+  std::vector<int> notVizit;
+  TsmResult data;
 };
 
 class Graph;
@@ -68,6 +74,8 @@ class GraphAlgorithms {
   void firstFillArray(int **, Graph &);
   int minElem(int, int);
   void convertToArr(int *, std::vector<int> &);
+  void fillNotVizit(std::vector<int> &, size_t);
+  double probability(size_t, Ant &, double **, double **, size_t);
 };
 
 // #endif
