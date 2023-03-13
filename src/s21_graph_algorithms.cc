@@ -168,6 +168,44 @@ int **GraphAlgorithms::getLeastSpanningTree(Graph &graph) {
   return (res);
 }
 
+#define ALPHA 1  // вес фермента
+#define BETA 3  // коэффициент эвристики
+#define T_MAX 10000  // количество итераций
+#define M 20  // количество муравьев в колонии
+#define Q 100  // количетсво ??
+#define RHO 0.5  // коэффициент испарения феромона
+
+TsmResult solveTravelingSalesmanProblem(Graph &graph){
+  TsmResult way;
+  way.distance = -1;
+  size_t graphSize = graph.getSizeGraph();
+  double **distance = new double*[graphSize];
+  double **pheramone = new double*[graphSize];
+  for (size_t i = 0; i < graphSize; i++) {
+    distance[i] = new double [graphSize];
+    pheramone[i] = new double [graphSize];
+    for (size_t j = 0; j < graphSize; j++) {
+      pheramone[i][j] = 1.0 / graphSize;
+      if (i != j) {
+        distance[i][j] = 1.0 / graph.getGraph()[i][j];
+      }
+    }
+  }
+  // инициализация муравьев
+  TsmResult ants[M];
+  for (int i = 0; i < M; i++) {
+    ants[i].distance = 0.0;
+    ants[i].vertices.push_back(0);
+  }
+  for (int i = 0; i < T_MAX; i++) {
+    for (int k = 0; k < M; k++) {
+      while (ants[i].vertices.size() < graphSize) {
+      }
+    }
+  }
+  return (way);
+}
+
 int GraphAlgorithms::fillStack(s21::Stack<int> &rez, std::vector<int> vec, std::vector<int> vizit) {
   size_t i = vec.size() - 1;
 

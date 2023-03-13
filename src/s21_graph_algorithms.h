@@ -7,7 +7,8 @@
 #include "s21_graph.h"
 
 struct TsmResult {
-  int *vertices;// массив с искомым маршрутом (с порядком обхода вершин). Вместо int* можно использовать std::vector<int>
+  // int *vertices;// массив с искомым маршрутом (с порядком обхода вершин). Вместо int* можно использовать std::vector<int>
+  std::vector<int> vertices;// массив с искомым маршрутом (с порядком обхода вершин). Вместо int* можно использовать std::vector<int>
   double distance;// длина этого маршрута
 };
 
@@ -56,7 +57,7 @@ class GraphAlgorithms {
   хотя бы по одному разу с последующим возвратом в исходную вершину. В качестве
   результата функция должна возвращать структуру TsmResult:
   */
-  // TsmResult solveTravelingSalesmanProblem(Graph &graph);
+  TsmResult solveTravelingSalesmanProblem(Graph &graph);
   /* Необходимо выбрать дополнительные два алгоритма для решения задачи 
   коммивояжера и реализовать их в виде методов класса GraphAlgorithms
   */
