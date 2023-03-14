@@ -1,5 +1,3 @@
-// #ifndef S21_GRAPH_ALGORITHMS_H
-// #define S21_GRAPH_ALGORITHMS_H
 #pragma once
 
 #include <algorithm>
@@ -7,16 +5,17 @@
 
 #include "s21_graph.h"
 
+#define ALPHA 1  // вес фермента
+#define BETA 3  // коэффициент эвристики
+#define T_MAX 100000  // количество итераций
+#define M 20  // количество муравьев в колонии
+#define Q 100  // некоторый регулируемый параметр
+#define RHO 0.5  // коэффициент испарения феромона
+
 struct TsmResult {
-  // int *vertices;// массив с искомым маршрутом (с порядком обхода вершин). Вместо int* можно использовать std::vector<int>
   std::vector<int> vertices;// массив с искомым маршрутом (с порядком обхода вершин). Вместо int* можно использовать std::vector<int>
   double distance;// длина этого маршрута
 };
-
-// struct Ant {
-//   std::vector<int> vizit;
-//   TsmResult data;
-// };
 
 class Graph;
 
@@ -74,8 +73,8 @@ class GraphAlgorithms {
   void firstFillArray(int **, Graph &);
   int minElem(int, int);
   void convertToArr(int *, std::vector<int> &);
-  void fillNotVizit(std::vector<int> &, size_t);
   double probability(size_t, TsmResult &, double **, double **, size_t);
+  static void freeArr(double **, size_t);
 };
 
 // #endif

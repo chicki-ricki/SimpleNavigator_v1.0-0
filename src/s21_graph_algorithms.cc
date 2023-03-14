@@ -168,20 +168,6 @@ int **GraphAlgorithms::getLeastSpanningTree(Graph &graph) {
   return (res);
 }
 
-#define ALPHA 1  // вес фермента
-#define BETA 3  // коэффициент эвристики
-#define T_MAX 10000  // количество итераций
-#define M 20  // количество муравьев в колонии
-#define Q 100  // некоторый регулируемый параметр
-#define RHO 0.5  // коэффициент испарения феромона
-
-void GraphAlgorithms::fillNotVizit(std::vector<int> &vec, size_t vertex) {
-  for (size_t i = 1; i < vertex; i++) {
-    vec.push_back(i);
-  }
-  // vec.push_back(0);
-}
-
 double GraphAlgorithms::probability(size_t to, TsmResult &ant, double **distance, double **pheromone, size_t vertex) {
   for (size_t i = 0; i < ant.vertices.size(); i++) {
     if ((int)to == ant.vertices[i]) {
@@ -205,13 +191,19 @@ double GraphAlgorithms::probability(size_t to, TsmResult &ant, double **distance
   return ((pow(pheromone[from][to], ALPHA) * pow(distance[from][to], BETA)) / sum);
 }
 
+void GraphAlgorithms::freeArr(double **arr, size_t count) {
+  for (size_t i = 0; i < count; i++) {
+    delete [] arr[i];
+  }
+  delete [] arr;
+}
+
 TsmResult GraphAlgorithms::solveTravelingSalesmanProblem(Graph &graph) {
   TsmResult way;
   way.distance = -1;
   size_t graphSize = graph.getSizeGraph();
   double **distance = new double*[graphSize];
   double **pheromone = new double*[graphSize + 1];
-  // std::vector<int> notVizit;
 
   // инициализация данных о расстоянии и количестве феромона
   for (size_t i = 0; i < graphSize; i++) {
@@ -227,17 +219,15 @@ TsmResult GraphAlgorithms::solveTravelingSalesmanProblem(Graph &graph) {
 
   // инициализация муравьев
   TsmResult ants[M];
-  // size_t vert = 0;
+  size_t start = 0;
   for (int i = 0; i < M; i++) {
-    // vert += 1;
+    start += 1;
     ants[i].distance = 0.0;
-    // ants[i].vertices.push_back(vert);
-    ants[i].vertices.push_back(0);
-    // if (vert == graphSize - 1) {
-      // vert = 0;
-    // }
+    ants[i].vertices.push_back(start);
+    if (start== graphSize - 1) {
+      start= 0;
+    }
   }
-  int finish = graphSize - 1;
   // основной цикл
   for (int i = 0; i < T_MAX; i++) {
     // цикл по муравьям
@@ -254,9 +244,9 @@ TsmResult GraphAlgorithms::solveTravelingSalesmanProblem(Graph &graph) {
           }
         }
         if (jMax == -1) {
-          if (graph.getGraph()[ants[k].vertices.back()][0] > 0) {
-            ants[k].distance += graph.getGraph()[ants[k].vertices.back()][0];
-            ants[k].vertices.push_back(0);
+          if (graph.getGraph()[ants[k].vertices.back()][ants[k].vertices.front()] > 0) {
+            ants[k].distance += graph.getGraph()[ants[k].vertices.back()][ants[k].vertices.front()];
+            ants[k].vertices.push_back(ants[k].vertices.front());
           } else {
             s21::exitError("Error: impossible to solve the salesman's problem with a given graph");
           }
@@ -297,6 +287,8 @@ TsmResult GraphAlgorithms::solveTravelingSalesmanProblem(Graph &graph) {
       }
     }
   }
+  freeArr(distance, graphSize);
+  freeArr(pheromone, graphSize + 1);
   return (way);
 }
 
