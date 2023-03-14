@@ -7,7 +7,7 @@
 
 #define ALPHA 1  // вес фермента
 #define BETA 3  // коэффициент эвристики
-#define T_MAX 100000  // количество итераций
+#define T_MAX 10000  // количество итераций
 #define M 20  // количество муравьев в колонии
 #define Q 100  // некоторый регулируемый параметр
 #define RHO 0.5  // коэффициент испарения феромона
@@ -75,6 +75,18 @@ class GraphAlgorithms {
   void convertToArr(int *, std::vector<int> &);
   double probability(size_t, TsmResult &, double **, double **, size_t);
   static void freeArr(double **, size_t);
+  // инициализация муравьев
+  void initAnts(TsmResult *, size_t);
+    // инициализация данных о расстоянии и количестве феромона
+  void initData(double **, double **, size_t, Graph &);
+  // оставляем феромон на пути муравья
+  void rangePheromone(TsmResult &, double **);
+  // проверка на лучшее решение
+  void checkBestWay(TsmResult &, TsmResult &);
+  // обновление муравья
+  void updateAnt(TsmResult &);
+  // обновление феромонов с учетом коэффициента испарения
+  void updatePheromone(double **, size_t);
 };
 
 // #endif
