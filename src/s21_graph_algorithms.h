@@ -13,10 +13,10 @@ struct TsmResult {
   double distance;// длина этого маршрута
 };
 
-struct Ant {
-  std::vector<int> notVizit;
-  TsmResult data;
-};
+// struct Ant {
+//   std::vector<int> vizit;
+//   TsmResult data;
+// };
 
 class Graph;
 
@@ -75,7 +75,7 @@ class GraphAlgorithms {
   int minElem(int, int);
   void convertToArr(int *, std::vector<int> &);
   void fillNotVizit(std::vector<int> &, size_t);
-  double probability(size_t, Ant &, double **, double **, size_t);
+  double probability(size_t, TsmResult &, double **, double **, size_t);
 };
 
 // #endif

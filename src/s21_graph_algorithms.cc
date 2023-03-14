@@ -182,19 +182,27 @@ void GraphAlgorithms::fillNotVizit(std::vector<int> &vec, size_t vertex) {
   // vec.push_back(0);
 }
 
-double GraphAlgorithms::probability(size_t to, Ant &ant, double **distance, double **pheromone, size_t vertex) {
-  double sum = 0.0;
-  size_t from = ant.data.vertices[ant.data.vertices.size() - 1];
-
-  for (size_t j = 0; j < vertex; j++) {
-    sum += pow(pheromone[from][j], ALPHA) * pow(distance[from][j], BETA);
-  }
-  for (size_t j = 0; j < vertex; j++) {
-    if ((int)to == ant.notVizit[j]) {
-      return ((pow(pheromone[from][to], ALPHA) * pow(distance[from][to], BETA)) / sum);
+double GraphAlgorithms::probability(size_t to, TsmResult &ant, double **distance, double **pheromone, size_t vertex) {
+  for (size_t i = 0; i < ant.vertices.size(); i++) {
+    if ((int)to == ant.vertices[i]) {
+      return (0);
     }
   }
-  return (((pow(pheromone[from][to], ALPHA) * pow(distance[from][to], BETA)) / sum) / 2);
+  double sum = 0.0;
+  size_t from = ant.vertices[ant.vertices.size() - 1];
+
+  for (size_t j = 0; j < vertex; j++) {
+    int flag = 1;
+    for (size_t i = 0; i < ant.vertices.size(); i++) {
+      if ((int)j == ant.vertices[i]) {
+        flag = 0;
+      }
+      if (flag == 1) {
+        sum += pow(pheromone[from][j], ALPHA) * pow(distance[from][j], BETA);
+      }
+    }
+  }
+  return ((pow(pheromone[from][to], ALPHA) * pow(distance[from][to], BETA)) / sum);
 }
 
 TsmResult GraphAlgorithms::solveTravelingSalesmanProblem(Graph &graph) {
@@ -202,13 +210,13 @@ TsmResult GraphAlgorithms::solveTravelingSalesmanProblem(Graph &graph) {
   way.distance = -1;
   size_t graphSize = graph.getSizeGraph();
   double **distance = new double*[graphSize];
-  double **pheromone = new double*[graphSize];
+  double **pheromone = new double*[graphSize + 1];
   // std::vector<int> notVizit;
 
   // инициализация данных о расстоянии и количестве феромона
   for (size_t i = 0; i < graphSize; i++) {
     distance[i] = new double [graphSize];
-    pheromone[i] = new double [graphSize];
+    pheromone[i] = new double [graphSize + 1];
     for (size_t j = 0; j < graphSize; j++) {
       pheromone[i][j] = 1.0 / graphSize;
       if (graph.getGraph()[i][j] != 0) {
@@ -218,55 +226,67 @@ TsmResult GraphAlgorithms::solveTravelingSalesmanProblem(Graph &graph) {
   }
 
   // инициализация муравьев
-  // TsmResult ants[M];
-  Ant ants[M];
+  TsmResult ants[M];
+  // size_t vert = 0;
   for (int i = 0; i < M; i++) {
-    ants[i].data.distance = 0.0;
-    ants[i].data.vertices.push_back(0);
-    fillNotVizit(ants[i].notVizit, graphSize);
+    // vert += 1;
+    ants[i].distance = 0.0;
+    // ants[i].vertices.push_back(vert);
+    ants[i].vertices.push_back(0);
+    // if (vert == graphSize - 1) {
+      // vert = 0;
+    // }
   }
+  int finish = graphSize - 1;
   // основной цикл
   for (int i = 0; i < T_MAX; i++) {
     // цикл по муравьям
     for (int k = 0; k < M; k++) {
       // поиск маршрута для текущего муравья
-      while (ants[k].notVizit.size() > 0) {
+      while (ants[k].vertices.size() <= graphSize) {
         int jMax = -1;
         double pMax = 0.0;
         for (size_t j = 0; j < graphSize; j++) {
           double p = probability(j, ants[k], distance, pheromone, graphSize);
-          if (p && p >= pMax) {
+          if (p && p > pMax) {
             pMax = p;
             jMax = j;
           }
         }
-
-        ants[k].data.distance += graph.getGraph()[ants[k].data.vertices.back()][jMax];
-        ants[k].data.vertices.push_back(jMax);
-        ants[k].notVizit.erase(ants[i].notVizit.begin());
+        if (jMax == -1) {
+          if (graph.getGraph()[ants[k].vertices.back()][0] > 0) {
+            ants[k].distance += graph.getGraph()[ants[k].vertices.back()][0];
+            ants[k].vertices.push_back(0);
+          } else {
+            s21::exitError("Error: impossible to solve the salesman's problem with a given graph");
+          }
+        } else {
+          ants[k].distance += graph.getGraph()[ants[k].vertices.back()][jMax];
+          ants[k].vertices.push_back(jMax);
+        }
       }
 
       // оставляем феромон на пути муравья
-      for (size_t m = 0; m < ants[k].data.vertices.size() - 1; m++) {
-        size_t from = ants[k].data.vertices[m % ants[k].data.vertices.size()];
-        size_t to = ants[k].data.vertices[(m + 1) % ants[k].data.vertices.size()];
+      for (size_t m = 0; m < ants[k].vertices.size() - 1; m++) {
+        size_t from = ants[k].vertices[m % ants[k].vertices.size()];
+        size_t to = ants[k].vertices[(m + 1) % ants[k].vertices.size()];
 
-        pheromone[from][to] += Q / ants[k].data.distance;
+        pheromone[from][to] += Q / ants[k].distance;
         pheromone[to][from] = pheromone[from][to];
       }
-// std::cout << "GraphAlgorithms::solveTravelingSalesmanProblem| ending while" << std::endl;
 
       // проверка на лучшее решение
-      if (ants[k].data.distance < way.distance || way.distance < 0) {
-        way.distance = ants[k].data.distance;
-        for (size_t x = 0; x < ants[k].data.vertices.size(); x++) {
-          way.vertices[x] = ants[i].data.vertices[x];
+      if (ants[k].distance < way.distance || way.distance < 0) {
+        way.distance = ants[k].distance;
+        way.vertices.clear();
+        for (size_t x = 0; x < ants[k].vertices.size(); x++) {
+          way.vertices.push_back(ants[k].vertices[x] + 1);
         }
       }
       // обновление муравья
-      ants[k].data.distance = 0;
-      ants[k].data.vertices.push_back(0);
-      fillNotVizit(ants[k].notVizit, graphSize);
+      ants[k].distance = 0.0;
+      ants[k].vertices.clear();
+      ants[k].vertices.push_back(0);
     }
     // цикл по ребрам
     for (size_t i = 0; i < graphSize; i++) {
