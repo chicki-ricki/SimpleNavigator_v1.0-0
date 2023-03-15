@@ -4,7 +4,7 @@
 
 # NAME_1	=	s21_graph.a
 
-# SRC_1		=	main.cc s21_graph.cc
+# SRC_1		=	main.cpp s21_graph.cpp
 
 # HEADERS_1	=	s21_graph.h
 
@@ -14,7 +14,7 @@
 
 # NAME_2	=	s21_graph_algorithms.a
 
-# SRC_2		=	s21_graph_algorithms.cc
+# SRC_2		=	s21_graph_algorithms.cpp
 
 # HEADERS_2	=	s21_graph_algorithms.h
 
@@ -61,4 +61,4 @@
 
 
 all:	s21_graph_algorithms.h s21_graph.h s21_containers/s21_containers.h s21_containers/s21_stack.h s21_containers/s21_stack.tpp s21_containers/s21_utils.h
-	c++ -g -Wall -Werror -Wextra -lstdc++ -std=c++17 -Wno-unused main.cc s21_graph.cc s21_containers/s21_utils.cc s21_graph_algorithms.cc -o graph
+	c++ -g -Wall -Werror -Wextra -lstdc++ -std=c++17 -Wno-unused main.cpp s21_graph.cpp s21_containers/s21_utils.cpp s21_graph_algorithms.cpp -o graph

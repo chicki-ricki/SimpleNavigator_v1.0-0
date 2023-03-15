@@ -109,11 +109,11 @@ int main(int ac, char **av) {
     if (graph.exportGraphToDot("exportFile.dot") != 0) {
       s21::exitError("Error: cannot write graph to file");
     }
-    // makeDepthFirstSearch(graph, GraphAlgorithms);
-    // makeBreadthFirstSearch(graph, GraphAlgorithms);
-    // makeDeyxtraAlg(graph, GraphAlgorithms);
-    // makeFloydWorshelAlg(graph, GraphAlgorithms);
-    // makeAlgOfPrim(graph, GraphAlgorithms);
+    makeDepthFirstSearch(graph, GraphAlgorithms);
+    makeBreadthFirstSearch(graph, GraphAlgorithms);
+    makeDeyxtraAlg(graph, GraphAlgorithms);
+    makeFloydWorshelAlg(graph, GraphAlgorithms);
+    makeAlgOfPrim(graph, GraphAlgorithms);
     makeVoyage(graph, GraphAlgorithms);
   } else {
     s21::exitError("Error: invalid count of arguments");
