@@ -222,14 +222,15 @@ void GraphAlgorithms::initAnts(TsmResult *ants, size_t graphSize) {
   }
 }
 
-void GraphAlgorithms::initData(double **dst, double **ph, size_t gS, Graph &g) {
-  for (size_t i = 0; i < gS; i++) {
-    dst[i] = new double[gS];
-    ph[i] = new double[gS + 1];
-    for (size_t j = 0; j < gS; j++) {
-      ph[i][j] = 1.0 / gS;
-      if (g.getGraph()[i][j] != 0) {
-        dst[i][j] = 1.0 / g.getGraph()[i][j];
+void GraphAlgorithms::initData(double **dist, double **pheromone,
+                               size_t graphSize, Graph &graph) {
+  for (size_t i = 0; i < graphSize; i++) {
+    dist[i] = new double[graphSize];
+    pheromone[i] = new double[graphSize];
+    for (size_t j = 0; j < graphSize; j++) {
+      pheromone[i][j] = 1.0 / graphSize;
+      if (graph.getGraph()[i][j] != 0) {
+        dist[i][j] = 1.0 / graph.getGraph()[i][j];
       }
     }
   }
@@ -274,9 +275,10 @@ void GraphAlgorithms::updatePheromone(double **pheromone, size_t graphSize) {
 TsmResult GraphAlgorithms::solveTravelingSalesmanProblem(Graph &graph) {
   TsmResult way;
   way.distance = -1;
+  way.vertices.clear();
   size_t graphSize = graph.getSizeGraph();
   double **distance = new double *[graphSize];
-  double **pheromone = new double *[graphSize + 1];
+  double **pheromone = new double *[graphSize];
   TsmResult ants[M];
 
   initData(distance, pheromone, graphSize, graph);
@@ -302,7 +304,9 @@ TsmResult GraphAlgorithms::solveTravelingSalesmanProblem(Graph &graph) {
             ants[k].distance += graph.getGraph()[first][second];
             ants[k].vertices.push_back(ants[k].vertices.front());
           } else {
-            s21::exitError("Error: impossible to solve the salesman's problem");
+            s21::exitError(
+                "Error: impossible to solve the salesman's problem with a "
+                "giving graph");
           }
         } else {
           ants[k].distance += graph.getGraph()[ants[k].vertices.back()][jMax];
