@@ -1,10 +1,35 @@
+NAME			=	s21_containers.a
+
+SRCS			=	s21_utils.cpp
+
 HEADERS_QUEUE	=	s21_queue.h s21_queue.tpp
 
 HEADERS_STACK	=	s21_stack.h s21_stack.tpp
 
 HEADERS			=	${HEADERS_QUEUE} ${HEADERS_STACK} s21_utils.h
 
-all		:	${HEADERS}
-	c++ -g -Wall -Werror -Wextra -lstdc++ -std=c++17 -Wno-unused main_test_queue.cc s21_utils.cc -o queue
-	c++ -g -Wall -Werror -Wextra -lstdc++ -std=c++17 -Wno-unused main_test_stack.cc s21_utils.cc -o stack
-#	c++ -g -lstdc++ -std=c++17 -Wno-unused main_test_stack.cc s21_utils.cc -o stack
+OBJS			=	${SRCS:.cpp=.o}
+
+CFLAGS			=	-g -Wall -Werror -Wextra -lstdc++ -std=c++17 -Wno-unused
+
+CC				=	c++
+
+RM				=	rm -f
+
+.PHONY	:	all clean fclean re
+
+.o		:	%.cpp ${HEADERS}
+			${CC} ${CFLAGS} -c $< -o ${<:.cpp=.o}
+
+${NAME}	:	${OBJS} ${HEADERS}
+			ar rcs ${NAME} $?
+
+all		:	${NAME}
+
+clean	:
+			${RM} ${OBJS}
+
+fclean	:	clean
+			${RM} ${NAME}
+
+re		:	fclean all
