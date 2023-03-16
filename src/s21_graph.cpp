@@ -57,8 +57,25 @@ int Graph::loadGraphFromFile(std::string filename) {
   return (0);
 }
 
+int Graph::graphSimmetric() {
+  int k = 0;
+  for (size_t i = 0; i < size_; i++) {
+    for (size_t j = 0; j < size_; j++) {
+      if (graph_[i][j] != graph_[j][i]) {
+        k++;
+      }
+    }
+  }
+  if (k == 0) {
+    return (0);
+  } else {
+    return (1);
+  }
+}
+
 std::string Graph::convertGraphToDot() {
   std::string rez = "";
+  std::string delim;
   size_t i = 0;
   size_t j;
 
@@ -67,12 +84,17 @@ std::string Graph::convertGraphToDot() {
     i++;
   }
   i = 0;
+  if (graphSimmetric() == 0) {
+    delim = " -- ";
+  } else {
+    delim = " -> ";
+  }
   while (i < size_) {
     j = i + 1;
     while (j < size_) {
       if (graph_[i][j] != 0) {
-        rez = rez + std::to_string(i + 1) + " -- " + std::to_string(j + 1);
-        rez += ";\n";
+        rez = rez + std::to_string(i + 1) + delim + std::to_string(j + 1) +
+              " [weight=" + std::to_string(graph_[i][j]) + "];\n";
       }
       j++;
     }

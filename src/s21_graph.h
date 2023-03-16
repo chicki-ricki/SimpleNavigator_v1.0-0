@@ -29,6 +29,7 @@ class Graph {
   unsigned int size_;
   std::vector<int> makeVector(std::string const &, char);
   std::string convertGraphToDot();
+  int graphSimmetric();
 };
 
 // #endif
