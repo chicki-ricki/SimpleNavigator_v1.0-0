@@ -73,6 +73,44 @@ int Graph::graphSimmetric() {
   }
 }
 
+std::string Graph::simmetricGraph(std::string delim) {
+  std::string rez = "";
+  size_t i = 0;
+  size_t j;
+
+  while (i < size_) {
+    j = i + 1;
+    while (j < size_) {
+      if (graph_[i][j] != 0) {
+        rez = rez + std::to_string(i + 1) + delim + std::to_string(j + 1) +
+              " [weight=" + std::to_string(graph_[i][j]) + "];\n";
+      }
+      j++;
+    }
+    i++;
+  }
+  return (rez);
+}
+
+std::string Graph::unsimmetricGraph(std::string delim) {
+  std::string rez = "";
+  size_t i = 0;
+  size_t j;
+
+  while (i < size_) {
+    j = 0;
+    while (j < size_) {
+      if (graph_[i][j] != 0 && (graph_[i][j] != graph_[j][i] || i < j)) {
+        rez = rez + std::to_string(i + 1) + delim + std::to_string(j + 1) +
+              " [weight=" + std::to_string(graph_[i][j]) + "];\n";
+      }
+      j++;
+    }
+    i++;
+  }
+  return (rez);
+}
+
 std::string Graph::convertGraphToDot() {
   std::string rez = "";
   std::string delim;
@@ -86,20 +124,22 @@ std::string Graph::convertGraphToDot() {
   i = 0;
   if (graphSimmetric() == 0) {
     delim = " -- ";
+    rez += simmetricGraph(delim);
   } else {
     delim = " -> ";
+    rez += unsimmetricGraph(delim);
   }
-  while (i < size_) {
-    j = i + 1;
-    while (j < size_) {
-      if (graph_[i][j] != 0) {
-        rez = rez + std::to_string(i + 1) + delim + std::to_string(j + 1) +
-              " [weight=" + std::to_string(graph_[i][j]) + "];\n";
-      }
-      j++;
-    }
-    i++;
-  }
+  // while (i < size_) {
+  //   j = i + 1;
+  //   while (j < size_) {
+  //     if (graph_[i][j] != 0) {
+  //       rez = rez + std::to_string(i + 1) + delim + std::to_string(j + 1) +
+  //             " [weight=" + std::to_string(graph_[i][j]) + "];\n";
+  //     }
+  //     j++;
+  //   }
+  //   i++;
+  // }
   return (rez);
 }
 

@@ -30,6 +30,8 @@ class Graph {
   std::vector<int> makeVector(std::string const &, char);
   std::string convertGraphToDot();
   int graphSimmetric();
+  std::string simmetricGraph(std::string);
+  std::string unsimmetricGraph(std::string);
 };
 
 // #endif
