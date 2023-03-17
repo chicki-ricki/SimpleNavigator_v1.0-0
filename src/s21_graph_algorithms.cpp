@@ -172,22 +172,27 @@ int **GraphAlgorithms::getLeastSpanningTree(Graph &graph) {
   return (res);
 }
 
-double GraphAlgorithms::probability(size_t to, TsmResult &ant,
-                                    double **distance, double **pheromone,
-                                    size_t vertex) {
-  for (size_t i = 0; i < ant.vertices.size(); i++) {
-    if ((int)to == ant.vertices[i]) {
-      return (0);
+double GraphAlgorithms::probability(size_t to, Ant &ant, double **distance,
+                                    double **pheromone, size_t vertex) {
+  int ratio = 1;
+  for (size_t i = 0; i < ant.data.vertices.size(); i++) {
+    if ((int)to == ant.data.vertices[i]) {
+      ratio = 5;
     }
   }
+  std::random_device rd;   // non-deterministic generator
+  std::mt19937 gen(rd());  // to seed mersenne twister.
+  std::uniform_int_distribution<> rNumberInt(
+      1, RND_MAX);  // distribute results between 1 and RND_MAX inclusive.
+
   double sum = 0.0;
   double ret;
-  size_t from = ant.vertices[ant.vertices.size() - 1];
+  size_t from = ant.data.vertices[ant.data.vertices.size() - 1];
 
   for (size_t j = 0; j < vertex; j++) {
     int flag = 1;
-    for (size_t i = 0; i < ant.vertices.size(); i++) {
-      if ((int)j == ant.vertices[i]) {
+    for (size_t i = 0; i < ant.data.vertices.size(); i++) {
+      if ((int)j == ant.data.vertices[i]) {
         flag = 0;
       }
       if (flag == 1) {
@@ -195,7 +200,12 @@ double GraphAlgorithms::probability(size_t to, TsmResult &ant,
       }
     }
   }
-  ret = (pow(pheromone[from][to], ALPHA) * pow(distance[from][to], BETA)) / sum;
+  if (ant.exitFlag == 1 && ant.countVizit == vertex - 1 &&
+      distance[from][to] != 0.0) {
+    distance[from][to] = 1;
+  }
+  ret = (pow(pheromone[from][to], ALPHA) * pow((distance[from][to]), BETA)) *
+        rNumberInt(gen) / ((sum + 1) * ratio);
   return (ret);
 }
 
@@ -210,56 +220,65 @@ void GraphAlgorithms::freeArr(double **arr, size_t count) {
   }
 }
 
-void GraphAlgorithms::initAnts(TsmResult *ants, size_t graphSize) {
+void GraphAlgorithms::initAnts(Ant *ants, size_t graphSize) {
   size_t start = 0;
   for (int i = 0; i < M; i++) {
     start += 1;
-    ants[i].distance = 0.0;
-    ants[i].vertices.push_back(start);
+    ants[i].data.distance = 0.0;
+    ants[i].data.vertices.clear();
+    ants[i].data.vertices.push_back(start);
+    ants[i].vizit = new int[graphSize];
+    bzero(ants[i].vizit, graphSize);
+    ants[i].vizit[start] = 1;
+    ants[i].countVizit = 1;
+    ants[i].exitFlag = 0;
+    ants[i].startVertex = start;
     if (start == graphSize - 1) {
       start = 0;
     }
   }
 }
 
-void GraphAlgorithms::initData(double **dist, double **pheromone,
+void GraphAlgorithms::initData(double **distance, double **pheromone,
                                size_t graphSize, Graph &graph) {
   for (size_t i = 0; i < graphSize; i++) {
-    dist[i] = new double[graphSize];
+    distance[i] = new double[graphSize];
     pheromone[i] = new double[graphSize];
     for (size_t j = 0; j < graphSize; j++) {
       pheromone[i][j] = 1.0 / graphSize;
       if (graph.getGraph()[i][j] != 0) {
-        dist[i][j] = 1.0 / graph.getGraph()[i][j];
+        distance[i][j] = 1.0 / graph.getGraph()[i][j];
+      } else {
+        distance[i][j] = 0.0;
       }
     }
   }
 }
 
-void GraphAlgorithms::rangePheromone(TsmResult &ant, double **pheromone) {
-  for (size_t m = 0; m < ant.vertices.size() - 1; m++) {
-    size_t from = ant.vertices[m % ant.vertices.size()];
-    size_t to = ant.vertices[(m + 1) % ant.vertices.size()];
+void GraphAlgorithms::rangePheromone(Ant &ant, double **pheromone) {
+  for (size_t m = 0; m < ant.data.vertices.size() - 1; m++) {
+    size_t from = ant.data.vertices[m % ant.data.vertices.size()];
+    size_t to = ant.data.vertices[(m + 1) % ant.data.vertices.size()];
 
-    pheromone[from][to] += Q / ant.distance;
+    pheromone[from][to] += Q / ant.data.distance;
     pheromone[to][from] = pheromone[from][to];
   }
 }
 
-void GraphAlgorithms::checkBestWay(TsmResult &ant, TsmResult &way) {
-  if (ant.distance < way.distance || way.distance < 0) {
-    way.distance = ant.distance;
+void GraphAlgorithms::checkBestWay(Ant &ant, TsmResult &way) {
+  if (ant.data.distance < way.distance || way.distance < 0) {
+    way.distance = ant.data.distance;
     way.vertices.clear();
-    for (size_t x = 0; x < ant.vertices.size(); x++) {
-      way.vertices.push_back(ant.vertices[x] + 1);
+    for (size_t x = 0; x < ant.data.vertices.size(); x++) {
+      way.vertices.push_back(ant.data.vertices[x] + 1);
     }
   }
 }
 
-void GraphAlgorithms::updateAnt(TsmResult &ant) {
-  ant.distance = 0.0;
-  ant.vertices.clear();
-  ant.vertices.push_back(0);
+void GraphAlgorithms::updateAnt(Ant &ant) {
+  ant.data.distance = 0.0;
+  ant.data.vertices.clear();
+  ant.data.vertices.push_back(0);
 }
 
 void GraphAlgorithms::updatePheromone(double **pheromone, size_t graphSize) {
@@ -272,6 +291,24 @@ void GraphAlgorithms::updatePheromone(double **pheromone, size_t graphSize) {
   }
 }
 
+int GraphAlgorithms::ckeckValidGraph(Graph &graph) {
+  int column = 0;
+  int str = 0;
+  for (size_t i = 0; i < graph.getSizeGraph(); i++) {
+    for (size_t j = 0; j < graph.getSizeGraph(); j++) {
+      str += graph.getGraph()[i][j];
+      column += graph.getGraph()[j][i];
+    }
+    if (str == 0 || column == 0) {
+      return (1);
+    } else {
+      str = 0;
+      column = 0;
+    }
+  }
+  return (0);
+}
+
 TsmResult GraphAlgorithms::solveTravelingSalesmanProblem(Graph &graph) {
   TsmResult way;
   way.distance = -1;
@@ -279,15 +316,20 @@ TsmResult GraphAlgorithms::solveTravelingSalesmanProblem(Graph &graph) {
   size_t graphSize = graph.getSizeGraph();
   double **distance = new double *[graphSize];
   double **pheromone = new double *[graphSize];
-  TsmResult ants[M];
+  Ant ants[M];
 
+  if (ckeckValidGraph(graph) == 1) {
+    s21::exitError(
+        "Error: impossible to solve the salesman's problem with a "
+        "giving graph");
+  }
   initData(distance, pheromone, graphSize, graph);
   initAnts(ants, graphSize);
   for (int i = 0; i < T_MAX; i++) {  // основной цикл
     // цикл по муравьям
     for (int k = 0; k < M; k++) {
       // поиск маршрута для текущего муравья
-      while (ants[k].vertices.size() <= graphSize) {
+      while (ants[k].countVizit < graphSize) {
         int jMax = -1;
         double pMax = 0.0;
         for (size_t j = 0; j < graphSize; j++) {
@@ -297,25 +339,22 @@ TsmResult GraphAlgorithms::solveTravelingSalesmanProblem(Graph &graph) {
             jMax = j;
           }
         }
-        if (jMax == -1) {
-          int first = ants[k].vertices.back();
-          int second = ants[k].vertices.front();
-          if (graph.getGraph()[first][second] > 0) {
-            ants[k].distance += graph.getGraph()[first][second];
-            ants[k].vertices.push_back(ants[k].vertices.front());
-          } else {
-            s21::exitError(
-                "Error: impossible to solve the salesman's problem with a "
-                "giving graph");
-          }
-        } else {
-          ants[k].distance += graph.getGraph()[ants[k].vertices.back()][jMax];
-          ants[k].vertices.push_back(jMax);
+        ants[k].data.distance +=
+            graph.getGraph()[ants[k].data.vertices.back()][jMax];
+        ants[k].data.vertices.push_back(jMax);
+        if (ants[k].vizit[jMax] == 0) {
+          ants[k].vizit[jMax] = 1;
+          ants[k].countVizit++;
+        }
+        if (ants[k].countVizit == graphSize && ants[k].exitFlag == 0) {
+          ants[k].exitFlag = 1;
+          ants[k].vizit[ants[k].startVertex] = 0;
+          ants[k].countVizit--;
         }
       }
       rangePheromone(ants[k], pheromone);
       checkBestWay(ants[k], way);
-      updateAnt(ants[k]);
+      // updateAnt(ants[k]);
     }
     updatePheromone(pheromone, graphSize);
   }

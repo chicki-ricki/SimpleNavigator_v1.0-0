@@ -3,21 +3,33 @@
 #include <math.h>
 
 #include <algorithm>
+#include <cstring>
+#include <ctime>
+#include <random>
 
 #include "s21_graph.h"
 
-#define ALPHA 1.1      // вес фермента
-#define BETA 2       // коэффициент эвристики
-#define T_MAX 10000  // количество итераций
+#define ALPHA 2     // вес фермента
+#define BETA 0.5      // коэффициент эвристики
+#define T_MAX 1000  // количество итераций
 #define M 20         // количество муравьев в колонии
-#define Q 100    // некоторый регулируемый параметр
-#define RHO 0.5  // коэффициент испарения феромона
+#define Q 100      // некоторый регулируемый параметр
+#define RHO 0.9  // коэффициент испарения феромона
+#define RND_MAX 4  // разброс случайности
 
 struct TsmResult {
   std::vector<int>
       vertices;  // массив с искомым маршрутом (с порядком обхода вершин).
                  // Вместо int* можно использовать std::vector<int>
   double distance;  // длина этого маршрута
+};
+
+struct Ant {
+  TsmResult data;
+  int *vizit;
+  size_t countVizit;
+  int startVertex;
+  int exitFlag;
 };
 
 class Graph;
@@ -75,20 +87,21 @@ class GraphAlgorithms {
   void firstFillArray(int **, Graph &);
   int minElem(int, int);
   void convertToArr(int *, std::vector<int> &);
-  double probability(size_t, TsmResult &, double **, double **, size_t);
+  double probability(size_t, Ant &, double **, double **, size_t);
   static void freeArr(double **, size_t);
   // инициализация муравьев
-  void initAnts(TsmResult *, size_t);
+  void initAnts(Ant *, size_t);
   // инициализация данных о расстоянии и количестве феромона
   void initData(double **, double **, size_t, Graph &);
   // оставляем феромон на пути муравья
-  void rangePheromone(TsmResult &, double **);
+  void rangePheromone(Ant &, double **);
   // проверка на лучшее решение
-  void checkBestWay(TsmResult &, TsmResult &);
+  void checkBestWay(Ant &, TsmResult &);
   // обновление муравья
-  void updateAnt(TsmResult &);
+  void updateAnt(Ant &);
   // обновление феромонов с учетом коэффициента испарения
   void updatePheromone(double **, size_t);
+  int ckeckValidGraph(Graph &);
 };
 
 // #endif
