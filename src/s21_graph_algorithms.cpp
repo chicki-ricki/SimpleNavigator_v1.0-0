@@ -163,8 +163,11 @@ int **GraphAlgorithms::getLeastSpanningTree(Graph &graph) {
         }
       }
     }
-
-    res[x][y] = res[y][x] = min;
+    if (graph_arr[x][y] == graph_arr[y][x]) {
+      res[x][y] = res[y][x] = min;
+    } else {
+      res[x][y] = min;
+    }
     vizit[y] = 1;
     edgeNum++;
   }
