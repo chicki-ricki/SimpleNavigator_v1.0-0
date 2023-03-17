@@ -20,7 +20,7 @@ OBJS_GRAPH	=	${SRC_GRAPH:%.cpp=%.o}
 
 # OBJS_2	=	${SRC_2:%.cpp=%.o}
 
-FLAGS	=	-g -Wall -Werror -Wextra -lstdc++ -std=c++17 -Wno-unused
+FLAGS	=	-g -Wall -Wextra -lstdc++ -std=c++17 -Wno-unused# -Werror
 
 CC		=	c++
 
@@ -48,11 +48,13 @@ all		:	${NAME}
 
 # all		:	${NAME_1} ${NAME_2}
 
-# clean	:
-# 	${RM} ${OBJS}
+clean	:
+	${RM} ${OBJS_GRAPH}
+	cd ./s21_containers && ${MAKE} clean
 
-# fclean	:	clean
-# 	${RM} ${NAME}
+fclean	:	clean
+	${RM} ${NAME}
+	cd ./s21_containers && ${MAKE} fclean
 
 # re		:	fclean all
 
