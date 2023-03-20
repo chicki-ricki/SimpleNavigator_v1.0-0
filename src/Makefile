@@ -1,8 +1,14 @@
 # # В операционных системах GNU/Linux имена файлов библиотек должны иметь префикс "lib", статические библиотеки - расширение *.a, динамические - *.so.
 
-NAME			=	s21_graph.a
+NAME			=	graph
 
-# NAME_1	=	s21_graph.a
+SRC				=	main.cpp
+
+OBJS			=	${SRC:%.cpp=%.o}
+
+
+
+NAME_GRAPH		=	s21_graph.a
 
 SRC_GRAPH		=	s21_graph.cpp
 
@@ -12,13 +18,13 @@ OBJS_GRAPH	=	${SRC_GRAPH:%.cpp=%.o}
 
 
 
-# NAME_2	=	s21_graph_algorithms.a
+NAME_ALG	=	libs21_graph_algorithms.a
 
-# SRC_2		=	s21_graph_algorithms.cpp
+SRC_ALG		=	s21_graph_algorithms.cpp
 
-# HEADERS_2	=	s21_graph_algorithms.h
+HEADERS_ALG	=	s21_graph_algorithms.h
 
-# OBJS_2	=	${SRC_2:%.cpp=%.o}
+OBJS_ALG	=	${SRC_ALG:%.cpp=%.o}
 
 FLAGS	=	-g -Wall -Wextra -lstdc++ -std=c++17 -Wno-unused# -Werror
 
@@ -26,22 +32,27 @@ CC		=	c++
 
 RM		=	rm -f
 
-.PHONY	:	all clean fclean re test
+.PHONY	:	all clean fclean re test s21_graph.a s21_graph_algorithms.a
 
-%.o		:	%.cpp ${HEADERS_GRAPH}
+%.o		:	%.cpp ${HEADERS_GRAPH} ${HEADERS_ALG}
 			${CC} ${FLAGS} -c $< -o $@
 
 # %.o		:	%.cpp ${HEADERS_1} ${HEADERS_2}
 # 	${CC} ${FLAGS} -c $< -o $@
 
-# ${NAME_1}:	${OBJS_1}
-# 	${CC} ${FLAGS} -I ${HEADERS_1} ${SRC_1} -o $@
-
-${NAME}	:	${OBJS_GRAPH} ${HEADERS_GRAPH}
-			cd ./s21_containers && ${MAKE}
-			ar rcs ${NAME} s21_containers/*.o $?
+${NAME}:	${OBJS}
+	${MAKE} ${NAME_ALG}
+	${CC} ${FLAGS} -I. ${SRC} -L. -ls21_graph_algorithms -o $@
 
 all		:	${NAME}
+
+${NAME_GRAPH}	:	${OBJS_GRAPH} ${HEADERS_GRAPH}
+			cd ./s21_containers && ${MAKE}
+			ar rcs ${NAME_GRAPH} s21_containers/*.o $?
+
+${NAME_ALG}	:	${OBJS_ALG} ${HEADERS_ALG} ${OBJS_GRAPH} ${HEADERS_GRAPH}
+#			${MAKE} ${NAME_GRAPH}
+			ar rcs ${NAME_ALG} $?
 
 # ${NAME_2}:	${OBJS_2}
 # 	${CC} ${FLAGS} -I ${HEADERS_2} ${SRC_2} -o $@
@@ -49,14 +60,14 @@ all		:	${NAME}
 # all		:	${NAME_1} ${NAME_2}
 
 clean	:
-	${RM} ${OBJS_GRAPH}
+	${RM} ${OBJS_GRAPH} ${OBJS_ALG} ${OBJS}
 	cd ./s21_containers && ${MAKE} clean
 
 fclean	:	clean
-	${RM} ${NAME}
+	${RM} ${NAME} ${NAME_GRAPH} ${NAME_ALG}
 	cd ./s21_containers && ${MAKE} fclean
 
-# re		:	fclean all
+re		:	fclean all
 
 # # test	:
 
