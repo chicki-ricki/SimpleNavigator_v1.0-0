@@ -12,7 +12,7 @@ Graph &Graph::operator=(const Graph &rhs) {
   return (*this);
 }
 
-Graph::Graph(const Graph &src) : Graph() { *this = src; }
+Graph::Graph(const Graph &src) : size_(0) { *this = src; }
 
 Graph &Graph::operator=(Graph &&gg) {
   if (graph_.size() > 0) {
@@ -29,7 +29,7 @@ Graph &Graph::operator=(Graph &&gg) {
   return (*this);
 }
 
-Graph::Graph(Graph &&gg) : Graph() { *this = gg; }
+Graph::Graph(Graph &&gg) : size_(0) { *this = gg; }
 
 Graph::~Graph() {
   if (graph_.size() > 0) {
@@ -43,7 +43,6 @@ int Graph::loadGraphFromFile(std::string filename) {
   size_t i = 0;
 
   if (inFile.is_open() != true) {
-    // s21::exitError("Error: file with graph is not open");
     return (1);
   }
   inFile >> size_;
@@ -115,7 +114,6 @@ std::string Graph::convertGraphToDot() {
   std::string rez = "";
   std::string delim;
   size_t i = 0;
-  size_t j;
 
   while (i < size_) {
     rez = rez + std::to_string(i + 1) + ";\n";
@@ -129,17 +127,6 @@ std::string Graph::convertGraphToDot() {
     delim = " -> ";
     rez += unsimmetricGraph(delim);
   }
-  // while (i < size_) {
-  //   j = i + 1;
-  //   while (j < size_) {
-  //     if (graph_[i][j] != 0) {
-  //       rez = rez + std::to_string(i + 1) + delim + std::to_string(j + 1) +
-  //             " [weight=" + std::to_string(graph_[i][j]) + "];\n";
-  //     }
-  //     j++;
-  //   }
-  //   i++;
-  // }
   return (rez);
 }
 

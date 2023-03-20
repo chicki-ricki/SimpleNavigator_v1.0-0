@@ -1,4 +1,4 @@
-# # В операционных системах GNU/Linux имена файлов библиотек должны иметь префикс "lib", статические библиотеки - расширение *.a, динамические - *.so.
+# В операционных системах GNU/Linux имена файлов библиотек должны иметь префикс "lib", статические библиотеки - расширение *.a, динамические - *.so.
 
 NAME			=	graph
 
@@ -26,7 +26,7 @@ HEADERS_ALG	=	s21_graph_algorithms.h
 
 OBJS_ALG	=	${SRC_ALG:%.cpp=%.o}
 
-FLAGS	=	-g -Wall -Wextra -lstdc++ -std=c++17 -Wno-unused# -Werror
+FLAGS	=	-g -Wall -Wextra -Werror -std=c++17
 
 CC		=	c++
 
@@ -34,30 +34,19 @@ RM		=	rm -f
 
 .PHONY	:	all clean fclean re test s21_graph.a s21_graph_algorithms.a
 
-%.o		:	%.cpp ${HEADERS_GRAPH} ${HEADERS_ALG}
-			${CC} ${FLAGS} -c $< -o $@
-
-# %.o		:	%.cpp ${HEADERS_1} ${HEADERS_2}
-# 	${CC} ${FLAGS} -c $< -o $@
-
 ${NAME}:	${OBJS}
 	${MAKE} ${NAME_ALG}
 	${CC} ${FLAGS} -I. -I./s21_containers ${SRC} -L. -ls21_graph_algorithms -L./s21_containers -ls21_containers -o $@
 
 all		:	${NAME}
 
-${NAME_GRAPH}	:	${OBJS_GRAPH} ${HEADERS_GRAPH}
+${NAME_GRAPH}	:	${OBJS_GRAPH}
 			cd ./s21_containers && ${MAKE}
 			ar rcs ${NAME_GRAPH} s21_containers/*.o $?
 
-${NAME_ALG}	:	${OBJS_ALG} ${HEADERS_ALG} ${OBJS_GRAPH} ${HEADERS_GRAPH}
+${NAME_ALG}	:	${OBJS_ALG} ${OBJS_GRAPH}
 			${MAKE} ${NAME_GRAPH}
 			ar rcs ${NAME_ALG} $?
-
-# ${NAME_2}:	${OBJS_2}
-# 	${CC} ${FLAGS} -I ${HEADERS_2} ${SRC_2} -o $@
-
-# all		:	${NAME_1} ${NAME_2}
 
 clean	:
 	${RM} ${OBJS_GRAPH} ${OBJS_ALG} ${OBJS}
@@ -73,10 +62,8 @@ re		:	fclean all
 
 style	:
 	cp ../materials/linters/.clang-format ./
+	clang-format -i *.cpp *.h ./s21_containers/*.cpp ./s21_containers/*.h
 	clang-format -n *.cpp *.h ./s21_containers/*.cpp ./s21_containers/*.h
 
 leak	:
 	CK_FORK=no leaks -atExit -- ./${NAME}
-
-# all:	s21_graph_algorithms.h s21_graph.h s21_containers/s21_containers.h s21_containers/s21_stack.h s21_containers/s21_stack.tpp s21_containers/s21_utils.h
-# 	c++ -g -Wall -Werror -Wextra -lstdc++ -std=c++17 -Wno-unused main.cpp s21_graph.cpp s21_containers/s21_utils.cpp s21_graph_algorithms.cpp -o graph

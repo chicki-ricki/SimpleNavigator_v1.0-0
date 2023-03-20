@@ -29,13 +29,6 @@ s21::Queue<T>::Queue(Queue &&qq) : Queue() {
 }
 
 template <typename T>
-s21::Queue<T>::Queue(std::initializer_list<T> const &init) : Queue() {
-  for (auto it = init.begin(); it != init.end(); it++) {
-    push(*it);
-  }
-}
-
-template <typename T>
 s21::Queue<T>::~Queue() {
   this->Clear();
 }
@@ -74,7 +67,6 @@ T &s21::Queue<T>::pop() {
     tail_ = nullptr;
   }
   size_--;
-  // return (ret->value);
   return (*val);
 }
 
@@ -117,8 +109,6 @@ void s21::Queue<T>::Clear() {
   }
   tail_ = nullptr;
   size_ = 0;
-  // if (head_)
-  //   delete head_;
 }
 
 #endif

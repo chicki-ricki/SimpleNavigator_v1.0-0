@@ -17,9 +17,6 @@ s21::Stack<T>::Stack(const Stack &src) : Stack() {
 
 template <typename T>
 s21::Stack<T> &s21::Stack<T>::operator=(Stack &&ss) {
-  // if (this == &ss)
-  // 	return (*this);
-  // std::cout << "hello from  operator=" << std::endl;
   this->Clear();
   s21::Stack<T>::Copy(ss);
   ss->Clear();
@@ -28,21 +25,12 @@ s21::Stack<T> &s21::Stack<T>::operator=(Stack &&ss) {
 
 template <typename T>
 s21::Stack<T>::Stack(Stack &&ss) : Stack() {
-  // std::cout << "hello from  &&ss" << std::endl;
   *this = ss;
-}
-
-template <typename T>
-s21::Stack<T>::Stack(std::initializer_list<T> const &init) : Stack() {
-  for (auto it = init.begin(); it != init.end(); it++) {
-    push(*it);
-  }
 }
 
 template <typename T>
 s21::Stack<T>::~Stack() {
   this->Clear();
-
 }
 
 template <typename T>
@@ -76,7 +64,6 @@ T &s21::Stack<T>::pop() {
   }
   head_ = head_->next;
   size_--;
-  // return (ret->value);
   return (*val);
 }
 

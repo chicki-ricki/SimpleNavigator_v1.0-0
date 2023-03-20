@@ -8,9 +8,9 @@ HEADERS_STACK	=	s21_stack.h s21_stack.tpp
 
 HEADERS			=	${HEADERS_QUEUE} ${HEADERS_STACK} s21_utils.h
 
-OBJS			=	${SRCS:.cpp=.o}
+OBJS			=	${SRCS:%.cpp=%.o}
 
-CFLAGS			=	-g -Wall -Werror -Wextra -lstdc++ -std=c++17 -Wno-unused
+CFLAGS			=	-g -Wall -Wextra -Werror -std=c++17# -lstdc++ -Wunused-command-line-argument
 
 CC				=	c++
 
@@ -18,10 +18,10 @@ RM				=	rm -f
 
 .PHONY	:	all clean fclean re
 
-.o		:	%.cpp ${HEADERS}
-			${CC} ${CFLAGS} -c $< -o ${<:.cpp=.o}
+%.o		:	%.cpp ${HEADERS}
+			${CC} ${CFLAGS} -c $< -o $@
 
-${NAME}	:	${OBJS} ${HEADERS}
+${NAME}	:	${OBJS}# ${HEADERS}
 			ar rcs ${NAME} $?
 
 all		:	${NAME}

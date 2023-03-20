@@ -7,19 +7,14 @@ GraphAlgorithms &GraphAlgorithms::operator=(const GraphAlgorithms &rhs) {
   return (*this);
 }
 
-GraphAlgorithms::GraphAlgorithms(const GraphAlgorithms &src)
-    : GraphAlgorithms() {
-  *this = src;
-}
+GraphAlgorithms::GraphAlgorithms(const GraphAlgorithms &src) { *this = src; }
 
 GraphAlgorithms &GraphAlgorithms::operator=(GraphAlgorithms &&gg) {
   (void)gg;
   return (*this);
 }
 
-GraphAlgorithms::GraphAlgorithms(GraphAlgorithms &&gg) : GraphAlgorithms() {
-  *this = gg;
-}
+GraphAlgorithms::GraphAlgorithms(GraphAlgorithms &&gg) { *this = gg; }
 
 GraphAlgorithms::~GraphAlgorithms() {}
 
@@ -177,7 +172,6 @@ int **GraphAlgorithms::getLeastSpanningTree(Graph &graph) {
 
 double GraphAlgorithms::probability(size_t to, Ant &ant, double **distance,
                                     double **pheromone, size_t vertex) {
-  //  std::cout << "Probability begin\n";
   int ratio = 1;
   for (size_t i = 0; i < ant.data.vertices.size(); i++) {
     if ((int)to == ant.data.vertices[i]) {
@@ -185,7 +179,6 @@ double GraphAlgorithms::probability(size_t to, Ant &ant, double **distance,
     }
     if (ant.data.vertices.size() > 1 &&
         ant.data.vertices[ant.data.vertices.size() - 2] == (int)to) {
-      //      std::cout << "BACK SPIN\n";
       ratio = 100000;
     }
   }
@@ -197,32 +190,23 @@ double GraphAlgorithms::probability(size_t to, Ant &ant, double **distance,
   double sum = 0.0;
   double ret;
   size_t from = ant.data.vertices[ant.data.vertices.size() - 1];
-  //  std::cout << "Probability before main circle\n";
   for (size_t j = 0; j < vertex; j++) {
     int flag = 1;
-    //    std::cout << "Probability inside main circle - 1\n";
     for (size_t i = 0; i < ant.data.vertices.size(); i++) {
       if ((int)j == ant.data.vertices[i]) {
         flag = 0;
       }
-      //      std::cout << "Probability inside main circle - 2\n";
       if (flag == 1) {
-        //        sum += pow(1, ALPHA) * pow(1, BETA);
-        //        std::cout << "From = " << from << " ; J = " << j << " ;\n";
         sum += pow(pheromone[from][j], ALPHA) * pow(distance[from][j], BETA);
       }
     }
   }
-  //  std::cout << "Probability inside main circle - 3\n";
   if (ant.exitFlag == 1 && ant.countVizit == vertex - 1 &&
       distance[from][to] != 0.0) {
     distance[from][to] = 1;
   }
-  //  std::cout << "Probability inside main circle - 4\n";
   ret = (pow(pheromone[from][to], ALPHA) * pow((distance[from][to]), BETA)) *
         rNumberInt(gen) / ((sum + 1) * ratio);
-  //  std::cout << ret << "\t\t";
-  //  std::cout << "Probability inside main circle - 5\n";
   return (ret);
 }
 
@@ -240,7 +224,6 @@ void GraphAlgorithms::freeArr(double **arr, size_t count) {
 void GraphAlgorithms::initAnts(Ant *ants, size_t graphSize) {
   size_t start = 0;
   for (int i = 0; i < M; i++) {
-    //    std::cout << "Ants_begining\n";
     start += 1;
     ants[i].data.distance = 0.0;
     ants[i].data.vertices.clear();
@@ -249,15 +232,11 @@ void GraphAlgorithms::initAnts(Ant *ants, size_t graphSize) {
     for (int k = 0; k < (int)graphSize; k++) {
       ants[i].vizit[k] = 0;
     }
-    //    bzero(ants[i].vizit, graphSize);
     ants[i].vizit[start] = 1;
     ants[i].countVizit = 1;
     ants[i].exitFlag = 0;
     ants[i].startVertex = start;
     start %= (graphSize - 1);
-    //    if (start == graphSize - 1) {
-    //      start = 0;
-    //    }
   }
 }
 
@@ -283,7 +262,6 @@ void GraphAlgorithms::rangePheromone(Ant &ant, double **pheromone) {
     size_t to = ant.data.vertices[(m + 1) % ant.data.vertices.size()];
 
     pheromone[from][to] += Q / ant.data.distance;
-    //    pheromone[to][from] = pheromone[from][to];
   }
 }
 
@@ -385,8 +363,6 @@ TsmResult GraphAlgorithms::solveTravelingSalesmanProblem(Graph &graph) {
         }
       }
       rangePheromone(ants[k], pheromone);
-      // checkBestWay(ants[k], way);
-
       if (ants[k].countVizit == graphSize) {
         checkBestWay(ants[k], way);
         count_whiteAnt++;

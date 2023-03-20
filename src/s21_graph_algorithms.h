@@ -1,4 +1,6 @@
-#pragma once
+#ifndef S21_GRAPH_ALGORITHMS_H
+#define S21_GRAPH_ALGORITHMS_H
+// #pragma once
 
 #include <math.h>
 
@@ -81,6 +83,10 @@ class GraphAlgorithms {
   коммивояжера и реализовать их в виде методов класса GraphAlgorithms
   */
  private:
+  // GraphAlgorithms &operator=(const GraphAlgorithms &) = delete;
+  // GraphAlgorithms(const GraphAlgorithms &) = delete;
+  // GraphAlgorithms &operator=(GraphAlgorithms &&) = delete;
+  // GraphAlgorithms(GraphAlgorithms &&) = delete;
   int fillStack(s21::Stack<int> &, std::vector<int>, std::vector<int>);
   int fillQueue(s21::Queue<int> &, std::vector<int>, std::vector<int>);
   int checkElem(int, std::vector<int> &);
@@ -104,4 +110,4 @@ class GraphAlgorithms {
   int ckeckValidGraph(Graph &);
 };
 
-// #endif
+#endif

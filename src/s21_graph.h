@@ -1,9 +1,7 @@
-// #ifndef S21_GRAHP_H
-// #define S21_GRAHP_H
-#pragma once
+#ifndef S21_GRAHP_H
+#define S21_GRAHP_H
 
 #include <fstream>
-// #include <iostream>
 #include <sstream>
 #include <vector>
 
@@ -34,4 +32,4 @@ class Graph {
   std::string unsimmetricGraph(std::string);
 };
 
-// #endif
+#endif

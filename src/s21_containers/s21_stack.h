@@ -1,8 +1,6 @@
 #ifndef S21_STACK_H
 #define S21_STACK_H
 
-// #include <strings.h>
-
 #include "s21_utils.h"
 
 namespace s21 {
@@ -15,7 +13,6 @@ class Stack {
   Stack(const Stack &);
   Stack &operator=(Stack &&);
   Stack(Stack &&);
-  Stack(std::initializer_list<T> const &);
   ~Stack();
   void init();
   void push(T const &);

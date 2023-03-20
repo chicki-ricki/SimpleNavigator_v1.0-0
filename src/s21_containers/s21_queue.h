@@ -4,7 +4,6 @@
 #include <strings.h>
 
 #include <initializer_list>
-// #include <iostream>
 
 #include "s21_utils.h"
 
@@ -18,7 +17,6 @@ class Queue {
   Queue(const Queue &);  // конструктор копирования
   Queue &operator=(Queue &&);
   Queue(Queue &&);  // конструктор перемещения
-  Queue(std::initializer_list<T> const &init);
   ~Queue();
   T &peek();
   T &pop();
