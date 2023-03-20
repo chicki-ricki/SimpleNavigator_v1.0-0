@@ -42,7 +42,7 @@ RM		=	rm -f
 
 ${NAME}:	${OBJS}
 	${MAKE} ${NAME_ALG}
-	${CC} ${FLAGS} -I. ${SRC} -L. -ls21_graph_algorithms -o $@
+	${CC} ${FLAGS} -I. -I./s21_containers ${SRC} -L. -ls21_graph_algorithms -L./s21_containers -ls21_containers -o $@
 
 all		:	${NAME}
 
@@ -51,7 +51,7 @@ ${NAME_GRAPH}	:	${OBJS_GRAPH} ${HEADERS_GRAPH}
 			ar rcs ${NAME_GRAPH} s21_containers/*.o $?
 
 ${NAME_ALG}	:	${OBJS_ALG} ${HEADERS_ALG} ${OBJS_GRAPH} ${HEADERS_GRAPH}
-#			${MAKE} ${NAME_GRAPH}
+			${MAKE} ${NAME_GRAPH}
 			ar rcs ${NAME_ALG} $?
 
 # ${NAME_2}:	${OBJS_2}

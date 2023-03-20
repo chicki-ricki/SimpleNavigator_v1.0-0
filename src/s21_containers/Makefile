@@ -1,4 +1,4 @@
-NAME			=	s21_containers.a
+NAME			=	libs21_containers.a
 
 SRCS			=	s21_utils.cpp
 
