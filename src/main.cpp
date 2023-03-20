@@ -86,12 +86,33 @@ void makeVoyage(Graph &graph, GraphAlgorithms &GraphAlgorithms) {
 
   rez = GraphAlgorithms.solveTravelingSalesmanProblem(graph);
   std::cout << "***********" << std::endl;
-  std::cout << "Voyage:" << std::endl;
-  std::vector<int>::iterator it = rez.vertices.begin();
-  for (; it != rez.vertices.end(); it++) {
-    std::cout << *it;
-    if (it != rez.vertices.end() - 1) {
-      std::cout << "->";
+  std::cout << "The shortest voyage by ant's algorithm:" << std::endl;
+  if (*(rez.vertices.begin()) != 1) {
+    std::vector<int> temp_v;
+    int k = -1;
+    while (rez.vertices[++k] != 1)
+      ;
+    for (int i = k; i < (int)rez.vertices.size(); i++) {
+      temp_v.push_back(rez.vertices[i]);
+    }
+    for (int i = 1; i < k; i++) {
+      temp_v.push_back(rez.vertices[i]);
+    }
+    temp_v.push_back(1);
+    std::vector<int>::iterator itTemp = temp_v.begin();
+    for (; itTemp != temp_v.end(); itTemp++) {
+      std::cout << *itTemp;
+      if (itTemp != temp_v.end() - 1) {
+        std::cout << "->";
+      }
+    }
+  } else {
+    std::vector<int>::iterator it = rez.vertices.begin();
+    for (; it != rez.vertices.end(); it++) {
+      std::cout << *it;
+      if (it != rez.vertices.end() - 1) {
+        std::cout << "->";
+      }
     }
   }
   std::cout << std::endl;
@@ -102,6 +123,7 @@ int main(int ac, char **av) {
   if (ac == 2) {
     Graph graph;
     GraphAlgorithms GraphAlgorithms;
+    time_t bg, nd_time;
 
     if (graph.loadGraphFromFile(std::string(av[1])) != 0) {
       s21::exitError("Error: cannot read file with graph");
@@ -114,7 +136,10 @@ int main(int ac, char **av) {
     makeDeyxtraAlg(graph, GraphAlgorithms);
     makeFloydWorshelAlg(graph, GraphAlgorithms);
     makeAlgOfPrim(graph, GraphAlgorithms);
+    time(&bg);
     makeVoyage(graph, GraphAlgorithms);
+    time(&nd_time);
+    std::cout << "Calculating time: " << difftime(nd_time, bg) << " seconds\n";
   } else {
     s21::exitError("Error: invalid count of arguments");
   }

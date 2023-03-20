@@ -9,13 +9,13 @@
 
 #include "s21_graph.h"
 
-#define ALPHA 2     // вес фермента
-#define BETA 0.5      // коэффициент эвристики
-#define T_MAX 1000  // количество итераций
-#define M 20         // количество муравьев в колонии
-#define Q 100      // некоторый регулируемый параметр
-#define RHO 0.9  // коэффициент испарения феромона
-#define RND_MAX 4  // разброс случайности
+#define ALPHA 0.5  // вес фермента
+#define BETA 3     // коэффициент видимости точки
+#define T_MAX 800  // количество итераций
+#define M 44       // количество муравьев в колонии
+#define Q 500      //  Объем феромона у муравья
+#define RHO 0.05   // коэффициент испарения феромона
+#define RND_MAX 12  // разброс случайности
 
 struct TsmResult {
   std::vector<int>
@@ -98,7 +98,7 @@ class GraphAlgorithms {
   // проверка на лучшее решение
   void checkBestWay(Ant &, TsmResult &);
   // обновление муравья
-  void updateAnt(Ant &);
+  void updateAnt(Ant &, int);
   // обновление феромонов с учетом коэффициента испарения
   void updatePheromone(double **, size_t);
   int ckeckValidGraph(Graph &);

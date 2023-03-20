@@ -71,8 +71,12 @@ re		:	fclean all
 
 # # test	:
 
+style	:
+	cp ../materials/linters/.clang-format ./
+	clang-format -n *.cpp *.h ./s21_containers/*.cpp ./s21_containers/*.h
 
-
+leak	:
+	CK_FORK=no leaks -atExit -- ./${NAME}
 
 # all:	s21_graph_algorithms.h s21_graph.h s21_containers/s21_containers.h s21_containers/s21_stack.h s21_containers/s21_stack.tpp s21_containers/s21_utils.h
 # 	c++ -g -Wall -Werror -Wextra -lstdc++ -std=c++17 -Wno-unused main.cpp s21_graph.cpp s21_containers/s21_utils.cpp s21_graph_algorithms.cpp -o graph
