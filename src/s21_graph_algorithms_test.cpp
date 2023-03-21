@@ -1,4 +1,4 @@
-#include "googletest/include/gtest/gtest.h"
+#include <gtest/gtest.h>
 
 #include "s21_graph_algorithms.h"
 
@@ -7,7 +7,7 @@ TEST(depthFirstSearch_test, depthFirstSearch_data) {
   Graph graph;
   GraphAlgorithms graphAlg;
   int start = 1;
-  int *exp;
+  int *exp = new int[11];
 
   graph.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_11.txt");
   exp = graphAlg.depthFirstSearch(graph, start);

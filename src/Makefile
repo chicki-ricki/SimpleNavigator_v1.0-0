@@ -38,7 +38,7 @@ ${NAME}:	${OBJS}
 	${MAKE} ${NAME_ALG}
 	${CC} ${FLAGS} ${SRC} -I. s21_graph_algorithms.a -Is21_containers/ s21_containers/s21_containers.a -o $@
 
-all		:	${NAME}
+all		:	${NAME} test
 
 ${NAME_GRAPH}	:	${OBJS_GRAPH}
 			cd ./s21_containers && ${MAKE}
@@ -53,13 +53,13 @@ clean	:
 	cd ./s21_containers && ${MAKE} clean
 
 fclean	:	clean
-	${RM} ${NAME} ${NAME_GRAPH} ${NAME_ALG}
+	${RM} ${NAME} ${NAME_GRAPH} ${NAME_ALG} test
 	cd ./s21_containers && ${MAKE} fclean
 
 re		:	fclean all
 
 test	:	all
-	${CC} -lgtest s21_graph_algorithms_test.cpp s21_graph_algorithms.a -o test
+	${CC} -std=c++17 -lgtest s21_graph_algorithms_test.cpp s21_graph_algorithms.a s21_containers/s21_containers.a -o test
 
 google-style	:
 	@cp ../materials/linters/.clang-format ./
@@ -69,5 +69,5 @@ google-style	:
 leak	:
 	CK_FORK=no leaks -atExit -- ./${NAME}
 
-google-test	:
-	
+install_gtest	:
+	brew install web-eid/gtest/gtest
