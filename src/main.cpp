@@ -32,8 +32,9 @@ void printResult2D(int **matrix, unsigned int count) {
 
 void makeDepthFirstSearch(Graph &graph, GraphAlgorithms &GraphAlgorithms) {
   int *testGraph;
+  int start = 1;
 
-  testGraph = GraphAlgorithms.depthFirstSearch(graph, 1);
+  testGraph = GraphAlgorithms.depthFirstSearch(graph, start);
   std::cout << "***********" << std::endl;
   std::cout << "обход в глубину: " << std::endl;
   printResult(testGraph, graph.getSizeGraph());

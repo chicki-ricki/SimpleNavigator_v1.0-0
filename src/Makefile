@@ -59,6 +59,7 @@ fclean	:	clean
 re		:	fclean all
 
 test	:	all
+	${CC} -lgtest s21_graph_algorithms_test.cpp s21_graph_algorithms.a -o test
 
 google-style	:
 	@cp ../materials/linters/.clang-format ./
