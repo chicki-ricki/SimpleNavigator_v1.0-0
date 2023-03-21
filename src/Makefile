@@ -18,7 +18,7 @@ OBJS_GRAPH	=	${SRC_GRAPH:%.cpp=%.o}
 
 
 
-NAME_ALG	=	libs21_graph_algorithms.a
+NAME_ALG	=	s21_graph_algorithms.a
 
 SRC_ALG		=	s21_graph_algorithms.cpp
 
@@ -36,7 +36,7 @@ RM		=	rm -f
 
 ${NAME}:	${OBJS}
 	${MAKE} ${NAME_ALG}
-	${CC} ${FLAGS} -I. -I./s21_containers ${SRC} -L. -ls21_graph_algorithms -L./s21_containers -ls21_containers -o $@
+	${CC} ${FLAGS} ${SRC} -I. s21_graph_algorithms.a -Is21_containers/ s21_containers/s21_containers.a -o $@
 
 all		:	${NAME}
 
@@ -58,12 +58,15 @@ fclean	:	clean
 
 re		:	fclean all
 
-# # test	:
+test	:	all
 
-style	:
-	cp ../materials/linters/.clang-format ./
-	clang-format -i *.cpp *.h ./s21_containers/*.cpp ./s21_containers/*.h
+google-style	:
+	@cp ../materials/linters/.clang-format ./
+	@clang-format -i *.cpp *.h ./s21_containers/*.cpp ./s21_containers/*.h
 	clang-format -n *.cpp *.h ./s21_containers/*.cpp ./s21_containers/*.h
 
 leak	:
 	CK_FORK=no leaks -atExit -- ./${NAME}
+
+google-test	:
+	
