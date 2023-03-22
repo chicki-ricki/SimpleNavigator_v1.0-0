@@ -57,6 +57,7 @@ a.out
 queue
 stack
 graph
+test
 
 depthFirstSearch.cc
 *.dot

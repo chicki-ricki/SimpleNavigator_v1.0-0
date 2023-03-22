@@ -34,17 +34,24 @@ RM		=	rm -f
 
 .PHONY	:	all clean fclean re test s21_graph.a s21_graph_algorithms.a
 
-${NAME}:	${OBJS} ${HEADERS_GRAPH} ${HEADERS_ALG}
+${OBJS_GRAPH}:	%.o:	%.cpp ${HEADERS_GRAPH}
+	${CC} ${FLAGS} -I. -c $< -o $@
+
+${OBJS_ALG}:	%.o:	%.cpp ${HEADERS_ALG}
+	${CC} ${FLAGS} -I. -c $< -o $@
+
+${NAME}:
 	${MAKE} ${NAME_ALG}
-	${CC} ${FLAGS} ${SRC} ${SRC_GRAPH} ${SRC_ALG} -Is21_containers/ s21_containers/s21_containers.a -o $@
+	${CC} ${FLAGS} ${SRC} ${SRC_GRAPH} ${SRC_ALG} -I. s21_containers/s21_containers.a -o $@
+#	${CC} ${FLAGS} ${SRC} -I. -Is21_containers/ s21_graph.a s21_graph_algorithms.a s21_containers/s21_containers.a -o $@
 
 all		:	${NAME} test
 
 ${NAME_GRAPH}	:	${OBJS_GRAPH}
 			cd ./s21_containers && ${MAKE}
-			ar rcs ${NAME_GRAPH} s21_containers/*.o $?
+			ar rcs ${NAME_GRAPH} $?
 
-${NAME_ALG}	:	${OBJS_ALG} ${OBJS_GRAPH}
+${NAME_ALG}	:	${OBJS_ALG}
 			${MAKE} ${NAME_GRAPH}
 			ar rcs ${NAME_ALG} $?
 
