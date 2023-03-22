@@ -70,4 +70,5 @@ leak	:
 	CK_FORK=no leaks -atExit -- ./${NAME}
 
 install_gtest	:
-	brew install web-eid/gtest/gtest
+#	brew install web-eid/gtest/gtest
+	brew install googletest
