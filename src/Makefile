@@ -28,15 +28,15 @@ OBJS_ALG	=	${SRC_ALG:%.cpp=%.o}
 
 FLAGS	=	-g -Wall -Wextra -Werror -std=c++17
 
-CC		=	c++
+CC		=	g++
 
 RM		=	rm -f
 
 .PHONY	:	all clean fclean re test s21_graph.a s21_graph_algorithms.a
 
-${NAME}:	${OBJS}
+${NAME}:	${OBJS} ${HEADERS_GRAPH} ${HEADERS_ALG}
 	${MAKE} ${NAME_ALG}
-	${CC} ${FLAGS} ${SRC} -I. s21_graph_algorithms.a -Is21_containers/ s21_containers/s21_containers.a -o $@
+	${CC} ${FLAGS} ${SRC} ${SRC_GRAPH} ${SRC_ALG} -Is21_containers/ s21_containers/s21_containers.a -o $@
 
 all		:	${NAME} test
 
@@ -58,8 +58,8 @@ fclean	:	clean
 
 re		:	fclean all
 
-test	:	all
-	${CC} -std=c++17 -lgtest s21_graph_algorithms_test.cpp s21_graph_algorithms.a s21_containers/s21_containers.a -o test
+test	:
+	${CC} s21_graph.cpp s21_graph_algorithms.cpp s21_graph_algorithms_test.cpp s21_containers/s21_containers.a -o test -pthread -std=c++17 -lgtest -lgmock
 
 google-style	:
 	@cp ../materials/linters/.clang-format ./
@@ -70,4 +70,5 @@ leak	:
 	CK_FORK=no leaks -atExit -- ./${NAME}
 
 install_gtest	:
-	brew install web-eid/gtest/gtest
+#	brew install web-eid/gtest/gtest
+	brew install googletest

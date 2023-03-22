@@ -223,7 +223,7 @@ void GraphAlgorithms::freeArr(double **arr, size_t count) {
 
 void GraphAlgorithms::initAnts(Ant *ants, size_t graphSize) {
   size_t start = 0;
-  for (int i = 0; i < M; i++) {
+  for (int i = 0; i < ANT; i++) {
     start += 1;
     ants[i].data.distance = 0.0;
     ants[i].data.vertices.clear();
@@ -324,7 +324,7 @@ TsmResult GraphAlgorithms::solveTravelingSalesmanProblem(Graph &graph) {
   size_t graphSize = graph.getSizeGraph();
   double **distance = new double *[graphSize];
   double **pheromone = new double *[graphSize];
-  Ant ants[M];
+  Ant ants[ANT];
   int count_blackAnt = 0, count_whiteAnt = 0;
 
   if (ckeckValidGraph(graph) == 1) {
@@ -336,7 +336,7 @@ TsmResult GraphAlgorithms::solveTravelingSalesmanProblem(Graph &graph) {
   initAnts(ants, graphSize);
   for (int i = 0; i < T_MAX; i++) {  // основной цикл
     // цикл по муравьям
-    for (int k = 0; k < M; k++) {
+    for (int k = 0; k < ANT; k++) {
       // поиск маршрута для текущего муравья
       while (ants[k].countVizit < graphSize &&
              ants[k].data.vertices.size() < (2 * graphSize)) {
