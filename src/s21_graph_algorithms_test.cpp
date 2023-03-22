@@ -1,9 +1,9 @@
-#include <gtest/gtest.h>
-
 #include "s21_graph_algorithms.h"
 
+#include <gtest/gtest.h>
+
 TEST(depthFirstSearch_test, depthFirstSearch_data) {
-  int rez[5] {1, 2, 4, 3, 5};
+  int rez[5]{1, 2, 4, 3, 5};
   Graph graph;
   GraphAlgorithms graphAlg;
   int start = 1;
@@ -15,7 +15,7 @@ TEST(depthFirstSearch_test, depthFirstSearch_data) {
 }
 
 TEST(breadthFirstSearch_test, breadthFirstSearch_data) {
-  int rez[5] {1, 2, 3, 4, 5};
+  int rez[5]{1, 2, 3, 4, 5};
   Graph graph;
   GraphAlgorithms graphAlg;
   int start = 1;
@@ -26,7 +26,8 @@ TEST(breadthFirstSearch_test, breadthFirstSearch_data) {
   EXPECT_EQ(rez[3], exp[3]);
 }
 
-TEST(getShortestPathBetweenVertices_test, getShortestPathBetweenVertices_data1) {
+TEST(getShortestPathBetweenVertices_test,
+     getShortestPathBetweenVertices_data1) {
   int rez = 20;
   Graph graph;
   GraphAlgorithms graphAlg;
@@ -38,7 +39,8 @@ TEST(getShortestPathBetweenVertices_test, getShortestPathBetweenVertices_data1) 
   EXPECT_EQ(rez, exp);
 }
 
-TEST(getShortestPathBetweenVertices_test, getShortestPathBetweenVertices_data2) {
+TEST(getShortestPathBetweenVertices_test,
+     getShortestPathBetweenVertices_data2) {
   int rez = 130;
   Graph graph;
   GraphAlgorithms graphAlg;

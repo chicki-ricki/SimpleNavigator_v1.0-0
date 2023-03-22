@@ -12,7 +12,7 @@ OBJS			=	${SRCS:%.cpp=%.o}
 
 CFLAGS			=	-g -Wall -Wextra -Werror -std=c++17# -lstdc++ -Wunused-command-line-argument
 
-CC				=	c++
+CC				=	g++
 
 RM				=	rm -f
 
