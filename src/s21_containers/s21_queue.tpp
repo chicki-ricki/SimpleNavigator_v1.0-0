@@ -58,7 +58,7 @@ T &s21::Queue<T>::pop() {
   QueueItem *ret = head_;
   T *val = &(ret->value);
 
-  delete ret;
+  
   if (head_ == nullptr) {
     s21::exitError("Error: queue is empty");
   }
@@ -66,6 +66,7 @@ T &s21::Queue<T>::pop() {
   if (head_ == nullptr) {
     tail_ = nullptr;
   }
+  delete ret;
   size_--;
   return (*val);
 }

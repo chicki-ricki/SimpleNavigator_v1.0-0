@@ -57,13 +57,13 @@ T &s21::Stack<T>::pop() {
   StackItem *ret = head_;
   // создание указателя на значение, без указателя - лики:
   T *val = &(ret->value);
-  delete ret;
-
+//  delete ret;
   if (head_ == nullptr) {
     s21::exitError("Error: stack is empty");
   }
   head_ = head_->next;
   size_--;
+  delete ret;
   return (*val);
 }
 
