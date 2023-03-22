@@ -21,8 +21,8 @@ RM				=	rm -f
 %.o		:	%.cpp ${HEADERS}
 			${CC} ${CFLAGS} -c $< -o $@
 
-${NAME}	:	${OBJS}# ${HEADERS}
-			ar rcs ${NAME} $?
+${NAME}	:	${OBJS} ${HEADERS}
+			ar rcs ${NAME} ${OBJS}
 
 all		:	${NAME}
 

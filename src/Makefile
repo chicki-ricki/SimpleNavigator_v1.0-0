@@ -40,10 +40,10 @@ ${OBJS_GRAPH}:	%.o:	%.cpp ${HEADERS_GRAPH}
 ${OBJS_ALG}:	%.o:	%.cpp ${HEADERS_ALG}
 	${CC} ${FLAGS} -I. -c $< -o $@
 
-${NAME}:
-	${MAKE} ${NAME_ALG}
-	${CC} ${FLAGS} ${SRC} ${SRC_GRAPH} ${SRC_ALG} -I. s21_containers/s21_containers.a -o $@
-#	${CC} ${FLAGS} ${SRC} -I. -Is21_containers/ s21_graph.a s21_graph_algorithms.a s21_containers/s21_containers.a -o $@
+${NAME}: ${NAME_GRAPH} ${NAME_ALG}
+#	${MAKE} ${NAME_ALG}
+#	${CC} ${FLAGS} ${SRC} ${SRC_GRAPH} ${SRC_ALG} -I. s21_containers/s21_containers.a -o $@
+	${CC} ${FLAGS} ${SRC} -I. -Is21_containers/ s21_graph.a s21_graph_algorithms.a s21_containers/s21_containers.a -o $@
 
 all		:	${NAME} test
 
