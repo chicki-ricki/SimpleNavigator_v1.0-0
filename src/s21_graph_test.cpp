@@ -175,10 +175,17 @@ TEST(LoadFromFile, NoExistFile) {
   EXPECT_EQ(graph.loadGraphFromFile("noFile.txt"), 1);
 }
 
-TEST(LoadFromFile, ElementaryGraph) {
-  
+TEST(LoadFromFile, EmptyGraph) {
+  Graph graph;
+
+  EXPECT_EQ(graph.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_0.txt"), 2);
 }
 
+TEST(LoadFromFile, ElementaryGraph) {
+  Graph graph;
+
+  EXPECT_EQ(graph.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_1.txt"), 2);
+}
 
 
 

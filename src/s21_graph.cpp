@@ -40,8 +40,16 @@ Graph::~Graph() {
 }
 
 int Graph::checkGraph() {
-  if (size_ == 0) {  // empty file
-    return (2);
+  if (size_ < 2) {
+    return (2);  // empty file or matrix without edges
+  }
+  if (graph_.size() != size_) {
+    return (3);  // graph has strings no equal size_
+  }
+  for (std::vector<std::vector<int> >::iterator it = graph_.begin(); it != graph_.end(); it++) {
+    if (it->size() != size_) {
+      return (4);  // graph has column no equal size_
+    }
   }
 
 
@@ -52,6 +60,7 @@ int Graph::loadGraphFromFile(std::string filename) {
   std::ifstream inFile(filename);
   std::string line;
   size_t i = 0;
+  int check = 0;
 
   if (inFile.is_open() != true) {
     return (1);
@@ -64,7 +73,8 @@ int Graph::loadGraphFromFile(std::string filename) {
     i++;
   }
   inFile.close();
-  if (int check = checkGraph() != 0) {
+  if ((check = checkGraph()) != 0) {
+// std::cout << "check: " << check << std::endl;
     return (check);
   }
   return (0);
@@ -136,19 +146,10 @@ std::string Graph::unsimmetricGraph(std::string delim) {
 
 std::string Graph::convertGraphToDot() {
   std::string rez = "";
-  // std::string delim;
-  // size_t i = 0;
 
-  // while (i < size_) {
-  //   rez = rez + "\t" + std::to_string(i + 1) + ";\n";
-  //   i++;
-  // }
-  // i = 0;
   if (graphSimmetric() == 0) {
-    // delim = " -- ";
     rez += simmetricGraph(" -- ");
   } else {
-    // delim = " -> ";
     rez += unsimmetricGraph(" -> ");
   }
   rez += "}";
