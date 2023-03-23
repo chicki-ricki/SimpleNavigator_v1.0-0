@@ -187,6 +187,17 @@ TEST(LoadFromFile, ElementaryGraph) {
   EXPECT_EQ(graph.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_1.txt"), 2);
 }
 
+TEST(LoadFromFile, GraphWrongLine) {
+  Graph graph;
+
+  EXPECT_EQ(graph.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_wrong_line.txt"), 3);
+}
+
+TEST(LoadFromFile, GraphWrongColumn) {
+  Graph graph;
+
+  EXPECT_EQ(graph.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_wrong_column.txt"), 4);
+}
 
 
 int main(int argc, char **argv) {
