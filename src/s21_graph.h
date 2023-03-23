@@ -15,6 +15,8 @@ class Graph {
   Graph &operator=(Graph &&);
   Graph(Graph &&);
   ~Graph();
+  int **matrix_;  //для проверки конструктора перемещения
+
   // загрузка графа из файла в формате матрицы смежности:
   int loadGraphFromFile(std::string);
   // выгрузка графа в файл в формате dot:
@@ -30,6 +32,7 @@ class Graph {
   int graphSimmetric();
   std::string simmetricGraph(std::string);
   std::string unsimmetricGraph(std::string);
+  int checkGraph();
 };
 
 #endif

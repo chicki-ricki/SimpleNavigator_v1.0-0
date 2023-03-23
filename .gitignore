@@ -58,6 +58,7 @@ queue
 stack
 graph
 test
+test_*
 
 depthFirstSearch.cc
 *.dot

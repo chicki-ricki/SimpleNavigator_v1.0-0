@@ -66,7 +66,8 @@ fclean	:	clean
 re		:	fclean all
 
 test	:
-	${CC} s21_graph.cpp s21_graph_algorithms.cpp s21_graph_algorithms_test.cpp s21_containers/s21_containers.a -o test -pthread -std=c++17 -lgtest -lgmock
+#	${CC} s21_graph.cpp s21_graph_algorithms.cpp s21_graph_algorithms_test.cpp s21_containers/s21_containers.a -o test_algorithms -pthread -std=c++17 -lgtest -lgmock
+	${CC} s21_graph.cpp s21_graph_test.cpp s21_containers/s21_containers.a -o test_graph -pthread -std=c++17 -lgtest -lgmock -g
 
 google-style	:
 	@cp ../materials/linters/.clang-format ./
