@@ -7,76 +7,83 @@ SRC				=	main.cpp
 OBJS			=	${SRC:%.cpp=%.o}
 
 
+LIB_CONT		=	s21_containers.a
 
-NAME_GRAPH		=	s21_graph.a
+LIB_GRAPH		=	s21_graph.a
 
 SRC_GRAPH		=	s21_graph.cpp
 
 HEADERS_GRAPH	=	s21_graph.h
 
-OBJS_GRAPH	=	${SRC_GRAPH:%.cpp=%.o}
+OBJS_GRAPH		=	${SRC_GRAPH:%.cpp=%.o}
 
 
+LIB_GRAPH_ALG	=	s21_graph_algorithms.a
 
-NAME_ALG	=	s21_graph_algorithms.a
+SRC_ALG			=	s21_graph_algorithms.cpp
 
-SRC_ALG		=	s21_graph_algorithms.cpp
+HEADERS_ALG		=	s21_graph_algorithms.h
 
-HEADERS_ALG	=	s21_graph_algorithms.h
+OBJS_ALG		=	${SRC_ALG:%.cpp=%.o}
 
-OBJS_ALG	=	${SRC_ALG:%.cpp=%.o}
 
-FLAGS	=	-g -Wall -Wextra -Werror -std=c++17
+# NAME_TEST		=	test
 
-CC		=	g++
+# SRC_TEST		=	s21_graph_algorithms_test.cpp s21_graph_test.cpp 
 
-RM		=	rm -f
+# OBJS_TEST		=	${SRC_TEST:%.cpp=%.o}
 
-.PHONY	:	all clean fclean re test s21_graph.a s21_graph_algorithms.a
 
-${OBJS_GRAPH}:	%.o:	%.cpp ${HEADERS_GRAPH}
-	${CC} ${FLAGS} -I. -c $< -o $@
+FLAGS			=	-g -Wall -Wextra -Werror -std=c++17
 
-${OBJS_ALG}:	%.o:	%.cpp ${HEADERS_ALG}
-	${CC} ${FLAGS} -I. -c $< -o $@
+CC				=	g++
 
-${NAME}: ${NAME_GRAPH} ${NAME_ALG}
-#	${MAKE} ${NAME_ALG}
-#	${CC} ${FLAGS} ${SRC} ${SRC_GRAPH} ${SRC_ALG} -I. s21_containers/s21_containers.a -o $@
-	${CC} ${FLAGS} ${SRC} -I. -Is21_containers/ s21_graph.a s21_graph_algorithms.a s21_containers/s21_containers.a -o $@
+RM				=	rm -f
 
-all		:	${NAME} test
+%.o			:	%.cpp 
+			@${CC} ${FLAGS} -I. -c $< -o $@
 
-${NAME_GRAPH}	:	${OBJS_GRAPH}
-			cd ./s21_containers && ${MAKE}
-			ar rcs ${NAME_GRAPH} $?
+.PHONY		:	all clean fclean re test s21_graph.a s21_graph_algorithms.a cont
 
-${NAME_ALG}	:	${OBJS_ALG}
-			${MAKE} ${NAME_GRAPH}
-			ar rcs ${NAME_ALG} $?
+all			:	${LIB_CONT} ${LIB_GRAPH} ${LIB_GRAPH_ALG} ${NAME} test
 
-clean	:
-	${RM} ${OBJS_GRAPH} ${OBJS_ALG} ${OBJS}
-	cd ./s21_containers && ${MAKE} clean
+${NAME}		:	${OBJS} 
+			${CC} ${FLAGS} ${SRC} -I. *.a -o $@
 
-fclean	:	clean
-	${RM} ${NAME} ${NAME_GRAPH} ${NAME_ALG} test
-	cd ./s21_containers && ${MAKE} fclean
+${LIB_GRAPH}:	${OBJS_GRAPH}
+			@ar rcs ${LIB_GRAPH} $?
+			@ranlib ${LIB_GRAPH}
 
-re		:	fclean all
+${LIB_GRAPH_ALG}	:	${OBJS_ALG}
+			@ar rcs ${LIB_GRAPH_ALG} $?
+			@ranlib ${LIB_GRAPH_ALG}
 
-test	:
-#	${CC} s21_graph.cpp s21_graph_algorithms.cpp s21_graph_algorithms_test.cpp s21_containers/s21_containers.a -o test_algorithms -pthread -std=c++17 -lgtest -lgmock
-	${CC} s21_graph.cpp s21_graph_test.cpp s21_containers/s21_containers.a -o test_graph -pthread -std=c++17 -lgtest -lgmock -g
+${LIB_CONT}: 
+			@cd ./s21_containers && ${MAKE}
+			@cp ./s21_containers/s21_containers.a ./s21_containers.a
 
-google-style	:
-	@cp ../materials/linters/.clang-format ./
-	@clang-format -i *.cpp *.h ./s21_containers/*.cpp ./s21_containers/*.h
-	clang-format -n *.cpp *.h ./s21_containers/*.cpp ./s21_containers/*.h
+clean		:
+			${RM} ${OBJS_GRAPH} ${OBJS_ALG} ${OBJS} ${OBJS_TEST}
+			cd ./s21_containers && ${MAKE} clean
 
-leak	:
-	CK_FORK=no leaks -atExit -- ./${NAME}
+fclean		:	clean
+			${RM} ${NAME} ${LIB_GRAPH} ${LIB_GRAPH_ALG} test_algorithms test_graph ${LIB_CONT}
+			cd ./s21_containers && ${MAKE} fclean
 
-install_gtest	:
-#	brew install web-eid/gtest/gtest
-	brew install googletest
+re			:	fclean all 
+
+test		: 	#${OBJS_TEST}
+			${CC} s21_graph_algorithms_test.cpp -L. -I. ${LIB_GRAPH} ${LIB_GRAPH_ALG} ${LIB_CONT} -o test_algorithms -pthread -std=c++17 -lgtest -lgmock
+			${CC} s21_graph_test.cpp -L. -I. ${LIB_GRAPH} ${LIB_CONT} -o test_graph -pthread -std=c++17 -lgtest -lgmock -g
+
+google-style:
+			@cp ../materials/linters/.clang-format ./
+			@clang-format -i *.cpp *.h ./s21_containers/*.cpp ./s21_containers/*.h
+			clang-format -n *.cpp *.h ./s21_containers/*.cpp ./s21_containers/*.h
+
+leak		:
+			CK_FORK=no leaks -atExit -- ./${NAME}
+
+install_gtest:
+#			brew install web-eid/gtest/gtest
+			brew install googletest

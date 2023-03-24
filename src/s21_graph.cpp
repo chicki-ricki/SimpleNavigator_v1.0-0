@@ -40,32 +40,22 @@ Graph::~Graph() {
 }
 
 int Graph::checkGraph() {
-  size_t countLine = 0;
-  size_t countColumn = 0;
+  size_t countColumn;
   if (size_ < 2) {
     return (2);  // empty file or matrix without edges
   }
-//   if (graph_.size() != size_) {
-// std::cout << "graph_.size(): " << graph_.size() << ", size_: " << size_ << std::endl;
-//     return (3);  // graph has strings no equal size_
-//   }
+  if (graph_.size() != size_) {
+    return (3);  // graph has strings no equal size_
+  }
   for (std::vector<std::vector<int> >::iterator it = graph_.begin(); it != graph_.end(); it++) {
-    // if (it->size() != size_) {
-    //   return (4);  // graph has column no equal size_
-    // }
+    countColumn = 0;
     for (std::vector<int>::iterator it2 = it->begin(); it2 != it->end(); it2++) {
       countColumn++;
     }
     if (countColumn != size_) {
       return (4);  // graph has column no equal size_
     }
-    countLine++;
   }
-  if (countLine != size_) {
-    return (3);  // graph has strings no equal size_
-  }
-
-
   return (0);
 }
 
@@ -80,14 +70,15 @@ int Graph::loadGraphFromFile(std::string filename) {
   }
   inFile >> size_;
   getline(inFile, line);
-  while (i < size_) {
-    getline(inFile, line);
+  getline(inFile, line);
+  while (line != "") {
     graph_.push_back(makeVector(line, ' '));
     i++;
+    line = "";
+    getline(inFile, line);
   }
   inFile.close();
   if ((check = checkGraph()) != 0) {
-std::cout << "check: " << check << std::endl;
     return (check);
   }
   return (0);

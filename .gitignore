@@ -63,3 +63,4 @@ test_*
 depthFirstSearch.cc
 *.dot
 alg.cpp
+1Makefile*

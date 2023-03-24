@@ -75,8 +75,8 @@ TEST(GraphAssignmentCopy, RightCopy) {
   test.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_11.txt");
   test = graph;
   EXPECT_EQ(graph.getSizeGraph(), test.getSizeGraph());
-  for (int i = 0; i < graph.getSizeGraph(); i++) {
-    for (int j = 0; j < graph.getSizeGraph(); j++) {
+  for (size_t i = 0; i < graph.getSizeGraph(); i++) {
+    for (size_t j = 0; j < graph.getSizeGraph(); j++) {
       EXPECT_EQ(graph.getGraph()[i][j], test.getGraph()[i][j]);
     }
   }
@@ -198,6 +198,18 @@ TEST(LoadFromFile, GraphWrongColumn) {
 
   EXPECT_EQ(graph.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_wrong_column.txt"), 4);
 }
+
+TEST(LoadFromFile, NonReadableFile) {
+  Graph graph;
+
+  std::system("chmod 000 /Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_4.txt");
+  EXPECT_EQ(graph.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_4.txt"), 1);
+  std::system("chmod 777 /Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_4.txt");
+}
+
+
+
+
 
 
 int main(int argc, char **argv) {
