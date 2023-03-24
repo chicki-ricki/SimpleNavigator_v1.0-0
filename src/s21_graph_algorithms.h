@@ -39,11 +39,6 @@ class Graph;
 class GraphAlgorithms {
  public:
   GraphAlgorithms();
-  // GraphAlgorithms &operator=(const GraphAlgorithms &) = delete;
-  // GraphAlgorithms(const GraphAlgorithms &) = delete;
-  // GraphAlgorithms &operator=(GraphAlgorithms &&) = delete;
-  // GraphAlgorithms(GraphAlgorithms &&) = delete;
-  // ~GraphAlgorithms() = delete;
   /* - нерекурентный поиск в глубину в графе от заданной вершины. Функция должна
   возвращать массив, содержащий в себе обойдённые вершины в порядке их обхода.
   При реализации этой функции обязательно использовать самописную структуру
