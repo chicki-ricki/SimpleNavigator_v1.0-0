@@ -15,7 +15,7 @@ TEST(GraphConstructor, DefaultGraph) {
 TEST(GraphConstructor, RightCopy) {
   Graph graph;
 
-  graph.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_4.txt");
+  graph.loadGraphFromFile("graph_4.txt");
   EXPECT_EQ(graph.getSizeGraph(), 4);
   Graph copyGraph(graph);
 
@@ -29,7 +29,7 @@ TEST(GraphConstructor, RightCopy) {
 TEST(GraphConstructor, ReallocMemory) {
   Graph graph;
 
-  graph.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_4.txt");
+  graph.loadGraphFromFile("graph_4.txt");
   Graph copyGraph(graph);
 
   EXPECT_NE(&graph.getGraph(), &copyGraph.getGraph());
@@ -38,7 +38,7 @@ TEST(GraphConstructor, ReallocMemory) {
 TEST(GraphConstructor, RightMove) {
   Graph graph;
 
-  graph.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_4.txt");
+  graph.loadGraphFromFile("graph_4.txt");
   Graph test = std::move(graph);
 
   EXPECT_EQ(graph.getSizeGraph(), 0);
@@ -51,7 +51,7 @@ TEST(GraphConstructor, NoReallocMemory) {
     new int [2]{0, 1}, new int [2]{1, 0}
   };
 
-  graph.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_4.txt");
+  graph.loadGraphFromFile("graph_4.txt");
 
   int *old_ptr = graph.matrix_[0];
   std::vector<int> *old_ptr_vec = &graph.getGraph()[0];
@@ -71,8 +71,8 @@ TEST(GraphAssignmentCopy, RightCopy) {
   Graph graph;
   Graph test;
 
-  graph.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_4.txt");
-  test.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_11.txt");
+  graph.loadGraphFromFile("graph_4.txt");
+  test.loadGraphFromFile("graph_11.txt");
   test = graph;
   EXPECT_EQ(graph.getSizeGraph(), test.getSizeGraph());
   for (size_t i = 0; i < graph.getSizeGraph(); i++) {
@@ -86,8 +86,8 @@ TEST(GraphAssignmentCopy, ReallocMemory) {
   Graph graph;
   Graph test;
 
-  graph.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_4.txt");
-  test.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_11.txt");
+  graph.loadGraphFromFile("graph_4.txt");
+  test.loadGraphFromFile("graph_11.txt");
   test = graph;
   EXPECT_NE(&graph, &test);
   EXPECT_NE(graph.getGraph().begin(), test.getGraph().begin());
@@ -95,7 +95,7 @@ TEST(GraphAssignmentCopy, ReallocMemory) {
 
 TEST(GraphAssignmentCopy, SelfAssingmentNotReallocateMemory) {
   Graph graph;
-  graph.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_4.txt");
+  graph.loadGraphFromFile("graph_4.txt");
 
   Graph *oldPtr = &graph;
   std::vector<int> *oldPtrVec = &graph.getGraph()[0];
@@ -110,8 +110,8 @@ TEST(GraphAssignmentMove, RightMove) {
   Graph graph;
   Graph test;
 
-  graph.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_4.txt");
-  test.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_11.txt");
+  graph.loadGraphFromFile("graph_4.txt");
+  test.loadGraphFromFile("graph_11.txt");
   std::vector<std::vector<int> > check = graph.getGraph();
   test = std::move(graph);
   EXPECT_EQ(test.getSizeGraph(), 4);
@@ -127,8 +127,8 @@ TEST(GraphAssignmentMove, NoReallocMemory) {
   Graph graph;
   Graph test;
 
-  graph.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_4.txt");
-  test.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_11.txt");
+  graph.loadGraphFromFile("graph_4.txt");
+  test.loadGraphFromFile("graph_11.txt");
   std::vector<int> *oldPtrVec = &graph.getGraph()[0];
   test = std::move(graph);
   std::vector<int> *newPtrVec = &test.getGraph()[0];
@@ -138,7 +138,7 @@ TEST(GraphAssignmentMove, NoReallocMemory) {
 TEST(GraphAssignmentMove, SelfAssingmentNotReallocateMemory) {
   Graph graph;
 
-  graph.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_4.txt");
+  graph.loadGraphFromFile("graph_4.txt");
   Graph *oldPtr = &graph;
   std::vector<int> *oldPtrVec = &graph.getGraph()[0];
   graph = std::move(graph);
@@ -151,7 +151,7 @@ TEST(GraphAssignmentMove, SelfAssingmentNotReallocateMemory) {
 TEST(GraphDestructor, RightDelete) {
   Graph *graph = new Graph();
 
-  graph->loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_4.txt");
+  graph->loadGraphFromFile("graph_4.txt");
   EXPECT_EQ(graph->getSizeGraph(), 4);
 
   Graph *ptr = graph;
@@ -163,9 +163,9 @@ TEST(GraphDestructor, RightDelete) {
 TEST(LoadFromFile, RightLoad) {
   Graph graph;
 
-  graph.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_4.txt");
+  graph.loadGraphFromFile("graph_4.txt");
   EXPECT_EQ(graph.getSizeGraph(), 4);
-  graph.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_5.txt");
+  graph.loadGraphFromFile("graph_5.txt");
   EXPECT_EQ(graph.getSizeGraph(), 5);
 }
 
@@ -178,33 +178,33 @@ TEST(LoadFromFile, NoExistFile) {
 TEST(LoadFromFile, EmptyGraph) {
   Graph graph;
 
-  EXPECT_EQ(graph.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_0.txt"), 2);
+  EXPECT_EQ(graph.loadGraphFromFile("graph_0.txt"), 2);
 }
 
 TEST(LoadFromFile, ElementaryGraph) {
   Graph graph;
 
-  EXPECT_EQ(graph.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_1.txt"), 2);
+  EXPECT_EQ(graph.loadGraphFromFile("graph_1.txt"), 2);
 }
 
 TEST(LoadFromFile, GraphWrongLine) {
   Graph graph;
 
-  EXPECT_EQ(graph.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_wrong_line.txt"), 3);
+  EXPECT_EQ(graph.loadGraphFromFile("graph_wrong_line.txt"), 3);
 }
 
 TEST(LoadFromFile, GraphWrongColumn) {
   Graph graph;
 
-  EXPECT_EQ(graph.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_wrong_column.txt"), 4);
+  EXPECT_EQ(graph.loadGraphFromFile("graph_wrong_column.txt"), 4);
 }
 
 TEST(LoadFromFile, NonReadableFile) {
   Graph graph;
 
-  std::system("chmod 000 /Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_4.txt");
-  EXPECT_EQ(graph.loadGraphFromFile("/Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_4.txt"), 1);
-  std::system("chmod 777 /Users/eugenia/IT_projects/06_sber21/A2_SimpleNavigator_v1.0-2/src/graph_4.txt");
+  std::system("chmod 000 graph_4.txt");
+  EXPECT_EQ(graph.loadGraphFromFile("graph_4.txt"), 1);
+  std::system("chmod 777 graph_4.txt");
 }
 
 
