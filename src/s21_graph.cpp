@@ -193,14 +193,23 @@ std::vector<std::vector<int> > &Graph::getGraph() { return (graph_); }
 
 unsigned int Graph::getSizeGraph() { return (size_); }
 
+int	Graph::checkStringIsDigit(std::string str) {
+	for(char c : str) {
+		if (std::isdigit(c) == 0) {
+			return (1);
+		}
+	}
+	return (0);
+}
+
 std::vector<int> Graph::makeVector(std::string const &str, char c) {
   std::stringstream ss(str);
   std::string s;
   std::vector<int> rez;
 
   while (getline(ss, s, c)) {
-    if (s != "") {
-      rez.push_back(std::stoi(s));
+    if (s != "" && checkStringIsDigit(s) == 0) {
+		rez.push_back(std::stoi(s));
     }
   }
   return (rez);

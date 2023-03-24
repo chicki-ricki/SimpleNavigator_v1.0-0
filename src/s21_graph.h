@@ -34,6 +34,7 @@ class Graph {
   std::string unsimmetricGraph(std::string);
   int checkGraph();
   int checkExtention(std::string filename);
+  int checkStringIsDigit(std::string str);
 };
 
 #endif

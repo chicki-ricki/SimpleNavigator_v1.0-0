@@ -1,4 +1,6 @@
 #include <gtest/gtest.h>
+#include <graphviz/cgraph.h>
+//#include <graphviz/gvc.h>
 
 #include "s21_graph.h"
 
@@ -199,6 +201,12 @@ TEST(LoadFromFile, GraphWrongColumn) {
   EXPECT_EQ(graph.loadGraphFromFile("graph_wrong_column.txt"), 4);
 }
 
+TEST(LoadFromFile, WithoutRowsNumber) {
+  Graph graph;
+
+  EXPECT_EQ(graph.loadGraphFromFile("graph_without_size.txt"), 2);
+}
+
 TEST(LoadFromFile, NonReadableFile) {
   Graph graph;
 
@@ -206,6 +214,7 @@ TEST(LoadFromFile, NonReadableFile) {
   EXPECT_EQ(graph.loadGraphFromFile("graph_4.txt"), 1);
   std::system("chmod 777 graph_4.txt");
 }
+
 
 TEST(LoadFromFile, OnlyRowNumber) {
   Graph graph;
@@ -246,12 +255,64 @@ TEST(ExportGraphToDot, WithoutExtention) {
 
 
 
+TEST(LoadFromFile, NoDigitsInMatrix) {
+    Graph graph;
 
+  EXPECT_EQ(graph.loadGraphFromFile("graph_with_symbols.txt"), 4);
+}
 
+TEST(ExportGraphToDot, NonWritableFile) {
+  Graph graph;
+  std::system("chmod 000 exportFile.dot");
+  graph.loadGraphFromFile("graph_4.txt");
+  EXPECT_EQ(graph.exportGraphToDot("exportFile.dot"), 1);
+  std::system("chmod 777 exportFile.dot");
+}
 
+TEST(ExportGraphToDot, StandardGraphDot) {
+  Graph graph;
+  graph.loadGraphFromFile("graph_4.txt");
+  graph.exportGraphToDot("graph_4.dot");
+  Agraph_t *g;
+  FILE *fp;
+  fp = fopen("graph_4.dot", "r");
+  g = agread(fp, 0);
+  int agraph_size = agnnodes(g);
+  agclose(g);
+  fclose(fp);
+  EXPECT_EQ(graph.getSizeGraph(), agraph_size);
+}
 
+TEST(ExportGraphToDot, StandardGraphGv) {
+  Graph graph;
+  graph.loadGraphFromFile("graph_4.txt");
+  graph.exportGraphToDot("graph_4.gv");
+  Agraph_t *g;
+  FILE *fp;
+  fp = fopen("graph_4.gv", "r");
+  g = agread(fp, 0);
+  int agraph_size = agnnodes(g);
+  agclose(g);
+  fclose(fp);
+  EXPECT_EQ(graph.getSizeGraph(), agraph_size);
+}
+
+TEST(ExportGraphToDot, ExistingFile) {
+	Graph graph;
+  graph.loadGraphFromFile("graph_4.txt");
+  graph.exportGraphToDot("exportFile.dot");
+  Agraph_t *g;
+  FILE *fp;
+  fp = fopen("exportFile.dot", "r");
+  g = agread(fp, 0);
+  int agraph_size = agnnodes(g);
+  agclose(g);
+  fclose(fp);
+  EXPECT_EQ(graph.getSizeGraph(), agraph_size);
+}
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
-  return (RUN_ALL_TESTS());
+	int t = RUN_ALL_TESTS();
+  return (t);
 }
