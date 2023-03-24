@@ -2,21 +2,21 @@
 
 GraphAlgorithms::GraphAlgorithms() {}
 
-GraphAlgorithms &GraphAlgorithms::operator=(const GraphAlgorithms &rhs) {
-  (void)rhs;
-  return (*this);
-}
+// GraphAlgorithms &GraphAlgorithms::operator=(const GraphAlgorithms &rhs) {
+//   (void)rhs;
+//   return (*this);
+// }
 
-GraphAlgorithms::GraphAlgorithms(const GraphAlgorithms &src) { *this = src; }
+// GraphAlgorithms::GraphAlgorithms(const GraphAlgorithms &src) { *this = src; }
 
-GraphAlgorithms &GraphAlgorithms::operator=(GraphAlgorithms &&gg) {
-  (void)gg;
-  return (*this);
-}
+// GraphAlgorithms &GraphAlgorithms::operator=(GraphAlgorithms &&gg) {
+//   (void)gg;
+//   return (*this);
+// }
 
-GraphAlgorithms::GraphAlgorithms(GraphAlgorithms &&gg) { *this = gg; }
+// GraphAlgorithms::GraphAlgorithms(GraphAlgorithms &&gg) { *this = gg; }
 
-GraphAlgorithms::~GraphAlgorithms() {}
+// GraphAlgorithms::~GraphAlgorithms() {}
 
 void GraphAlgorithms::convertToArr(int *rez, std::vector<int> &vec) {
   for (size_t i = 0; i < vec.size(); i++) {

@@ -1,6 +1,5 @@
 #include <gtest/gtest.h>
 #include <graphviz/cgraph.h>
-//#include <graphviz/gvc.h>
 
 #include "s21_graph.h"
 
