@@ -29,9 +29,9 @@ OBJS_ALG		=	${SRC_ALG:%.cpp=%.o}
 
 # NAME_TEST		=	test
 
-# SRC_TEST		=	s21_graph_algorithms_test.cpp s21_graph_test.cpp 
+SRC_TEST		=	s21_graph_algorithms_test.cpp s21_graph_test.cpp 
 
-# OBJS_TEST		=	${SRC_TEST:%.cpp=%.o}
+OBJS_TEST		=	${SRC_TEST:%.cpp=%.o}
 
 
 FLAGS			=	-g -Wall -Wextra -Werror -std=c++17
