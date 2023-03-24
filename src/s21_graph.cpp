@@ -35,8 +35,9 @@ Graph::Graph(Graph &&gg) { *this = std::move(gg); }
 
 Graph::~Graph() {
   if (graph_.size() > 0) {
-    graph_.clear();
+    graph_.clear();	
   }
+  size_ = 0;
 }
 
 int Graph::checkGraph() {
