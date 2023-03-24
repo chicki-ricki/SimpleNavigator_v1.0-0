@@ -40,7 +40,7 @@ CC				=	g++
 
 RM				=	rm -f
 
-%.o			:	%.cpp 
+%.o			:	%.cpp
 			@${CC} ${FLAGS} -I. -c $< -o $@
 
 .PHONY		:	all clean fclean re test s21_graph.a s21_graph_algorithms.a cont
@@ -74,16 +74,20 @@ re			:	fclean all
 
 test		: 	#${OBJS_TEST}
 			${CC} s21_graph_algorithms_test.cpp -L. -I. ${LIB_GRAPH} ${LIB_GRAPH_ALG} ${LIB_CONT} -o test_algorithms -pthread -std=c++17 -lgtest -lgmock
-			${CC} s21_graph_test.cpp -L. -I. ${LIB_GRAPH} ${LIB_CONT} -o test_graph -pthread -std=c++17 -lgtest -lgmock -g
+			${CC} s21_graph_test.cpp -L. -I. ${LIB_GRAPH} ${LIB_CONT} -o test_graph -pthread -std=c++17 -lgtest -lgmock -g -lcgraph -lgvc
 
 google-style:
 			@cp ../materials/linters/.clang-format ./
 			@clang-format -i *.cpp *.h ./s21_containers/*.cpp ./s21_containers/*.h
 			clang-format -n *.cpp *.h ./s21_containers/*.cpp ./s21_containers/*.h
 
-leak		:
+leaks		:
 			CK_FORK=no leaks -atExit -- ./${NAME}
+			CK_FORK=no leaks -atExit -- ./test_graph
 
 install_gtest:
 #			brew install web-eid/gtest/gtest
 			brew install googletest
+
+install_graphviz:
+			brew install graphviz
