@@ -33,6 +33,7 @@ class Graph {
   std::string simmetricGraph(std::string);
   std::string unsimmetricGraph(std::string);
   int checkGraph();
+  int checkExtention(std::string filename);
 };
 
 #endif

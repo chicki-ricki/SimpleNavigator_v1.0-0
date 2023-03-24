@@ -161,9 +161,25 @@ std::string Graph::convertGraphToDot() {
   return (rez);
 }
 
+int Graph::checkExtention(std::string filename) {
+  int poz = filename.find_last_of('.');
+  if (poz == -1) {
+    return (2);
+  }
+  std::string extention = filename.substr(poz);
+  if (extention != ".dot" && extention != ".gv") {
+    return (3);
+  }
+  return (0);
+}
+
 int Graph::exportGraphToDot(std::string filename) {
   std::ofstream outFile;
+  int error;
 
+  if ((error = checkExtention(filename)) != 0) {
+    return (error);
+  }
   outFile.open(filename);
   if (outFile.is_open() != true) {
     return (1);

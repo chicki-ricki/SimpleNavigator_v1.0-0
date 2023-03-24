@@ -207,6 +207,45 @@ TEST(LoadFromFile, NonReadableFile) {
   std::system("chmod 777 graph_4.txt");
 }
 
+TEST(LoadFromFile, OnlyRowNumber) {
+  Graph graph;
+
+  EXPECT_EQ(graph.loadGraphFromFile("graph_without_matrix.txt"), 3);
+}
+
+TEST(LoadFromFile, EmptyFile) {
+  Graph graph;
+
+  EXPECT_EQ(graph.loadGraphFromFile("graph_empty_file.txt"), 2);
+}
+
+TEST(ExportGraphToDot, RightExtention) {
+  Graph graph;
+
+  EXPECT_EQ(graph.exportGraphToDot("check.dot"), 0);
+  EXPECT_EQ(graph.exportGraphToDot("check.gv"), 0);
+
+}
+
+TEST(ExportGraphToDot, WrongExtention) {
+  Graph graph;
+
+  EXPECT_EQ(graph.exportGraphToDot("check.tor"), 3);
+  EXPECT_EQ(graph.exportGraphToDot("check.avtor"), 3);
+  EXPECT_EQ(graph.exportGraphToDot("check.dotavtor"), 3);
+  EXPECT_EQ(graph.exportGraphToDot("check.gw"), 3);
+  EXPECT_EQ(graph.exportGraphToDot("check.gvbob"), 3);
+
+}
+
+TEST(ExportGraphToDot, WithoutExtention) {
+  Graph graph;
+
+  EXPECT_EQ(graph.exportGraphToDot("check"), 2);
+}
+
+
+
 
 
 
