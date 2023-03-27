@@ -63,8 +63,8 @@ ${LIB_CONT}:
 			@cp ./s21_containers/s21_containers.a ./s21_containers.a
 
 clean		:
-			${RM} ${OBJS_GRAPH} ${OBJS_ALG} ${OBJS} ${OBJS_TEST}
-			cd ./s21_containers && ${MAKE} clean
+			${RM} ${OBJS_GRAPH} ${OBJS_ALG} ${OBJS} ${OBJS_TEST} *.dot *.gv
+			cd ./s21_containers && ${MAKE} clean 
 
 fclean		:	clean
 			${RM} ${NAME} ${LIB_GRAPH} ${LIB_GRAPH_ALG} test_algorithms test_graph ${LIB_CONT}
