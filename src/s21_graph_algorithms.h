@@ -39,11 +39,6 @@ class Graph;
 class GraphAlgorithms {
  public:
   GraphAlgorithms();
-  GraphAlgorithms &operator=(const GraphAlgorithms &);
-  GraphAlgorithms(const GraphAlgorithms &);
-  GraphAlgorithms &operator=(GraphAlgorithms &&);
-  GraphAlgorithms(GraphAlgorithms &&);
-  ~GraphAlgorithms();
   /* - нерекурентный поиск в глубину в графе от заданной вершины. Функция должна
   возвращать массив, содержащий в себе обойдённые вершины в порядке их обхода.
   При реализации этой функции обязательно использовать самописную структуру
@@ -83,10 +78,10 @@ class GraphAlgorithms {
   коммивояжера и реализовать их в виде методов класса GraphAlgorithms
   */
  private:
-  // GraphAlgorithms &operator=(const GraphAlgorithms &) = delete;
-  // GraphAlgorithms(const GraphAlgorithms &) = delete;
-  // GraphAlgorithms &operator=(GraphAlgorithms &&) = delete;
-  // GraphAlgorithms(GraphAlgorithms &&) = delete;
+  GraphAlgorithms &operator=(const GraphAlgorithms &) = delete;
+  GraphAlgorithms(const GraphAlgorithms &) = delete;
+  GraphAlgorithms &operator=(GraphAlgorithms &&) = delete;
+  GraphAlgorithms(GraphAlgorithms &&) = delete;
   int fillStack(s21::Stack<int> &, std::vector<int>, std::vector<int>);
   int fillQueue(s21::Queue<int> &, std::vector<int>, std::vector<int>);
   int checkElem(int, std::vector<int> &);

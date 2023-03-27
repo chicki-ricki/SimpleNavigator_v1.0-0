@@ -2,22 +2,6 @@
 
 GraphAlgorithms::GraphAlgorithms() {}
 
-GraphAlgorithms &GraphAlgorithms::operator=(const GraphAlgorithms &rhs) {
-  (void)rhs;
-  return (*this);
-}
-
-GraphAlgorithms::GraphAlgorithms(const GraphAlgorithms &src) { *this = src; }
-
-GraphAlgorithms &GraphAlgorithms::operator=(GraphAlgorithms &&gg) {
-  (void)gg;
-  return (*this);
-}
-
-GraphAlgorithms::GraphAlgorithms(GraphAlgorithms &&gg) { *this = gg; }
-
-GraphAlgorithms::~GraphAlgorithms() {}
-
 void GraphAlgorithms::convertToArr(int *rez, std::vector<int> &vec) {
   for (size_t i = 0; i < vec.size(); i++) {
     rez[i] = vec[i] + 1;
@@ -25,6 +9,9 @@ void GraphAlgorithms::convertToArr(int *rez, std::vector<int> &vec) {
 }
 
 int *GraphAlgorithms::depthFirstSearch(Graph &graph, int startVertex) {
+  if (startVertex > (int)graph.getSizeGraph() || startVertex <= 0) {
+    return (NULL);
+  }
   int index = startVertex - 1;
   s21::Stack<int> s;
   std::vector<int> vizit;
@@ -47,6 +34,9 @@ int *GraphAlgorithms::depthFirstSearch(Graph &graph, int startVertex) {
 }
 
 int *GraphAlgorithms::breadthFirstSearch(Graph &graph, int startVertex) {
+  if (startVertex > (int)graph.getSizeGraph() || startVertex <= 0) {
+    return (NULL);
+  }
   s21::Queue<int> queue;
   int index = startVertex - 1;
   std::vector<int> visited;
@@ -69,6 +59,9 @@ int *GraphAlgorithms::breadthFirstSearch(Graph &graph, int startVertex) {
 
 int GraphAlgorithms::getShortestPathBetweenVertices(Graph &graph, int v1,
                                                     int v2) {
+  if (v1 > (int)graph.getSizeGraph() || v1 <= 0 || v2 > (int)graph.getSizeGraph() || v2 <= 0) {
+    return (1);
+  }
   std::vector<int> distance;
   std::vector<int> vizit;
   int index = v1 - 1;

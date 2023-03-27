@@ -66,6 +66,10 @@ int Graph::loadGraphFromFile(std::string filename) {
   size_t i = 0;
   int check = 0;
 
+  if (graph_.size() > 0) {
+    graph_.clear();
+  }
+  size_ = 0;
   if (inFile.is_open() != true) {
     return (1);
   }
