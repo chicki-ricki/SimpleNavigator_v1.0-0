@@ -9,7 +9,7 @@ Graph &Graph::operator=(const Graph &rhs) {
     }
     size_ = rhs.size_;
     for (size_t i = 0; i < size_; i++) {
-        graph_.push_back(rhs.graph_[i]);
+      graph_.push_back(rhs.graph_[i]);
     }
   }
   return (*this);
@@ -35,7 +35,7 @@ Graph::Graph(Graph &&gg) { *this = std::move(gg); }
 
 Graph::~Graph() {
   if (graph_.size() > 0) {
-    graph_.clear();	
+    graph_.clear();
   }
   size_ = 0;
 }
@@ -48,9 +48,11 @@ int Graph::checkGraph() {
   if (graph_.size() != size_) {
     return (3);  // graph has strings no equal size_
   }
-  for (std::vector<std::vector<int> >::iterator it = graph_.begin(); it != graph_.end(); it++) {
+  for (std::vector<std::vector<int> >::iterator it = graph_.begin();
+       it != graph_.end(); it++) {
     countColumn = 0;
-    for (std::vector<int>::iterator it2 = it->begin(); it2 != it->end(); it2++) {
+    for (std::vector<int>::iterator it2 = it->begin(); it2 != it->end();
+         it2++) {
       countColumn++;
     }
     if (countColumn != size_) {
@@ -119,7 +121,8 @@ std::string Graph::simmetricGraph(std::string delim) {
     j = i + 1;
     while (j < size_) {
       if (graph_[i][j] != 0) {
-        rez = rez + "\t" + std::to_string(i + 1) + delim + std::to_string(j + 1) +
+        rez = rez + "\t" + std::to_string(i + 1) + delim +
+              std::to_string(j + 1) +
               " [weight=" + std::to_string(graph_[i][j]) + "];\n";
       }
       j++;
@@ -143,7 +146,8 @@ std::string Graph::unsimmetricGraph(std::string delim) {
     j = 0;
     while (j < size_) {
       if (graph_[i][j] != 0 && (graph_[i][j] != graph_[j][i] || i < j)) {
-        rez = rez + "\t" + std::to_string(i + 1) + delim + std::to_string(j + 1) +
+        rez = rez + "\t" + std::to_string(i + 1) + delim +
+              std::to_string(j + 1) +
               " [weight=" + std::to_string(graph_[i][j]) + "];\n";
       }
       j++;
@@ -190,6 +194,7 @@ int Graph::exportGraphToDot(std::string filename) {
   }
   outFile << convertGraphToDot() << std::endl;
   outFile.close();
+	std::cout << "Graph saved to file " << filename << std::endl;
   return (0);
 }
 
@@ -197,13 +202,13 @@ std::vector<std::vector<int> > &Graph::getGraph() { return (graph_); }
 
 unsigned int Graph::getSizeGraph() { return (size_); }
 
-int	Graph::checkStringIsDigit(std::string str) {
-	for(char c : str) {
-		if (std::isdigit(c) == 0) {
-			return (1);
-		}
-	}
-	return (0);
+int Graph::checkStringIsDigit(std::string str) {
+  for (char c : str) {
+    if (std::isdigit(c) == 0) {
+      return (1);
+    }
+  }
+  return (0);
 }
 
 std::vector<int> Graph::makeVector(std::string const &str, char c) {
@@ -213,7 +218,7 @@ std::vector<int> Graph::makeVector(std::string const &str, char c) {
 
   while (getline(ss, s, c)) {
     if (s != "" && checkStringIsDigit(s) == 0) {
-		rez.push_back(std::stoi(s));
+      rez.push_back(std::stoi(s));
     }
   }
   return (rez);

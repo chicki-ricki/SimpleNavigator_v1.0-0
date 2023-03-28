@@ -1,7 +1,7 @@
-#include <gtest/gtest.h>
-#include <graphviz/cgraph.h>
-
 #include "s21_graph.h"
+
+#include <graphviz/cgraph.h>
+#include <gtest/gtest.h>
 
 TEST(GraphConstructor, DefaultSize) {
   Graph graph;
@@ -16,7 +16,7 @@ TEST(GraphConstructor, DefaultGraph) {
 TEST(GraphConstructor, RightCopy) {
   Graph graph;
 
-  graph.loadGraphFromFile("graph_4.txt");
+  graph.loadGraphFromFile("graph_files/good/graph_4.txt");
   EXPECT_EQ(graph.getSizeGraph(), 4);
   Graph copyGraph(graph);
 
@@ -30,7 +30,7 @@ TEST(GraphConstructor, RightCopy) {
 TEST(GraphConstructor, ReallocMemory) {
   Graph graph;
 
-  graph.loadGraphFromFile("graph_4.txt");
+  graph.loadGraphFromFile("graph_files/good/graph_4.txt");
   Graph copyGraph(graph);
 
   EXPECT_NE(&graph.getGraph(), &copyGraph.getGraph());
@@ -39,7 +39,7 @@ TEST(GraphConstructor, ReallocMemory) {
 TEST(GraphConstructor, RightMove) {
   Graph graph;
 
-  graph.loadGraphFromFile("graph_4.txt");
+  graph.loadGraphFromFile("graph_files/good/graph_4.txt");
   Graph test = std::move(graph);
 
   EXPECT_EQ(graph.getSizeGraph(), 0);
@@ -49,10 +49,10 @@ TEST(GraphConstructor, RightMove) {
 TEST(GraphConstructor, NoReallocMemory) {
   Graph graph;
   graph.matrix_ = new int *[2] {
-    new int [2]{0, 1}, new int [2]{1, 0}
+    new int[2]{0, 1}, new int[2] { 1, 0 }
   };
 
-  graph.loadGraphFromFile("graph_4.txt");
+  graph.loadGraphFromFile("graph_files/good/graph_4.txt");
 
   int *old_ptr = graph.matrix_[0];
   std::vector<int> *old_ptr_vec = &graph.getGraph()[0];
@@ -72,8 +72,8 @@ TEST(GraphAssignmentCopy, RightCopy) {
   Graph graph;
   Graph test;
 
-  graph.loadGraphFromFile("graph_4.txt");
-  test.loadGraphFromFile("graph_11.txt");
+  graph.loadGraphFromFile("graph_files/good/graph_4.txt");
+  test.loadGraphFromFile("graph_files/good/graph_11.txt");
   test = graph;
   EXPECT_EQ(graph.getSizeGraph(), test.getSizeGraph());
   for (size_t i = 0; i < graph.getSizeGraph(); i++) {
@@ -87,8 +87,8 @@ TEST(GraphAssignmentCopy, ReallocMemory) {
   Graph graph;
   Graph test;
 
-  graph.loadGraphFromFile("graph_4.txt");
-  test.loadGraphFromFile("graph_11.txt");
+  graph.loadGraphFromFile("graph_files/good/graph_4.txt");
+  test.loadGraphFromFile("graph_files/good/graph_11.txt");
   test = graph;
   EXPECT_NE(&graph, &test);
   EXPECT_NE(graph.getGraph().begin(), test.getGraph().begin());
@@ -96,7 +96,7 @@ TEST(GraphAssignmentCopy, ReallocMemory) {
 
 TEST(GraphAssignmentCopy, SelfAssingmentNotReallocateMemory) {
   Graph graph;
-  graph.loadGraphFromFile("graph_4.txt");
+  graph.loadGraphFromFile("graph_files/good/graph_4.txt");
 
   Graph *oldPtr = &graph;
   std::vector<int> *oldPtrVec = &graph.getGraph()[0];
@@ -111,8 +111,8 @@ TEST(GraphAssignmentMove, RightMove) {
   Graph graph;
   Graph test;
 
-  graph.loadGraphFromFile("graph_4.txt");
-  test.loadGraphFromFile("graph_11.txt");
+  graph.loadGraphFromFile("graph_files/good/graph_4.txt");
+  test.loadGraphFromFile("graph_files/good/graph_11.txt");
   std::vector<std::vector<int> > check = graph.getGraph();
   test = std::move(graph);
   EXPECT_EQ(test.getSizeGraph(), 4);
@@ -128,8 +128,8 @@ TEST(GraphAssignmentMove, NoReallocMemory) {
   Graph graph;
   Graph test;
 
-  graph.loadGraphFromFile("graph_4.txt");
-  test.loadGraphFromFile("graph_11.txt");
+  graph.loadGraphFromFile("graph_files/good/graph_4.txt");
+  test.loadGraphFromFile("graph_files/good/graph_11.txt");
   std::vector<int> *oldPtrVec = &graph.getGraph()[0];
   test = std::move(graph);
   std::vector<int> *newPtrVec = &test.getGraph()[0];
@@ -139,7 +139,7 @@ TEST(GraphAssignmentMove, NoReallocMemory) {
 TEST(GraphAssignmentMove, SelfAssingmentNotReallocateMemory) {
   Graph graph;
 
-  graph.loadGraphFromFile("graph_4.txt");
+  graph.loadGraphFromFile("graph_files/good/graph_4.txt");
   Graph *oldPtr = &graph;
   std::vector<int> *oldPtrVec = &graph.getGraph()[0];
   graph = std::move(graph);
@@ -152,7 +152,7 @@ TEST(GraphAssignmentMove, SelfAssingmentNotReallocateMemory) {
 TEST(GraphDestructor, RightDelete) {
   Graph *graph = new Graph();
 
-  graph->loadGraphFromFile("graph_4.txt");
+  graph->loadGraphFromFile("graph_files/good/graph_4.txt");
   EXPECT_EQ(graph->getSizeGraph(), 4);
 
   Graph *ptr = graph;
@@ -164,9 +164,9 @@ TEST(GraphDestructor, RightDelete) {
 TEST(LoadFromFile, RightLoad) {
   Graph graph;
 
-  graph.loadGraphFromFile("graph_4.txt");
+  graph.loadGraphFromFile("graph_files/good/graph_4.txt");
   EXPECT_EQ(graph.getSizeGraph(), 4);
-  graph.loadGraphFromFile("graph_5.txt");
+  graph.loadGraphFromFile("graph_files/good/graph_5.txt");
   EXPECT_EQ(graph.getSizeGraph(), 5);
 }
 
@@ -179,60 +179,58 @@ TEST(LoadFromFile, NoExistFile) {
 TEST(LoadFromFile, EmptyGraph) {
   Graph graph;
 
-  EXPECT_EQ(graph.loadGraphFromFile("graph_0.txt"), 2);
+  EXPECT_EQ(graph.loadGraphFromFile("graph_files/bad/graph_0.txt"), 2);
 }
 
 TEST(LoadFromFile, ElementaryGraph) {
   Graph graph;
 
-  EXPECT_EQ(graph.loadGraphFromFile("graph_1.txt"), 2);
+  EXPECT_EQ(graph.loadGraphFromFile("graph_files/bad/graph_1.txt"), 2);
 }
 
 TEST(LoadFromFile, GraphWrongLine) {
   Graph graph;
 
-  EXPECT_EQ(graph.loadGraphFromFile("graph_wrong_line.txt"), 3);
+  EXPECT_EQ(graph.loadGraphFromFile("graph_files/bad/graph_wrong_line.txt"), 3);
 }
 
 TEST(LoadFromFile, GraphWrongColumn) {
   Graph graph;
 
-  EXPECT_EQ(graph.loadGraphFromFile("graph_wrong_column.txt"), 4);
+  EXPECT_EQ(graph.loadGraphFromFile("graph_files/bad/graph_wrong_column.txt"), 4);
 }
 
 TEST(LoadFromFile, WithoutRowsNumber) {
   Graph graph;
 
-  EXPECT_EQ(graph.loadGraphFromFile("graph_without_size.txt"), 2);
+  EXPECT_EQ(graph.loadGraphFromFile("graph_files/bad/graph_without_size.txt"), 2);
 }
 
 TEST(LoadFromFile, NonReadableFile) {
   Graph graph;
 
-  std::system("chmod 000 graph_4.txt");
-  EXPECT_EQ(graph.loadGraphFromFile("graph_4.txt"), 1);
-  std::system("chmod 777 graph_4.txt");
+  std::system("chmod 000 graph_files/good/graph_4.txt");
+  EXPECT_EQ(graph.loadGraphFromFile("graph_files/good/graph_4.txt"), 1);
+  std::system("chmod 777 graph_files/good/graph_4.txt");
 }
-
 
 TEST(LoadFromFile, OnlyRowNumber) {
   Graph graph;
 
-  EXPECT_EQ(graph.loadGraphFromFile("graph_without_matrix.txt"), 3);
+  EXPECT_EQ(graph.loadGraphFromFile("graph_files/bad/graph_without_matrix.txt"), 3);
 }
 
 TEST(LoadFromFile, EmptyFile) {
   Graph graph;
 
-  EXPECT_EQ(graph.loadGraphFromFile("graph_empty_file.txt"), 2);
+  EXPECT_EQ(graph.loadGraphFromFile("graph_files/bad/graph_empty_file.txt"), 2);
 }
 
 TEST(ExportGraphToDot, RightExtention) {
   Graph graph;
 
-  EXPECT_EQ(graph.exportGraphToDot("check.dot"), 0);
-  EXPECT_EQ(graph.exportGraphToDot("check.gv"), 0);
-
+  EXPECT_EQ(graph.exportGraphToDot("graph_files/check.dot"), 0);
+  EXPECT_EQ(graph.exportGraphToDot("graph_files/check.gv"), 0);
 }
 
 TEST(ExportGraphToDot, WrongExtention) {
@@ -243,38 +241,35 @@ TEST(ExportGraphToDot, WrongExtention) {
   EXPECT_EQ(graph.exportGraphToDot("check.dotavtor"), 3);
   EXPECT_EQ(graph.exportGraphToDot("check.gw"), 3);
   EXPECT_EQ(graph.exportGraphToDot("check.gvbob"), 3);
-
 }
 
 TEST(ExportGraphToDot, WithoutExtention) {
   Graph graph;
 
-  EXPECT_EQ(graph.exportGraphToDot("check"), 2);
+  EXPECT_EQ(graph.exportGraphToDot("graph_files/check"), 2);
 }
 
-
-
 TEST(LoadFromFile, NoDigitsInMatrix) {
-    Graph graph;
+  Graph graph;
 
-  EXPECT_EQ(graph.loadGraphFromFile("graph_with_symbols.txt"), 4);
+  EXPECT_EQ(graph.loadGraphFromFile("graph_files/bad/graph_with_symbols.txt"), 4);
 }
 
 TEST(ExportGraphToDot, NonWritableFile) {
   Graph graph;
-  std::system("chmod 000 exportFile.dot");
-  graph.loadGraphFromFile("graph_4.txt");
-  EXPECT_EQ(graph.exportGraphToDot("exportFile.dot"), 1);
-  std::system("chmod 777 exportFile.dot");
+  std::system("chmod 000 graph_files/exportFile.dot");
+  graph.loadGraphFromFile("graph_files/good/graph_4.txt");
+  EXPECT_EQ(graph.exportGraphToDot("graph_files/exportFile.dot"), 1);
+  std::system("chmod 777 graph_files/exportFile.dot");
 }
 
 TEST(ExportGraphToDot, StandardGraphDot) {
   Graph graph;
-  graph.loadGraphFromFile("graph_4.txt");
-  graph.exportGraphToDot("graph_4.dot");
+  graph.loadGraphFromFile("graph_files/good/graph_4.txt");
+  graph.exportGraphToDot("graph_files/graph_4.dot");
   Agraph_t *g;
   FILE *fp;
-  fp = fopen("graph_4.dot", "r");
+  fp = fopen("graph_files/graph_4.dot", "r");
   g = agread(fp, 0);
   int agraph_size = agnnodes(g);
   agclose(g);
@@ -284,11 +279,11 @@ TEST(ExportGraphToDot, StandardGraphDot) {
 
 TEST(ExportGraphToDot, StandardGraphGv) {
   Graph graph;
-  graph.loadGraphFromFile("graph_4.txt");
-  graph.exportGraphToDot("graph_4.gv");
+  graph.loadGraphFromFile("graph_files/good/graph_4.txt");
+  graph.exportGraphToDot("graph_files/graph_4.gv");
   Agraph_t *g;
   FILE *fp;
-  fp = fopen("graph_4.gv", "r");
+  fp = fopen("graph_files/graph_4.gv", "r");
   g = agread(fp, 0);
   int agraph_size = agnnodes(g);
   agclose(g);
@@ -297,12 +292,12 @@ TEST(ExportGraphToDot, StandardGraphGv) {
 }
 
 TEST(ExportGraphToDot, ExistingFile) {
-	Graph graph;
-  graph.loadGraphFromFile("graph_4.txt");
-  graph.exportGraphToDot("exportFile.dot");
+  Graph graph;
+  graph.loadGraphFromFile("graph_files/good/graph_4.txt");
+  graph.exportGraphToDot("graph_files/exportFile.dot");
   Agraph_t *g;
   FILE *fp;
-  fp = fopen("exportFile.dot", "r");
+  fp = fopen("graph_files/exportFile.dot", "r");
   g = agread(fp, 0);
   int agraph_size = agnnodes(g);
   agclose(g);
@@ -312,6 +307,6 @@ TEST(ExportGraphToDot, ExistingFile) {
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);
-	int t = RUN_ALL_TESTS();
+  int t = RUN_ALL_TESTS();
   return (t);
 }

@@ -15,7 +15,7 @@ class Graph {
   Graph &operator=(Graph &&);
   Graph(Graph &&);
   ~Graph();
-  int **matrix_;  //для проверки конструктора перемещения
+  int **matrix_;  // для проверки конструктора перемещения
 
   // загрузка графа из файла в формате матрицы смежности:
   int loadGraphFromFile(std::string);

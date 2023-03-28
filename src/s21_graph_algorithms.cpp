@@ -59,7 +59,8 @@ int *GraphAlgorithms::breadthFirstSearch(Graph &graph, int startVertex) {
 
 int GraphAlgorithms::getShortestPathBetweenVertices(Graph &graph, int v1,
                                                     int v2) {
-  if (v1 > (int)graph.getSizeGraph() || v1 <= 0 || v2 > (int)graph.getSizeGraph() || v2 <= 0) {
+  if (v1 > (int)graph.getSizeGraph() || v1 <= 0 ||
+      v2 > (int)graph.getSizeGraph() || v2 <= 0) {
     return (1);
   }
   std::vector<int> distance;

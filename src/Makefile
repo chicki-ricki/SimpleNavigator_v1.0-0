@@ -2,7 +2,9 @@
 
 NAME			=	graph
 
-SRC				=	main.cpp
+SRC				=	main.cpp ConsoleApplicationMenu.cpp ConsoleApplication.cpp
+
+HEADER		= ConsoleApplication.h
 
 OBJS			=	${SRC:%.cpp=%.o}
 
@@ -47,7 +49,7 @@ RM				=	rm -f
 
 all			:	${LIB_CONT} ${LIB_GRAPH} ${LIB_GRAPH_ALG} ${NAME} test
 
-${NAME}		:	${OBJS} 
+${NAME}		:	${OBJS} ${HEADER}
 			${CC} ${FLAGS} ${SRC} -I. *.a -o $@
 
 ${LIB_GRAPH}:	${OBJS_GRAPH}
@@ -73,8 +75,8 @@ fclean		:	clean
 re			:	fclean all 
 
 test		: 	#${OBJS_TEST}
-			${CC} s21_graph_algorithms_test.cpp -L. -I. ${LIB_GRAPH} ${LIB_GRAPH_ALG} ${LIB_CONT} -o test_algorithms -pthread -std=c++17 -lgtest -lgmock
-#			${CC} s21_graph_test.cpp -L. -I. ${LIB_GRAPH} ${LIB_CONT} -o test_graph -pthread -std=c++17 -lgtest -lgmock -g -lcgraph -lgvc
+#			${CC} s21_graph_algorithms_test.cpp -L. -I. ${LIB_GRAPH} ${LIB_GRAPH_ALG} ${LIB_CONT} -o test_algorithms -pthread -std=c++17 -lgtest -lgmock
+			${CC} s21_graph_test.cpp -L. -I. ${LIB_GRAPH} ${LIB_CONT} -o test_graph -pthread -std=c++17 -lgtest -lgmock -g -lcgraph -lgvc
 
 google-style:
 			@cp ../materials/linters/.clang-format ./
