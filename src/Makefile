@@ -53,16 +53,18 @@ ${NAME}		:	${OBJS} ${HEADER}
 			${CC} ${FLAGS} ${SRC} -I. *.a -o $@
 
 ${LIB_GRAPH}:	${OBJS_GRAPH}
-			@ar rcs ${LIB_GRAPH} $?
+			ar rcs ${LIB_GRAPH} $?
 			@ranlib ${LIB_GRAPH}
 
 ${LIB_GRAPH_ALG}	:	${OBJS_ALG}
-			@ar rcs ${LIB_GRAPH_ALG} $?
+			ar rcs ${LIB_GRAPH_ALG} $?
 			@ranlib ${LIB_GRAPH_ALG}
 
 ${LIB_CONT}: 
 			@cd ./s21_containers && ${MAKE}
 			@cp ./s21_containers/s21_containers.a ./s21_containers.a
+
+
 
 clean		:
 			${RM} ${OBJS_GRAPH} ${OBJS_ALG} ${OBJS} ${OBJS_TEST} *.dot *.gv
@@ -76,7 +78,7 @@ re			:	fclean all
 
 test		: 	#${OBJS_TEST}
 #			${CC} s21_graph_algorithms_test.cpp -L. -I. ${LIB_GRAPH} ${LIB_GRAPH_ALG} ${LIB_CONT} -o test_algorithms -pthread -std=c++17 -lgtest -lgmock
-			${CC} s21_graph_test.cpp -L. -I. ${LIB_GRAPH} ${LIB_CONT} -o test_graph -pthread -std=c++17 -lgtest -lgmock -g -lcgraph -lgvc
+			${CC} s21_graph_test.cpp -L. -I. ${LIB_GRAPH} ${LIB_GRAPH_ALG} ${LIB_CONT} -o test_graph -pthread -std=c++17 -lgtest -lgmock -g -lcgraph -lgvc
 
 google-style:
 			@cp ../materials/linters/.clang-format ./

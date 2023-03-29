@@ -61,7 +61,7 @@ int GraphAlgorithms::getShortestPathBetweenVertices(Graph &graph, int v1,
                                                     int v2) {
   if (v1 > (int)graph.getSizeGraph() || v1 <= 0 ||
       v2 > (int)graph.getSizeGraph() || v2 <= 0) {
-    return (1);
+    return (-1);
   }
   std::vector<int> distance;
   std::vector<int> vizit;
@@ -152,11 +152,11 @@ int **GraphAlgorithms::getLeastSpanningTree(Graph &graph) {
         }
       }
     }
-    if (graph_arr[x][y] == graph_arr[y][x]) {
+/*    if (graph_arr[x][y] == graph_arr[y][x]) {
       res[x][y] = res[y][x] = min;
-    } else {
+    } else {*/
       res[x][y] = min;
-    }
+//    }
     vizit[y] = 1;
     edgeNum++;
   }
