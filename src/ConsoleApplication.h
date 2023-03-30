@@ -18,17 +18,16 @@ class ConsoleApplication {
   ConsoleApplication(ConsoleApplication &&) = delete;
   ~ConsoleApplication() = delete;
 
-	static bool isNotChosen_;
-	static std::string fileName_;
-	static Graph *graph_;
-	static GraphAlgorithms *graphAlg_;
+  static bool isNotChosen_;
+  static std::string fileName_;
+  static Graph *graph_;
+  static GraphAlgorithms *graphAlg_;
 
-	static void freeArr(int **, size_t);
-	static void printResult(int *, size_t);
-	static void printResult2D(int **, unsigned int);
+  static void freeArr(int **, size_t);
+  static void printResult(int *, size_t);
+  static void printResult2D(int **, unsigned int);
 
  public:
-  
   ConsoleApplication(std::string fileName);
 
   static void start();

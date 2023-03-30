@@ -1,3 +1,5 @@
+#include <limits>
+
 #include "ConsoleApplication.h"
 
 #define HELLO_MESSAGE                                  \
@@ -28,12 +30,12 @@ Now you can do the following:\n\
   10. Exit program \n\n\
 Please, choose one and enter command number:  "
 
-#define input()                                                                \
-  {                                                                            \
-    std::cout << D_BLUE                                                        \
-              << "Your request does not satisfy the list. Try another one: "   \
-              << NONE;                                                         \
-    std::cin >> choice;                                                        \
+#define input()                                                              \
+  {                                                                          \
+    std::cout << D_BLUE                                                      \
+              << "Your request does not satisfy the list. Try another one: " \
+              << NONE;                                                       \
+    std::cin >> choice;                                                      \
   };
 #define CURRENT_GRAPH "\n You're working on graph from the file "
 
@@ -45,8 +47,22 @@ void ConsoleApplication::start() {
   while (isNotChosen_ == true) {
     helloMenu();
   }
+  int flag = 0;
   while (1) {
-    mainMenu();
+    if (flag == 0) {
+      mainMenu();
+      flag = 1;
+    } else {
+      int choice;
+      std::cout << D_BLUE << "Press key 1 to continue or 2 to exit" << NONE
+                << std::endl;
+      std::cin >> choice;
+      if (choice == 1) {
+        mainMenu();
+      } else if (choice == 2) {
+        ConsoleApplication::exit();
+      }
+    }
   }
 }
 
@@ -55,77 +71,77 @@ void ConsoleApplication::helloMenu() {
   std::string choice;
   std::cin >> choice;
   while (checkAndRunStartChoice(choice)) {
-		input();
+    input();
   }
 }
 
 void ConsoleApplication::mainMenu() {
-  std::cout << D_BLUE << CURRENT_GRAPH << ConsoleApplication::fileName_ << NONE << std::endl;
-	std::cout << D_BLUE << MAIN_MENU_MESSAGE << NONE;
+  std::cout << D_BLUE << CURRENT_GRAPH << ConsoleApplication::fileName_ << NONE
+            << std::endl;
+  std::cout << D_BLUE << MAIN_MENU_MESSAGE << NONE;
   std::string choice;
   std::cin >> choice;
-  while (checkAndRunChoice(choice))
-    input();
+  while (checkAndRunChoice(choice)) input();
 }
 
 int ConsoleApplication::checkAndRunStartChoice(std::string &choice) {
-	if (choice.compare("1") == 0) {
-		ConsoleApplication::list();
-		return (0);
-	}
-	if (choice.compare("2") == 0) {
-		ConsoleApplication::load();
-		return (0);
-	}
-	if (choice.compare("3") == 0) {
-		ConsoleApplication::exit();
-		return (0);
-	}
-	return (1);
+  if (choice.compare("1") == 0) {
+    ConsoleApplication::list();
+    return (0);
+  }
+  if (choice.compare("2") == 0) {
+    ConsoleApplication::load();
+    return (0);
+  }
+  if (choice.compare("3") == 0) {
+    ConsoleApplication::exit();
+    return (0);
+  }
+  return (1);
 }
 
 int ConsoleApplication::checkAndRunChoice(std::string &choice) {
-	if (choice.compare("1") == 0) {
-		ConsoleApplication::list();
-		return (0);
-	}
-	if (choice.compare("2") == 0) {
-		ConsoleApplication::load();
-		return (0);
-	}
-	if (choice.compare("3") == 0) {
-		ConsoleApplication::makeDepthFirstSearch(*graph_, *graphAlg_);
-		return (0);
-	}
-	if (choice.compare("4") == 0) {
-		ConsoleApplication::makeBreadthFirstSearch(*graph_, *graphAlg_);
-		return (0);
-	}
-	if (choice.compare("5") == 0) {
-		ConsoleApplication::makeDeyxtraAlg(*graph_, *graphAlg_);
-		return (0);
-	}
-	if (choice.compare("6") == 0) {
-		ConsoleApplication::makeFloydWorshelAlg(*graph_, *graphAlg_);
-		return (0);
-	}
-	if (choice.compare("7") == 0) {
-		ConsoleApplication::makeAlgOfPrim(*graph_, *graphAlg_);
-		return (0);
-	}
-	if (choice.compare("8") == 0) {
-		ConsoleApplication::makeVoyage(*graph_, *graphAlg_);
-		return (0);
-	}
-	if (choice.compare("9") == 0) {
-		if (graph_->exportGraphToDot("graph_files/exportFile.dot") != 0) {
+  if (choice.compare("1") == 0) {
+    ConsoleApplication::list();
+    return (0);
+  }
+  if (choice.compare("2") == 0) {
+    ConsoleApplication::load();
+    return (0);
+  }
+  if (choice.compare("3") == 0) {
+    ConsoleApplication::makeDepthFirstSearch(*graph_, *graphAlg_);
+    return (0);
+  }
+  if (choice.compare("4") == 0) {
+    ConsoleApplication::makeBreadthFirstSearch(*graph_, *graphAlg_);
+    return (0);
+  }
+  if (choice.compare("5") == 0) {
+    ConsoleApplication::makeDeyxtraAlg(*graph_, *graphAlg_);
+    return (0);
+  }
+  if (choice.compare("6") == 0) {
+    ConsoleApplication::makeFloydWorshelAlg(*graph_, *graphAlg_);
+    return (0);
+  }
+  if (choice.compare("7") == 0) {
+    ConsoleApplication::makeAlgOfPrim(*graph_, *graphAlg_);
+    return (0);
+  }
+  if (choice.compare("8") == 0) {
+    ConsoleApplication::makeVoyage(*graph_, *graphAlg_);
+    return (0);
+  }
+  if (choice.compare("9") == 0) {
+    if (graph_->exportGraphToDot("graph_files/exportFile.dot") != 0) {
       s21::exitError("Error: cannot write graph to file");
     }
-		return (0);
-	}
-	if (choice.compare("10") == 0) {
-		ConsoleApplication::exit();
-		return (0);
-	}
-	return (1);
+    return (0);
+  }
+  if (choice.compare("10") == 0) {
+    ConsoleApplication::exit();
+    return (0);
+  }
+  return (1);
 }

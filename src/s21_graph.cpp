@@ -194,7 +194,7 @@ int Graph::exportGraphToDot(std::string filename) {
   }
   outFile << convertGraphToDot() << std::endl;
   outFile.close();
-	std::cout << "Graph saved to file " << filename << std::endl;
+  std::cout << "Graph saved to file " << filename << std::endl;
   return (0);
 }
 
