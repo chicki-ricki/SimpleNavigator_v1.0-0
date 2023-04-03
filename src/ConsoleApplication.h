@@ -28,15 +28,13 @@ class ConsoleApplication {
   static void printResult2D(int **, unsigned int);
 
  public:
-  ConsoleApplication(std::string fileName);
-
   static void start();
   static void helloMenu();
   static void mainMenu();
   static void load();
   static void list();
   static void exit();
-  static void save();
+  static void execAll(Graph, GraphAlgorithms);
 
   static int checkAndRunStartChoice(std::string &);
   static int checkAndRunChoice(std::string &);

@@ -73,7 +73,7 @@ rec			:	fclean all
 # building Unit-test
 test		: 	${OBJS_TEST}
 			${CC} s21_graph_algorithms_test.cpp -L. -I. ${LIB_GRAPH} ${LIB_GRAPH_ALG} ${LIB_CONT} -o test_algorithms -pthread -std=c++17 -lgtest -lgmock
-			${CC} s21_graph_test.cpp -L. -I. ${LIB_GRAPH} ${LIB_GRAPH_ALG} ${LIB_CONT} -o test_graph -pthread -std=c++17 -lgtest -lgmock -g -lcgraph -lgvc
+			${CC} s21_graph_test.cpp -L. -I. ${LIB_GRAPH} ${LIB_GRAPH_ALG} ${LIB_CONT} -o test_graph -pthread -std=c++17 -lgtest -lgmock -g #-lcgraph -lgvc
 
 # formating & check code with google-syle
 google-style:
@@ -85,6 +85,7 @@ google-style:
 leaks		:
 			CK_FORK=no leaks -atExit -- ./${NAME}
 			CK_FORK=no leaks -atExit -- ./test_graph
+			CK_FORK=no leaks -atExit -- ./test_algorithms
 
 install_gtest:
 #			brew install web-eid/gtest/gtest

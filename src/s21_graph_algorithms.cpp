@@ -311,6 +311,12 @@ int GraphAlgorithms::ckeckValidGraph(Graph &graph) {
   return (0);
 }
 
+void GraphAlgorithms::freeAnt(Ant *ants) {
+  for (size_t i = 0; i < ANT; i++) {
+    free(ants[i].vizit);
+  }
+}
+
 TsmResult GraphAlgorithms::solveTravelingSalesmanProblem(Graph &graph) {
   TsmResult way;
   way.distance = -1;
@@ -368,6 +374,7 @@ TsmResult GraphAlgorithms::solveTravelingSalesmanProblem(Graph &graph) {
   }
   freeArr(distance, graphSize);
   freeArr(pheromone, graphSize);
+  freeAnt(ants);
   return (way);
 }
 

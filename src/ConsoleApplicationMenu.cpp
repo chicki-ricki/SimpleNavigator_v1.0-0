@@ -27,7 +27,8 @@ Now you can do the following:\n\
   7. Get least spanning tree (Prim's algorithm) \n\
   8. Solve traveling salesman problem using ant colony algorithm \n\
   9. Save to .dot.\n\
-  10. Exit program \n\n\
+  10. Execute all algorithms for this graph.\n\
+  11. Exit program \n\n\
 Please, choose one and enter command number:  "
 
 #define input()                                                              \
@@ -140,6 +141,10 @@ int ConsoleApplication::checkAndRunChoice(std::string &choice) {
     return (0);
   }
   if (choice.compare("10") == 0) {
+    ConsoleApplication::execAll(*graph_, *graphAlg_);
+    return (0);
+  }
+  if (choice.compare("11") == 0) {
     ConsoleApplication::exit();
     return (0);
   }

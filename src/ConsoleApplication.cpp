@@ -180,3 +180,13 @@ void ConsoleApplication::makeVoyage(Graph graph,
   std::cout << "Voyage distance: " << rez.distance << std::endl;
   std::cout << "***********" << std::endl;
 }
+
+void ConsoleApplication::execAll(Graph graph,
+                                       GraphAlgorithms graphAlgorithms) {
+  makeDepthFirstSearch(graph, graphAlgorithms);
+  makeBreadthFirstSearch(graph, graphAlgorithms);
+  makeDeyxtraAlg(graph, graphAlgorithms);
+  makeFloydWorshelAlg(graph, graphAlgorithms);
+  makeAlgOfPrim(graph, graphAlgorithms);
+  makeVoyage(graph, graphAlgorithms);
+}

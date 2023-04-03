@@ -7,13 +7,14 @@ TEST(depthFirstSearch, RightData) {
   Graph graph;
   GraphAlgorithms graphAlg;
   int start = 1;
-  int *exp = new int[5];
+  int *exp;
 
   graph.loadGraphFromFile("graph_files/good/graph_5.txt");
   exp = graphAlg.depthFirstSearch(graph, start);
   for (size_t i = 0; i < graph.getSizeGraph(); i++) {
     EXPECT_EQ(rez[2], exp[2]);
   }
+  delete[] exp;
 }
 
 TEST(depthFirstSearch, StartVertexOutOfRange) {
@@ -30,15 +31,27 @@ TEST(depthFirstSearch, StartVertexOutOfRange) {
 TEST(depthFirstSearch, invalidVertices) {
   Graph graph;
   GraphAlgorithms graphAlg;
+  int *ptr;
 
   graph.loadGraphFromFile("graph_files/good/graph_11.txt");
-  EXPECT_TRUE(NULL == graphAlg.depthFirstSearch(graph, 0));
-  EXPECT_TRUE(NULL == graphAlg.depthFirstSearch(graph, 12));
-  EXPECT_TRUE(NULL == graphAlg.depthFirstSearch(graph, 3500));
-
-  EXPECT_TRUE(NULL != graphAlg.depthFirstSearch(graph, 1));
-  EXPECT_TRUE(NULL != graphAlg.depthFirstSearch(graph, 11));
-  EXPECT_TRUE(NULL != graphAlg.depthFirstSearch(graph, 5));
+  ptr = graphAlg.depthFirstSearch(graph, 0);
+  EXPECT_TRUE(NULL == ptr);
+  delete ptr;
+  ptr = graphAlg.depthFirstSearch(graph, 12);
+  EXPECT_TRUE(NULL == ptr);
+  delete ptr;
+  ptr = graphAlg.depthFirstSearch(graph, 3500);
+  EXPECT_TRUE(NULL == ptr);
+  delete ptr;
+  ptr = graphAlg.depthFirstSearch(graph, 1);
+  EXPECT_TRUE(NULL != ptr);
+  delete ptr;
+  ptr = graphAlg.depthFirstSearch(graph, 11);
+  EXPECT_TRUE(NULL != ptr);
+  delete ptr;
+  ptr = graphAlg.depthFirstSearch(graph, 5);
+  EXPECT_TRUE(NULL != ptr);
+  delete ptr;
 }
 
 TEST(depthFirstSearch, allInclude) {
@@ -58,6 +71,7 @@ TEST(depthFirstSearch, allInclude) {
     }
   }
   EXPECT_TRUE(countVertices == sizeVertices);
+  delete[] rez;
 }
 
 TEST(depthFirstSearch, notRepeat) {
@@ -78,6 +92,7 @@ TEST(depthFirstSearch, notRepeat) {
       countVertices = 0;
   }
   EXPECT_TRUE(countVertices == 0);
+  delete[] rez;
 }
 
 TEST(breadthFirstSearch, RightData) {
@@ -85,13 +100,14 @@ TEST(breadthFirstSearch, RightData) {
   Graph graph;
   GraphAlgorithms graphAlg;
   int start = 1;
-  int *exp = new int[5];
+  int *exp;
 
   graph.loadGraphFromFile("graph_files/good/graph_5.txt");
   exp = graphAlg.breadthFirstSearch(graph, start);
   for (size_t i = 0; i < graph.getSizeGraph(); i++) {
     EXPECT_EQ(rez[i], exp[i]);
   }
+  delete[] exp;
 }
 
 TEST(breadthFirstSearch, StartVertexOutOfRange) {
@@ -108,11 +124,18 @@ TEST(breadthFirstSearch, StartVertexOutOfRange) {
 TEST(breadthFirstSearch, invalidVertices) {
   Graph graph;
   GraphAlgorithms graphAlg;
+  int *ptr;
 
   graph.loadGraphFromFile("graph_files/good/graph_11.txt");
-  EXPECT_TRUE(NULL == graphAlg.breadthFirstSearch(graph, 0));
-  EXPECT_TRUE(NULL == graphAlg.breadthFirstSearch(graph, 12));
-  EXPECT_TRUE(NULL == graphAlg.breadthFirstSearch(graph, 3500));
+  ptr = graphAlg.breadthFirstSearch(graph, 0);
+  EXPECT_TRUE(NULL == ptr);
+  delete ptr;
+  ptr = graphAlg.breadthFirstSearch(graph, 12);
+  EXPECT_TRUE(NULL == ptr);
+  delete ptr;
+  ptr = graphAlg.breadthFirstSearch(graph, 3500);
+  EXPECT_TRUE(NULL == ptr);
+  delete ptr;
 }
 
 TEST(breadthFirstSearch, allInclude) {
@@ -132,6 +155,7 @@ TEST(breadthFirstSearch, allInclude) {
     }
   }
   EXPECT_TRUE(countVertices == sizeVertices);
+  delete[] rez;
 }
 
 TEST(breadthFirstSearch, notRepeat) {
@@ -152,6 +176,7 @@ TEST(breadthFirstSearch, notRepeat) {
       countVertices = 0;
   }
   EXPECT_TRUE(countVertices == 0);
+  delete[] rez;
 }
 
 TEST(getShortestPathBetweenVertices, RightData) {
@@ -223,6 +248,10 @@ TEST(getShortestPathBetweenVertices, minByFloyd_Warshall) {
               graphAlg.getShortestPathBetweenVertices(graph, 2, 11));
   EXPECT_TRUE(rez[10][7] ==
               graphAlg.getShortestPathBetweenVertices(graph, 11, 8));
+  for (size_t i = 0; i < graph.getSizeGraph(); i++) {
+    delete[] rez[i];
+  }
+  delete[] rez;
 }
 
 TEST(getShortestPathsBetweenAllVertices, minByDeixtra) {
@@ -241,6 +270,10 @@ TEST(getShortestPathsBetweenAllVertices, minByDeixtra) {
               graphAlg.getShortestPathBetweenVertices(graph, 2, 11));
   EXPECT_TRUE(rez[10][7] ==
               graphAlg.getShortestPathBetweenVertices(graph, 11, 8));
+  for (size_t i = 0; i < graph.getSizeGraph(); i++) {
+    delete[] rez[i];
+  }
+  delete[] rez;
 }
 
 TEST(getLeastSpanningTree, countEdges) {
@@ -257,6 +290,10 @@ TEST(getLeastSpanningTree, countEdges) {
     }
   }
   EXPECT_TRUE(countEdges == sizeVertices - 1);
+  for (size_t i = 0; i < graph.getSizeGraph(); i++) {
+    delete[] rez[i];
+  }
+  delete[] rez;
 }
 
 TEST(getLeastSpanningTree, allVerticesInclude) {
@@ -275,6 +312,10 @@ TEST(getLeastSpanningTree, allVerticesInclude) {
     if (countEdges == 0) break;
   }
   EXPECT_TRUE(countEdges != 0);
+  for (size_t i = 0; i < graph.getSizeGraph(); i++) {
+    delete[] rez[i];
+  }
+  delete[] rez;
 }
 
 TEST(getLeastSpanningTree, withoutLoop) {
@@ -296,6 +337,10 @@ TEST(getLeastSpanningTree, withoutLoop) {
     }
   }
   EXPECT_TRUE(loopFlag == 0);
+  for (size_t i = 0; i < graph.getSizeGraph(); i++) {
+    delete[] rez[i];
+  }
+  delete[] rez;
 }
 
 TEST(solveTravelingSalesmanProblem, allVerticesInclude) {

@@ -104,6 +104,7 @@ class GraphAlgorithms {
   // обновление феромонов с учетом коэффициента испарения
   void updatePheromone(double **, size_t);
   int ckeckValidGraph(Graph &);
+  void freeAnt(Ant *ants);
 };
 
 #endif
