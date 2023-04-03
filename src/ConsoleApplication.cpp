@@ -181,8 +181,7 @@ void ConsoleApplication::makeVoyage(Graph graph,
   std::cout << "***********" << std::endl;
 }
 
-void ConsoleApplication::execAll(Graph graph,
-                                       GraphAlgorithms graphAlgorithms) {
+void ConsoleApplication::execAll(Graph graph, GraphAlgorithms graphAlgorithms) {
   makeDepthFirstSearch(graph, graphAlgorithms);
   makeBreadthFirstSearch(graph, graphAlgorithms);
   makeDeyxtraAlg(graph, graphAlgorithms);

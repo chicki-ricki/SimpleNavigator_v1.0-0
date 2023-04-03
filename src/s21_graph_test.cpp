@@ -263,6 +263,11 @@ TEST(LoadFromFile, NoDigitsInMatrix) {
 
 TEST(ExportGraphToDot, NonWritableFile) {
   Graph graph;
+  std::ofstream outFile;
+  outFile.open("graph_files/exportFile.dot");
+  if (outFile.is_open() != true) {
+    std::system("touch graph_files/exportFile.dot");
+  }
   std::system("chmod 000 graph_files/exportFile.dot");
   graph.loadGraphFromFile("graph_files/good/graph_4.txt");
   EXPECT_EQ(graph.exportGraphToDot("graph_files/exportFile.dot"), 1);
