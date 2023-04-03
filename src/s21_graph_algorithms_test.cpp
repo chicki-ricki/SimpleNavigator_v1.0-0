@@ -302,7 +302,6 @@ TEST(solveTravelingSalesmanProblem, allVerticesInclude) {
   Graph graph;
   GraphAlgorithms graphAlg;
   TsmResult rez;
-  
 
   graph.loadGraphFromFile("graph_files/good/graph_5.txt");
   rez = graphAlg.solveTravelingSalesmanProblem(graph);
